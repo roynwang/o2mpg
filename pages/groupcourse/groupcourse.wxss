@@ -1,0 +1,358 @@
+/**index.wxss**/
+
+.container {
+  background: #fafafa;
+}
+
+.row {
+  display: flex;
+}
+
+.stat-item {
+  float: left;
+  width: 50%;
+  text-align: center;
+  line-height: 96rpx;
+  min-height: 96rpx;
+}
+
+.stat-item-box {
+  width: 100%;
+  border: #e3e3e3 1px solid;
+  border-left: none;
+}
+
+.stat-item-unit {
+  display: inline-block;
+  font-size: 0.7rem;
+  position: relative;
+  top: -2rpx;
+}
+
+.stat-item-subtitle {
+  font-size: 0.8rem;
+  color: #999;
+  line-height: 50rpx;
+  margin-top: 10rpx;
+  font-weight: 600;
+}
+
+.stat-item-highlight {
+  line-height: 70rpx;
+  margin-bottom: 20rpx;
+  margin-top: -10rpx;
+}
+
+.stat-item-number {
+  /*border-bottom: 3px solid rgb(105, 206, 219);*/
+  text-align: center;
+  padding-left: 10rpx;
+  color: #555;
+  font-size: 1.7rem;
+  font-weight: 400;
+}
+
+.userinfo {
+  float: right;
+  width: 100%;
+}
+
+.userinfo-avatar {
+  width: 96rpx;
+  height: 96rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+  float: right;
+  margin-right: 60rpx;
+}
+
+.course-booked-avatar {
+  width: 48rpx;
+  height: 48rpx;
+  margin-right: 10rpx;
+  border-radius: 50%;
+}
+
+.text-highlight {
+  font-size: 1.3rem;
+  color: rgb(105, 206, 219);
+  line-height: 2rem;
+  font-weight: bold;
+}
+
+.text-summary {
+  font-size: 1.3rem;
+  color: #444;
+  line-height: 1.4rem;
+  font-weight: 400;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  color: #aaa;
+  line-height: 1.4rem;
+  position: relative;
+  margin-left: 40rpx;
+}
+
+text, view {
+  font-family: "PingFang SC",
+                 "Hiragino Sans GB",
+                 "Heiti SC",
+                 "Microsoft YaHei",
+                 "WenQuanYi Micro Hei";
+}
+
+.day-course-list {
+  display: flex;
+  flex-direction: row;
+  border-top: #e3e3e3 solid 1px;
+  /*margin-top: 30rpx;*/
+  border-bottom: #e3e3e3 solid 1px;
+}
+
+.days {
+  width: 162rpx;
+  border-right: #e3e3e3 solid 1rpx;
+}
+
+.date {
+  width: 160rpx;
+  height: 160rpx;
+  background: white;
+  line-height: 160rpx;
+  text-align: center;
+  border: #fff solid 1rpx;
+  border-right: none;
+}
+
+.date.active {
+  background: rgb(243, 245, 249);
+  border: #e3e3e3 solid 1rpx;
+  border-right: none;
+  margin-top: -1rpx;
+}
+
+.day {
+  font-size: 1.4rem;
+  color: rgba(119, 129, 139, 0.7);
+  line-height: 1.6rem;
+  padding-top: 40rpx;
+  font-weight: 600;
+}
+
+.active .day, .active .month {
+  color: #333;
+}
+
+.month {
+  font-size: 0.8rem;
+  color: rgba(119, 129, 139, 0.6);
+  line-height: 1rem;
+}
+
+.course-list {
+  flex-grow: 1;
+}
+
+.course {
+  max-height: 320rpx;
+  min-height: 320rpx;
+  background: white;
+  line-height: 160rpx;
+  text-align: left;
+  border-bottom: #e3e3e3 solid 1rpx;
+  padding: 0 100rpx 0 40rpx;
+  font-size: 1.1rem;
+  color: rgb(119, 129, 139);
+}
+
+.course-time {
+  color: rgba(119, 129, 139, 0.7);
+  font-size: 0.8rem;
+  line-height: 60rpx;
+}
+
+.course-time > text {
+  color: #333;
+  border-bottom: 4rpx solid rgb(105, 206, 219);
+  padding: 4rpx 4rpx;
+}
+
+.course-desc {
+  
+  font-size: 1.1rem;
+  color: #333;
+  line-height: 1.5rem;
+  margin-top: 10rpx;
+
+}
+
+.course-book {
+  display: flex;
+  flex-flow: column;
+}
+
+.course-book-now {
+  width: 160rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+  margin: auto;
+  color: #333;
+}
+
+.course-booked {
+  line-height: 60rpx;
+  flex-grow: 1;
+}
+
+.course-book-status {
+  text-align: left;
+  color: #333;
+  font-size: 0.8rem;
+  line-height:1.5rem;
+}
+
+.course-book-confirm {
+  width: 100%;
+  height: 100%;
+  background: rgb(105, 206, 219);
+}
+
+.course-book-btn {
+  display: inline-block;
+  float: right;
+  margin-right: -70rpx;
+  border: 3rpx solid rgb(105, 206, 219);
+  padding: 6rpx 20rpx;
+  line-height: 40rpx;
+  color: rgb(105, 206, 219);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.course-book-btn.large {
+  font-size: 1.0rem;
+  padding: 15rpx 20rpx;
+  border-width: 4rpx;
+  text-align: center;
+  margin: 30rpx auto;
+}
+
+.top-tips {
+  display: flex;
+  flex-flow: row;
+  background: rgb(105, 206, 219);
+  font-size: 0.8rem;
+  font-weight: 100;
+  color: white;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 100;
+  box-shadow: 0rpx 0rpx 20rpx 2rpx rgb(105, 206, 219);
+}
+
+.top-tips-text {
+  padding: 20rpx 10rpx 30rpx 60rpx;
+  flex-grow: 1;
+}
+
+.top-tips-btn {
+  padding-top: 100rpx;
+  margin-right: 40rpx;
+}
+
+.top-tips-btn>view {
+  border: 1px solid white;
+  border-radius: 2rpx;
+  padding: 6rpx 20rpx;
+  font-weight: 300;
+}
+
+.booked-course-list {
+}
+
+.booked-item {
+  display: flex;
+  border-bottom: 1px solid #e3e3e3;
+}
+
+.booked-item .course-time {
+  padding-top: 0;
+  padding-bottom: 20rpx;
+}
+
+.booked-item .course-book-btn {
+  margin-right: 0;
+}
+
+.booked-item .course-desc {
+  font-size: 0.9rem;
+  line-height: 1.2rem;
+  flex-grow: 1;
+  padding-top: 16rpx;
+  padding-right: 80rpx;
+}
+
+.booked-item-detail {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column-reverse;
+  padding-right: 20rpx;
+}
+
+.completed .course-time>text {
+  color: #999;
+  border: none;
+}
+
+.completed .course-desc {
+  color: #aaa;
+}
+
+.completed .course-book-btn {
+  color: #bbb;
+  border-color: #ccc;
+}
+
+.booked-item.pending .date > .day, .booked-item.pending .date > .month {
+  color: #333;
+}
+
+.booked-item.booking .date > .day, .booked-item.booking .date > .month {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.booked-item.booking .date {
+  background: rgb(105, 206, 219);
+  border-color: rgb(105, 206, 219);
+  box-shadow: 0rpx 0rpx 20rpx 2rpx rgb(105, 206, 219);
+  z-index: 10000;
+}
+
+.booking .booked-item-detail {
+  background: rgb(105, 206, 219);
+  color: rgb(0, 0, 0);
+  box-shadow: 0rpx 0rpx 14rpx 2rpx rgba(105, 206, 219, 0.5);
+  z-index: 10000;
+}
+
+.booked-item.booking {
+  border-color: rgb(105, 206, 219);
+}
+
+.booking .course-book-btn {
+  border-color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.8);
+  float: none;
+  width: 300rpx;
+  margin: 40rpx auto;
+}
+
+.booking .course-desc {
+  display: flex;
+  flex-flow: column;
+  text-align: center;
+}

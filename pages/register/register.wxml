@@ -1,0 +1,31 @@
+<!--index.wxml-->
+<view class="container">
+  <view  bindtap="bindViewTap" class="userinfo">
+    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+  </view>
+  <view class="input-view">
+    <view style="margin-bottom:40rpx;color:#666; font-size:1.1rem;">
+      绑定手机
+    </view>
+    <view style="text-align:left; width: 600rpx;margin:auto;padding-left:100rpx" hidden="{{step != 0}}" >
+    <text style="line-height:1.5rem;color:#666;">
+    *您的手机号码将用以绑定/创建您的帐号
+    *老客户请您使用预留的电话号码
+    *氧气不会向您推送任何广告和垃圾信息
+    *氧气不会将您的个人信息向任何第三方泄漏</text>
+ </view>
+    <view hidden="{{step != 0 }}" bindtap="tapConfirm" style="color:white;background:rgb(105, 206, 219);width:100rpx;margin:auto;font-size:1rem;padding:8rpx 20rpx;margin-top:40rpx;">继续</view>
+
+    <input hidden="{{step != 1}}" class="input-item" placeholder="请输入您的手机号码" focus="{{focus}}" bindinput="bindPhoneKeyInput" />
+    <view bindtap="tapVcode" hidden="{{step != 1 || phone.length != 11}}"  style="color:white;background:rgb(105, 206, 219);width:100rpx;margin:auto;font-size:1rem;padding:8rpx 20rpx;margin-top:40rpx;">继续</view>
+  
+      <input hidden="{{step != 2}}" class="input-item" placeholder="请输入验证码" focus="{{focus}}" bindinput="bindVcodeKeyInput" />
+    <view bindtap="tapSubmit" hidden="{{vcode.length != 6}}"  style="color:white;background:rgb(105, 206, 219);width:100rpx;margin:auto;font-size:1rem;padding:8rpx 20rpx;margin-top:40rpx;">提交</view>
+  </view>
+  <!--<view hidden="{{!confirm}}"  class="bindtips">
+    <text>*您的手机号码将用以绑定/创建您的帐号
+    *氧气不会向您推送任何广告和垃圾信息
+    *氧气不会将您的个人信息向任何第三方泄漏</text>
+  </view>-->
+</view>

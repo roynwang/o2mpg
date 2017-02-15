@@ -1,0 +1,59 @@
+/**index.wxss**/
+text, view {
+  font-family: "PingFang SC",
+                 "Hiragino Sans GB",
+                 "Heiti SC",
+                 "Microsoft YaHei",
+                 "WenQuanYi Micro Hei";
+  font-weight: 400;
+}
+.container {
+  /*background: #fafafa*/
+}
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #333;
+  font-weight: 400;
+  font-size:1.3rem;
+}
+
+.usermotto {
+  margin-top: 100px;
+}
+
+.bindtips {
+  margin: 80rpx;
+  font-size: 0.9rem;
+  text-align: left;
+  color: rgba(0,0,0,0.38);
+  line-height:1.3rem;
+}
+.input-view {
+  font-size: 0.9rem;
+  margin-top: 40rpx;
+  font-weight: 200;
+  background: #fafafa;
+  width:100%;
+  text-align:center;
+  padding: 50rpx 0;
+
+  
+}
+
+input {
+  border-bottom: 6rpx solid rgb(105, 206, 219);
+  width: 250rpx;
+  margin: auto;
+}

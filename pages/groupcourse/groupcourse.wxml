@@ -1,0 +1,122 @@
+
+<view class="section" hidden="{{user == null}}">
+  <!--<view class="userinfo" style="display:flex;flex-flow:row">
+    <view style="flex-grow:1;display:flex;flex-flow:row">
+      <view class="date">
+      </view>
+    </view>
+    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+  </view>-->
+  <view style="width:100%;display:flex; flex-flow:row;position:relative;">
+    <view style="flex-grow: 1;padding-left:60rpx;padding-bottom:60rpx;">
+      <text class="text-summary">
+        欢迎回来, {{userInfo.nickName}}
+        上次锻炼在 </text>
+      <text class="text-highlight">7</text>
+      <text class="text-summary" style="margin-left:10rpx">天前</text>
+    </view>
+    <view bindtap="showMe" style="width:140rpx;padding-top:80rpx">
+      <view style="line-height:10rpx;height:4rpx;background:#666;width:40rpx;position:relative;left:20rpx;"></view>
+      <view style="line-height:10rpx;height:4rpx;background:#666;width:60rpx;margin-top:16rpx"></view>
+      <view style="line-height:10rpx;height:4rpx;background:#666;width:40rpx;position:relative;margin-top:16rpx"></view>
+    </view>
+  </view>
+
+  <view class="booked-course-list" >
+
+  <view class="booked-item booking" hidden="{{showBook == false}}">
+      <view class="booked-item-detail">  
+        
+           <view bindtap="bookNow" class="course-book-btn large">预约下节课程</view>
+         </view>
+
+    </view>
+    <view class="booked-item pending">
+      <view class="date">
+        <view class="day">25</view>
+        <view class="month">JAN</view>
+      </view>
+      <view class="booked-item-detail">
+         <view class="course-time">
+          <text>19:00 × 徐东波</text>
+          <view class="course-book-btn">取消</view>
+        </view>
+         <view class="course-desc">
+          <text>高强度／减脂 HIIT适应性训练完全就是个测试
+          </text>
+        </view>
+      </view>
+    </view>
+    <view class="booked-item completed">
+      <view class="date">
+        <view class="day">25</view>
+        <view class="month">JAN</view>
+      </view>
+      <view class="booked-item-detail">
+         <view class="course-time">
+          <text>19:00 × 徐东波</text>
+          <view class="course-book-btn">完成</view>
+        </view>
+         <view class="course-desc">
+          <text>高强度／减脂 HIIT适应性训练完全就是个测试
+          </text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view hidden="{{user != null}}" style="padding-bottom:220rpx;">
+
+  <!--<view>
+    <text class="section-title">氧气团课</text>
+  </view>-->
+  <view class="day-course-list">
+    <view class="days">
+      <view class="date active">
+        <view class="day">24</view>
+        <view class="month">JAN</view>
+      </view>
+      <view class="date">
+        <view class="day">25</view>
+        <view class="month">JAN</view>
+      </view>
+      <view class="date">
+        <view class="day">26</view>
+        <view class="month">JAN</view>
+      </view>
+      <view class="date">
+        <view class="day">27</view>
+        <view class="month">JAN</view>
+      </view>
+      <view class="date">
+        <view class="day">28</view>
+        <view class="month">JAN</view>
+      </view>
+      <view class="date">
+        <view class="day">29</view>
+        <view class="month">JAN</view>
+      </view>
+    </view>
+    <view class="course-list">
+      <view class="course">
+        <view class="course-time">
+          <text>19:00 × 长楹天街店 × 徐东波</text>
+          <view class="course-book-btn" bindtap="showRegister">预约</view>
+        </view>
+        <view class="course-desc">
+          <text>高强度／减脂 HIIT适应性训练完全就是个测试
+          </text>
+        </view>
+        <view class="course-book">
+          <view class="course-book-status">位置 0／6
+          </view>
+        </view>
+      </view>
+
+      <!--<view class="course">
+          <view class="course-book-confirm">
+          </view>
+      </view>-->
+    </view>
+  </view>
+</view>

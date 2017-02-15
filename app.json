@@ -1,0 +1,18 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/groupcourse/groupcourse",
+    "pages/register/register",
+    "pages/charge/charge",
+    "pages/me/me",
+    "pages/courselist/courselist",
+    "pages/bookconfirm/bookconfirm"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "white",
+    "navigationBarTitleText": "氧气",
+    "navigationBarTextStyle":"black"
+  }
+}

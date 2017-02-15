@@ -1,0 +1,38 @@
+@import "../me/me.wxss";
+
+.price-item {
+  border: none;
+  
+}
+.price-detail-price {
+  line-height:160rpx;
+  padding-top: 0;
+}
+
+.price-detail {
+  padding-top: 0;
+  padding-left:20rpx;
+}
+
+.coupon {
+   flex-grow:1;
+   border: 6rpx dotted rgb(105, 206, 219);
+   border-right: none;
+   display:flex;
+   flex-flow: column;
+}
+.coupon-rate{
+  text-align: center;
+  line-height: 120rpx;
+  font-size: 1.8rem;
+  color: rgb(105, 206, 219);
+  font-weight:800;
+}
+.coupon-desc {
+  text-align: center;
+  color: rgba(105, 206, 219, 0.8);
+  line-height: 40rpx;
+  font-size: 0.6rem;
+  margin-top:-30rpx;
+  font-weight:800;
+}

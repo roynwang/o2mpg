@@ -1,0 +1,47 @@
+
+
+<view style="padding-bottom:220rpx;">
+  <!--<view>
+    <text class="section-title">氧气团课</text>
+  </view>-->
+  <view class="day-course-list">
+    <view class="days">
+       <view data-i="{{index}}" wx:for="{{days}}" bindtap="tapDate">
+      <view  class="date" hidden="{{item.selected}}">
+        <view class="day">{{item.day}}</view>
+        <view class="month">{{item.month}}</view>
+      </view>
+      <view class="date active" hidden="{{!item.selected}}">
+        <view class="day">{{item.day}}</view>
+        <view class="month">{{item.month}}</view>
+      </view>
+      </view>
+    </view>
+    <view class="course-list">
+      <view class="course">
+       <view class="course-desc" style="padding-top:40rpx;">
+          <text>高强度／减脂
+           HIIT适应性训练
+           位置 0／6
+          </text>
+        </view>
+        <view class="course-time">
+          <text>19:00 × 徐东波</text>
+          <view class="course-book-btn" bindtap="tapBook">预约</view>
+        </view>
+      </view>
+      <view class="course">
+       <view class="course-desc" style="padding-top:40rpx;">
+          <text>高强度／减脂
+           HIIT适应性训练
+           位置 0／6
+          </text>
+        </view>
+        <view class="course-time">
+          <text>19:00 × 徐东波</text>
+          <view class="course-book-btn" bindtap="showBook">预约</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

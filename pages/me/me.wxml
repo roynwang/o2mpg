@@ -1,0 +1,67 @@
+ <view class="row">
+  <view class="userinfo" style="display:flex;flex-flow:row">
+    <view style="flex-grow:1;display:flex;flex-flow:row">
+       <view style="margin:auto;color:#333font-weight:400;font-size:1.3rem;">{{userInfo.nickName}}</view>
+    </view>
+    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+  </view>
+  </view>
+  <view class="row">
+    <view class="stat-item">
+      <view class="stat-item-box">
+        <view class="stat-item-subtitle">
+          最近7日锻炼
+        </view>
+        <view class="stat-item-highlight">
+          <text class="stat-item-number">0 </text>
+          <view class="stat-item-unit"> 次</view>
+        </view>
+      </view>
+    </view>
+    <view class="stat-item">
+      <view class="stat-item-box">
+        <view class="stat-item-subtitle">
+          获得汗水折扣
+        </view>
+        <view class="stat-item-highlight">
+          <text class="stat-item-number">-15</text>
+          <view class="stat-item-unit"> ％</view>
+        </view>
+      </view>
+    </view>
+  </view>
+<view class="section">
+  <view class="price-item">
+    <view class="price-detail">
+      <view style="margin-top:-24rpx;">
+        <view style="padding-left:6rpx;padding-bottom:16rpx;color:#999;font-size:0.8rem;" class="price-detail-gift">账户余额 </view>
+      </view>
+      <view class="price-detail-price" style="font-size:1.7rem;"> 12000
+        <text class="stat-item-unit">元</text>
+      </view>
+    </view>
+    <view class="price-checkbox" style="border:none">
+      <view bindtap="charge" class="course-book-btn" style="margin:0;font-size: 1rem;float:left;margin-top:30rpx;">充值</view>
+    </view>
+  </view>
+  <view class="price-item">
+    <view class="price-detail">
+      <view style="margin-top:-24rpx;">
+        <view style="padding-left:6rpx;padding-bottom:16rpx;color:#999;font-size:0.8rem;" class="price-detail-gift">完成单人课程 </view>
+      </view>
+      <view class="price-detail-price" style="font-size:1.7rem;"> 12
+        <text class="stat-item-unit">节</text>
+      </view>
+    </view>
+  </view>
+    <view class="price-item">
+    <view class="price-detail">
+      <view style="margin-top:-24rpx;">
+        <view style="padding-left:6rpx;padding-bottom:16rpx;color:#999;font-size:0.8rem;" class="price-detail-gift">完成团体课程 </view>
+      </view>
+      <view class="price-detail-price" style="font-size:1.7rem;"> 12
+        <text class="stat-item-unit">节</text>
+      </view>
+    </view>
+  </view>
+</view>

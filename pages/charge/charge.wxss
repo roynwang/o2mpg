@@ -1,0 +1,77 @@
+@import "../groupcourse/groupcourse.wxss";
+
+.price-item {
+  height: 160rpx;
+  border-bottom: #eaeaea solid 2rpx;
+  display: flex;
+  flex-flow: row;
+}
+
+.price-detail {
+  padding-top: 40rpx;
+  flex-grow: 1;
+  padding-left: 100rpx;
+}
+
+.price-detail-price {
+  line-height: 40rpx;
+  font-size: 1.3rem;
+  color: #333;
+  font-weight: 400;
+}
+
+.price-detail-gift {
+  line-height: 1.1rem;
+  color: rgb(105, 206, 219);
+  background: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 20rpx 10rpx 2rpx 10rpx;
+ 
+}
+
+.price-checkbox {
+  width: 160rpx;
+  height: 120rpx;
+  margin: 20rpx 0;
+  line-height: 160rpx;
+  text-align: center;
+  border-left: 2rpx solid #eaeaea;
+}
+
+.active .price-checkbox>icon {
+
+}
+
+.price-checkbox > icon {
+  color: #e3e3e3;
+  position: relative;
+  top: -20rpx;
+}
+
+.active .price-checkbox>icon {
+   color: rgb(105, 206, 219);
+}
+
+.charge-balance {
+  display: flex;
+  flex-flow: row;
+  font-size: 1.1rem;
+  color: #333;
+  font-weight: 400;
+  padding-left: 60rpx;
+  margin-top: 50rpx;
+}
+
+.charge-pay-btn {
+  margin-top: 80rpx;
+  height: 100rpx;
+  color: white;
+  background: rgb(105, 206, 219);
+  text-align: center;
+  width: 100%;
+  line-height: 100rpx;
+  font-weight: 400;
+  font-size: 1.1rem;
+  box-shadow: 0rpx 0rpx 20rpx 2rpx rgb(105, 206, 219);
+}
