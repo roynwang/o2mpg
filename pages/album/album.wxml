@@ -1,0 +1,14 @@
+ <view class="section">
+
+     <view hidden="{{pics.length !=0}}" style="text-align:center;margin-top:30%;color:#333"> 暂无照片 </view>
+  <scroll-view bindscrolltolower="loadPic" scroll-y="1" style="height:{{scrollHeight}}px;padding: 20rpx 0">
+  <view wx:for="{{days}}" style="padding-bottom:20rpx">
+      <view class="album-section-title">
+        <text>{{index}}</text>
+      </view>
+      <view class="pic" data-i="{{index}}" wx:for="{{item}}" bindtap="showPic">
+      <image mode="aspectFill" mode="aspectFit" style="height:200rpx" src="{{item.url}}" ></image>
+      </view>
+  </view>
+</scroll-view>
+</view>

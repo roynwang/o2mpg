@@ -1,0 +1,16 @@
+.pic { 
+  width:48%;
+  display:inline-block;
+  text-align:center;
+  min-height: 160rpx;
+  margin-top: 20rpx;
+
+}
+
+.pic>text{
+  line-height:160rpx;
+  padding:40rpx;
+  border:8rpx solid #7f858a;
+  color: #7f858a;
+  font-weight:900;
+}

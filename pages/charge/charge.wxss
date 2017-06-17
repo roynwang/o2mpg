@@ -73,5 +73,5 @@
   line-height: 100rpx;
   font-weight: 400;
   font-size: 1.1rem;
-  box-shadow: 0rpx 0rpx 20rpx 2rpx rgb(105, 206, 219);
+ box-shadow:0rpx 0rpx 14rpx 2rpx rgba(105, 206, 219, 0.5);
 }

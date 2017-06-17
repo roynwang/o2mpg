@@ -9,3 +9,40 @@
   box-sizing: border-box;
   background:white;
 } 
+
+.bottom-bar-item{
+  width: 33.1%;
+  display: inline-block;
+  text-align: center;
+  line-height: 100rpx;
+  color:#666;
+  border-right: #ececec solid 2rpx;
+  
+}
+.bottom-bar-item:last-of-type{
+  border-right: none
+}
+.bottom-bar-item image {
+  margin-top:26rpx;
+  width: 50rpx;
+  height: 50rpx;
+}
+
+.bottom-bar-item.active .bar-icon-unselected{
+  display: none;
+}
+
+.bottom-bar-item:not(.active) .bar-icon-selected{
+  display: none;
+}
+
+.bottom-bar {
+  position:fixed;
+  bottom:0;
+  z-index:999999;
+  width:inherit;
+  background: #f6f6f6;
+  height: 100rpx;
+  box-shadow: 0rpx -5rpx 30rpx rgba(0,0,0,.1);
+  border-top: #ececec solid 2rpx;
+}

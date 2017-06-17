@@ -1,0 +1,13 @@
+
+<view class="section" style="border-top:#eaeaea solid 2rpx;">
+  <view  data-i="{{index}}" wx:for="{{orders}}" class="price-item">
+    <view class="price-detail">
+      <view style="margin-top:-24rpx;">
+        <view style="padding-left:6rpx;padding-bottom:16rpx;color:#333;font-size:1rem;" class="price-detail-gift">{{item.gym}} </view>
+      </view>
+      <view class="price-detail-price" style="color:#4fd2c2"> {{item.complete_status}}
+        <text class="stat-item-unit" style="color:#666">节</text>
+      </view>
+    </view>
+  </view>
+</view>

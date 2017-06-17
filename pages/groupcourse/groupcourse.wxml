@@ -1,122 +1,203 @@
+<view class="bottom-bar">
+  <view bindtap="toggleTab" class="bottom-bar-item {{tabs['mainpage']}}" data-i="mainpage">
+    <image class="bar-icon-unselected" src="/res/calendar.png" mode="aspectFill"></image>
+    <image class="bar-icon-selected" src="/res/calendar-active.png" mode="aspectFill"></image>
+  </view>
+    <view bindtap="toggleTab" class="bottom-bar-item {{tabs['groupcourse']}}" data-i="groupcourse">
+    <image class="bar-icon-unselected" src="/res/home.png" mode="aspectFill"></image>
+    <image class="bar-icon-selected" src="/res/home-active.png" mode="aspectFill"></image>
+  </view>
+  <view data-i="video" bindtap="toggleTab" class="bottom-bar-item {{tabs['video']}}">
+    <image class="bar-icon-unselected" src="/res/video.png" mode="aspectFill"></image>
+    <image class="bar-icon-selected" src="/res/video-active.png" mode="aspectFill"></image>
+  </view>
+</view>
+<view wx:if="{{tabs['mainpage'] == 'active'}}" style="position:fixed;width:100%;display:flex; flex-flow:row;top:0;background:#fff;z-index:1000;border-bottom:solid 4rpx #f3f3f3;box-shadow: 0rpx -3rpx 50rpx rgba(0,0,0,.1);">
+  <view style="flex-grow: 1;padding-left:60rpx;padding-bottom:40rpx;">
+    <text class="text-summary">
+      {{userInfo.nickName}}
+      <!--上次锻炼在 </text>
+      <text class="text-highlight">7</text>
+      <text class="text-summary" style="margin-left:10rpx">天前--></text>
+  </view>
+  <view bindtap="showMe" style="width:140rpx;padding-top:80rpx">
+    <view style="line-height:10rpx;height:4rpx;background:#666;width:40rpx;position:relative;left:20rpx;"></view>
+    <view style="line-height:10rpx;height:4rpx;background:#666;width:60rpx;margin-top:16rpx"></view>
+    <view style="line-height:10rpx;height:4rpx;background:#666;width:40rpx;position:relative;margin-top:16rpx"></view>
+  </view>
+</view>
 
-<view class="section" hidden="{{user == null}}">
-  <!--<view class="userinfo" style="display:flex;flex-flow:row">
+
+<scroll-view wx:if="{{tabs['mainpage'] == 'active'}}" bindscrolltolower="loadMoreCourse" scroll-y="1" style="height:{{scrollHeight}}px;padding: 80rpx 0;background:white;">
+  <view style="height:120rpx"></view>
+  <view class="section" hidden="{{user == null}}">
+
+    <!--<view class="userinfo" style="display:flex;flex-flow:row">
     <view style="flex-grow:1;display:flex;flex-flow:row">
       <view class="date">
       </view>
     </view>
     <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
   </view>-->
-  <view style="width:100%;display:flex; flex-flow:row;position:relative;">
-    <view style="flex-grow: 1;padding-left:60rpx;padding-bottom:60rpx;">
-      <text class="text-summary">
-        欢迎回来, {{userInfo.nickName}}
-        上次锻炼在 </text>
-      <text class="text-highlight">7</text>
-      <text class="text-summary" style="margin-left:10rpx">天前</text>
-    </view>
-    <view bindtap="showMe" style="width:140rpx;padding-top:80rpx">
-      <view style="line-height:10rpx;height:4rpx;background:#666;width:40rpx;position:relative;left:20rpx;"></view>
-      <view style="line-height:10rpx;height:4rpx;background:#666;width:60rpx;margin-top:16rpx"></view>
-      <view style="line-height:10rpx;height:4rpx;background:#666;width:40rpx;position:relative;margin-top:16rpx"></view>
+
+
+    <view class="booked-course-list" style="margin-top:-4rpx">
+
+      <view class="booked-item booking" hidden="{{showBook == false}}">
+        <view class="booked-item-detail">
+
+          <view bindtap="bookNow" class="course-book-btn large">预约一节课程</view>
+        </view>
+
+      </view>
+      <view wx:for="{{bookedGroupCourse}}" class="booked-item {{!item.completed ?'pending':'completed'}}">
+
+        <view class="date">
+          <view class="day">{{item.day}}</view>
+          <view class="month">{{item.month}}</view>
+        </view>
+        <view class="booked-item-detail">
+
+          <view class="course-time">
+            <text>{{item.title}}</text>
+            <view wx:if="{{ !item.hide_cancel&&!item.completed}}" data-i="{{index}}" bindtap="tapCancel" class="course-book-btn {{item.confirming?'confirm':''}}">{{item.confirming?'确认取消':'取消'}}</view>
+            <view wx:if="{{!item.confirming &&item.completed}}" class="course-book-btn">
+              <icon type="success_no_circle" size="10" color="#4fd2c2" style="line-height:10rpx;margin-right:4rpx;position:relative;right:5rpx;top:2rpx;" />已完成</view>
+          </view>
+          <view class="course-desc">
+            <text style="display:inline-block"> {{item.hour_str}} × {{item.coach}}</text>
+            <text class="course-price" wx:if="{{item.price!=0}}">{{item.price}}-{{item.discount}}</text>
+          </view>
+
+        </view>
+      </view>
     </view>
   </view>
+  <view hidden="{{user != null}}" style="padding-bottom:220rpx;">
 
-  <view class="booked-course-list" >
+    <!--<view>
+    <text class="section-title">氧气团课</text>
+  </view>-->
+    <view class="day-course-list">
+      <view class="days">
+        <view class="date active">
+          <view class="day">24</view>
+          <view class="month">JAN</view>
+        </view>
+        <view class="date">
+          <view class="day">25</view>
+          <view class="month">JAN</view>
+        </view>
+        <view class="date">
+          <view class="day">26</view>
+          <view class="month">JAN</view>
+        </view>
+        <view class="date">
+          <view class="day">27</view>
+          <view class="month">JAN</view>
+        </view>
+        <view class="date">
+          <view class="day">28</view>
+          <view class="month">JAN</view>
+        </view>
+        <view class="date">
+          <view class="day">29</view>
+          <view class="month">JAN</view>
+        </view>
+      </view>
+      <view class="course-list">
+        <view class="course">
+          <view class="course-time">
+            <text>19:00 × 长楹天街店 × 徐东波</text>
+            <view class="course-book-btn" bindtap="showRegister">预约</view>
+          </view>
+          <view class="course-desc">
+            <text>高强度／减脂 HIIT适应性训练完全就是个测试
+            </text>
+          </view>
+          <view class="course-book">
+            <view class="course-book-status">位置 0／6
+            </view>
+          </view>
+        </view>
 
-  <view class="booked-item booking" hidden="{{showBook == false}}">
-      <view class="booked-item-detail">  
-        
-           <view bindtap="bookNow" class="course-book-btn large">预约下节课程</view>
-         </view>
+        <!--<view class="course">
+          <view class="course-book-confirm">
+          </view>
+      </view>-->
+      </view>
+    </view>
+  </view>
+</scroll-view>
 
+
+<view   hidden="{{tabs['video'] != 'active'}}" class="video-search-section">
+    <view class="active" bindtap="toggleMuscle" style="padding-left:20rpx;color:#777;font-weight:900;z-index:10001"><text>类别: {{selected_keyword}}</text>
+      <text style="text-align:right;position:absolute;right:100rpx;font-weight:900;color:#777;"><text wx:if="{{hide_selection}}" style="position:relative;right:-4rpx;">○</text>
+      <text wx:if="{{!hide_selection}}" style="position:relative;top:-4rpx;color:#4fd2c2">×</text></text>
     </view>
-    <view class="booked-item pending">
-      <view class="date">
-        <view class="day">25</view>
-        <view class="month">JAN</view>
-      </view>
-      <view class="booked-item-detail">
-         <view class="course-time">
-          <text>19:00 × 徐东波</text>
-          <view class="course-book-btn">取消</view>
-        </view>
-         <view class="course-desc">
-          <text>高强度／减脂 HIIT适应性训练完全就是个测试
-          </text>
-        </view>
-      </view>
-    </view>
-    <view class="booked-item completed">
-      <view class="date">
-        <view class="day">25</view>
-        <view class="month">JAN</view>
-      </view>
-      <view class="booked-item-detail">
-         <view class="course-time">
-          <text>19:00 × 徐东波</text>
-          <view class="course-book-btn">完成</view>
-        </view>
-         <view class="course-desc">
-          <text>高强度／减脂 HIIT适应性训练完全就是个测试
-          </text>
-        </view>
-      </view>
-    </view>
+<view hidden="{{hide_selection}}" style="margin-top:20rpx;padding:20rpx 10rpx 6rpx 10rpx;border-top:#aaa dashed 2rpx;">
+<view   wx:for="{{keywords}}" data-i="{{index}}" class="video-keyword">
+  <view wx:if="{{item == selected_keyword}}"
+   class="active">{{item}}</view>
+  <view bindtap="tapKeyword" data-i="{{item}}" wx:if="{{item != selected_keyword}}">{{item}}</view>
   </view>
 </view>
-<view hidden="{{user != null}}" style="padding-bottom:220rpx;">
+</view>
 
+
+<scroll-view hidden="{{tabs['video'] != 'active'}}" bindscrolltolower="loadMoreVideo" scroll-y="1" style="height:{{scrollHeight}}px;background:white;padding-bottom:300rpx;padding-top:75rpx;">
+
+
+
+  <view  wx:for="{{videos}}" data-i="{{index}}" class="video-item" bindtap="showVideo">
+  <view class="video-image">
+   <image bindtap="playvideo" style="width:inherit;height:inherit" src="{{item.pic}}" mode="aspectFill"></image>
+   <view style="padding-left:20rpx;"><text style="border-bottom:6rpx solid #4fd2c2;font-size:0.9rem;color:#777">{{item.keywords}}</text></view>
+  </view>
+    <view class="video-info">
+      <text class="video-title">{{item.title}}
+      </text>
+      <text class="video-desc">{{item.summary}}</text>
+    </view>
+    <view style="height:20rpx;width:100%;box-shadow:0.5px -2px 25px rgba(0,0,0,.1);">
+    </view>
+  </view>
+</scroll-view>
+
+<view hidden="{{tabs['groupcourse'] != 'active'}}" style="padding-bottom:220rpx;">
   <!--<view>
     <text class="section-title">氧气团课</text>
   </view>-->
   <view class="day-course-list">
     <view class="days">
-      <view class="date active">
-        <view class="day">24</view>
-        <view class="month">JAN</view>
+       <view data-i="{{index}}" wx:for="{{days}}" bindtap="tapDate">
+      <view  class="date" hidden="{{item.selected}}">
+        <view class="day">{{item.day}}</view>
+        <view class="month">{{item.month}}</view>
       </view>
-      <view class="date">
-        <view class="day">25</view>
-        <view class="month">JAN</view>
+      <view class="date active" hidden="{{!item.selected}}">
+        <view class="day">{{item.day}}</view>
+        <view class="month">{{item.month}}</view>
       </view>
-      <view class="date">
-        <view class="day">26</view>
-        <view class="month">JAN</view>
-      </view>
-      <view class="date">
-        <view class="day">27</view>
-        <view class="month">JAN</view>
-      </view>
-      <view class="date">
-        <view class="day">28</view>
-        <view class="month">JAN</view>
-      </view>
-      <view class="date">
-        <view class="day">29</view>
-        <view class="month">JAN</view>
       </view>
     </view>
     <view class="course-list">
-      <view class="course">
-        <view class="course-time">
-          <text>19:00 × 长楹天街店 × 徐东波</text>
-          <view class="course-book-btn" bindtap="showRegister">预约</view>
-        </view>
-        <view class="course-desc">
-          <text>高强度／减脂 HIIT适应性训练完全就是个测试
+      <view hidden="{{courselist.length !=0}}" style="text-align:center;margin-top:30%;"> 暂无课程,换一天试试 </view>
+      <view class="course"  wx:for="{{courselist}}" >
+       <view class="course-desc" style="padding-top:40rpx;">
+          <text style="border-bottom:8rpx solid rgb(105, 206, 219);">{{item.weekday}} x {{item.hour_str}}
+          </text>
+           <text style="position:relative;top:20rpx;font-weight:600">{{item.course_detail.serial}}
+           </text>
+           <text style="position:relative;top:20rpx;font-weight:600">{{item.course_detail.title}}／{{item.course_detail.step}}
           </text>
         </view>
-        <view class="course-book">
-          <view class="course-book-status">位置 0／6
-          </view>
+        <view class="course-time" style="margin-top:20rpx">
+          <text style="border:none"> {{item.coach_detail.displayname}} <text style="border-bottom:8rpx solid #FAD04D;margin-left:4rpx">{{item.booked.length}}／{{item.budget}}</text></text>
+          <view  data-i="{{index}}" class="course-book-btn" bindtap="tapBook">预约</view>
         </view>
       </view>
-
-      <!--<view class="course">
-          <view class="course-book-confirm">
-          </view>
-      </view>-->
     </view>
   </view>
 </view>

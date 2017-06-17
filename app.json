@@ -1,18 +1,22 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index",
     "pages/logs/logs",
     "pages/groupcourse/groupcourse",
     "pages/register/register",
     "pages/charge/charge",
     "pages/me/me",
-    "pages/courselist/courselist",
-    "pages/bookconfirm/bookconfirm"
+    "pages/bookconfirm/bookconfirm",
+    "pages/album/album",
+    "pages/personaldata/personaldata",
+    "pages/evaldetail/evaldetail",
+    "pages/orderlist/orderlist",
+    "pages/videodetail/videodetail"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "white",
     "navigationBarTitleText": "氧气",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle": "black"
   }
 }

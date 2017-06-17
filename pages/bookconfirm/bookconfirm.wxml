@@ -2,22 +2,21 @@
   <view class="price-item" style="position:relative;bottom:-20rpx;">
     
     <view class="price-detail" style="margin-left:36rpx">
-      <view class="price-detail-price" style="font-size:1.5rem;font-weight:600"> HIIT适应性训练
+      <view class="price-detail-price" style="font-size:1.5rem;font-weight:600"> {{booking.course_detail.serial}} /{{booking.course_detail.title}} {{booking.course_detail.step}}
       </view>
     </view>
   
   </view>
   <view class="price-item">
    <view class="date active" style="background:white;border-color:white">
-        <view class="day">26</view>
-        <view class="month">JAN</view>
+        <view class="day">{{day}}</view>
+        <view class="month">{{month}}</view>
       </view>
     <view class="price-detail" style="border-left:4rpx solid #eaeaea;padding-left:60rpx">
       <view class="price-detail-price" style="line-height:60rpx;padding-top:20rpx;font-size:1.2rem;color:#666">
-        <text>常营天街店
-        <text >19: 00 x 徐东波 </text>
+        <text>{{gymInfo.name}}
+        <text >{{booking.hour_str}} x {{booking.coach_detail.displayname}} </text>
         </text> 
-       
       </view>
     </view>
   </view>
@@ -25,17 +24,23 @@
 <view class="price-item" style="background:#fafafa;margin-top:80rpx">
   <view style="width:65%">
     <view class="price-detail" style="padding-left:60rpx">
-      <view class="price-detail-price"> 
-       <text style="font-size:1.5rem">100<text style="font-size:0.8rem"> - 15</text> = <text style="border-bottom:6rpx solid rgb(105, 206, 219)">85</text> <text style="font-size:0.8rem"> 元</text> </text>
+      <view hidden="{{discount.discount==0}}" class="price-detail-price"> 
+       <text style="font-size:1.3rem">{{booking.price}}<text> - {{discountprice}}</text> = {{finalprice < 0? 0: finalprice}} <text style="font-size:0.8rem"> 元</text> </text>
+      </view>
+      <view  hidden="{{discount.discount!=0}}" class="price-detail-price"> 
+       <text style="font-size:1.3rem"> {{finalprice < 0? 0: finalprice}} <text style="font-size:0.8rem"> 元</text> </text>
       </view>
     </view>
   </view>
-  <view class="coupon">
-    <text class="coupon-rate">-15<text style="font-weight:200">%</text>
+  <view class="coupon"  hidden="{{discount.discount==0}}">
+    <text class="coupon-rate">-{{discount.discount}}<text style="font-weight:200">%</text>
     </text>
-    <text class="coupon-desc">7日完成4次锻炼</text>
+    <text class="coupon-desc">{{discount.dura}}日一练</text>
   </view>
 </view>
- <view class="charge-pay-btn">
+<view style="padding-top:40rpx;padding-left:60rpx">
+<text >余额：{{summary.balance}} 元</text>
+</view>
+ <view style="margin-top:50rpx;"class="charge-pay-btn" bindtap="tapConfirm">
     确定
   </view>

@@ -4,13 +4,29 @@ var app = getApp()
 Page({
   data: {
     motto: 'Hello World',
-    userInfo: {}
+    userInfo: {},
+    loading: true
   },
   //事件处理函数
   bindViewTap: function () {
     wx.navigateTo({
       url: '../logs/logs'
     })
+  },
+  tapGo: function () {
+    var that = this
+    if (that.data.loading) {
+      return
+    }
+    if (app.globalData.userInfo.detail == null) {
+      wx.navigateTo({
+        url: '../courselist/courselist'
+      })
+    } else {
+      wx.navigateTo({
+        url: '../groupcourse/groupcourse'
+      })
+    }
   },
   onShow: function () {
     console.log('onLoad')
@@ -24,23 +40,28 @@ Page({
       app.o2GetUser(app.globalData.openid,
         function () {
           setTimeout(function () {
+            that.setData({
+              loading: false
+            })
             wx.navigateTo({
               url: '../groupcourse/groupcourse'
+              // url: '../album/album'
             })
-          }, 1000)
+          }, 500)
           console.log("get user info success")
         },
         function () {
           setTimeout(function () {
-            wx.navigateTo({
-              url: '../courselist/courselist'
+            that.setData({
+              loading: false
             })
-          }, 1000)
+            wx.navigateTo({
+               url: '../groupcourse/groupcourse'
+              // url: '../courselist/courselist'
+            })
+          }, 500)
           console.log("get user info failed")
         })
     })
-    // wx.navigateTo({
-    //   url: '../groupcourse/groupcourse'
-    // })
   }
 })

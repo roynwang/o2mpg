@@ -1,0 +1,15 @@
+/* videodetail.wxss */
+.video-title {
+  color:#333;
+  font-size:1.1rem;
+  font-weight:600;
+
+}
+
+.video-desc {
+  font-size: 0.9rem;
+  color:#777;
+  margin-top:20rpx;
+  line-height:1.1rem;
+
+}

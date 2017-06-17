@@ -1,0 +1,8 @@
+ <view class="section">
+  <scroll-view style="height:{{scrollHeight}}px;padding: 20rpx 0">
+       <view hidden="{{dates.length !=0}}" style="text-align:center;margin-top:30%;color:#333"> 暂无记录 </view>
+      <view class="pic" data-i="{{index}}" wx:for="{{dates}}" bindtap="datedetail">
+          <text>{{item.date}}</text>
+      </view>
+</scroll-view>
+</view>

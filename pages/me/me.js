@@ -1,7 +1,7 @@
 var app = getApp()
 Page({
   data: {
-    userInfo: {},
+    trainsummary: {},
     user: true
   },
   //事件处理函数
@@ -15,14 +15,30 @@ Page({
       url: '../charge/charge'
     })
   },
-  onLoad: function () {
+  album: function(){
+    wx.navigateTo({
+      url: '../album/album'
+    })
+  },
+  personaldata: function () {
+    wx.navigateTo({
+      url: '../personaldata/personaldata'
+    })
+  },
+  orderlist: function() {
+    wx.navigateTo({
+      url: '../orderlist/orderlist'
+    })
+  },
+  onShow: function () {
     var that = this
     //调用应用实例的方法获取全局数据
-    app.getUserInfo(function (userInfo) {
+
+    app.o2GetUserTrainSummary(app.globalData.userInfo.detail.name, app.globalData.gym,function () {
       //更新数据
       that.setData({
-        userInfo: userInfo
+        userInfo: app.globalData.userInfo
       })
-    })
+    },function(){})
   }
 })

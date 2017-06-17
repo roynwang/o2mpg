@@ -47,10 +47,10 @@ Page({
         icon: 'success',
         duration: 2000
       })
-      that.setData({
-        step: 2,
-        focus: true
-      })
+    that.setData({
+      step: 2,
+      focus: true
+    })
     },
       function () {
         wx.showToast({
@@ -62,22 +62,26 @@ Page({
   },
   tapSubmit: function () {
     var that = this
-    var data = {
-      "name": that.data.phone,
-      "openid": app.globalData.openid
-    }
-    app.o2UpdateUser(that.data.phone, data, function () {
+    app.o2BindOpenId(that.data.phone, that.data.vcode, app.globalData.openid, function () {
       wx.showToast({
         title: '提交成功',
         icon: 'success',
         duration: 2000
       })
+      app.o2GetUser(that.data.phone, function () {
+        if (that.data.phone == app.globalData.userInfo.detail.displayname) {
+          app.o2UpdateUser(that.data.phone, {
+            displayname: app.globalData.userInfo.nickName
+          }, null, null)
+        }
+      }, null)
+
       setTimeout(function () {
         wx.navigateBack()
       }, 1000)
     }, function () {
       wx.showToast({
-        title: '验证码发送失败',
+        title: '绑定失败',
         icon: 'cancel',
         duration: 2000
       })
