@@ -1,6 +1,7 @@
 //app.js
 // var host = 'http://localhost:8000/api'
 var host = 'https://o2-fit.com/api'
+// var host = 'http://localhost:8000/api'
 var TimeMap = ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00"]
 var Weekdays = ['周日','周一','周二','周三','周四','周五','周六'];
 
@@ -113,6 +114,27 @@ App({
       }
     })
   },
+  o2WeekCourse: function( phone, day, onsuccess, onfail) {
+    wx.request({
+      url: host + '/' + phone + '/w/' + day,
+      header: {
+        'content-type': 'application/json',
+      },
+      data: {
+      },
+      success: function (res) {
+        var ret = []
+        if (res.statusCode != 200) {
+          onfail()
+        } else {
+          onsuccess(res.data.results)
+        }
+      },
+      fail: function (res) {
+        onfail()
+      }
+    })
+  },
   o2BookedPtCourse: function (day,phone, onsuccess, onfail) {
     var that = this
     if(that.globalData.bookedPtCourse == null){
@@ -150,12 +172,13 @@ App({
               "day": d.getDate(),
               "confirming": false,
               "coach": item.coachprofile.displayname,
+              "customer": item.customerprofile.displayname,
               "title": "1 V 1 普通训练",
               "hide_cancel": true,
               "completed": item.done,
               "price":item.price,
-              "discount":item.discount
-  
+              "discount":item.discount,
+              "iscoach" :that.globalData.userInfo.detail.iscoach
             }
             ret.push(tmp)
             that.globalData.bookedPtCourse.push(tmp)
@@ -195,7 +218,7 @@ App({
               "confirming": false,
               "price": 150,
               "discount": 150-item.price,
-              "title": item.course_detail.course_detail.serial + " " + item.course_detail.course_detail.title + "／" + item.course_detail.course_detail.step,
+              "title": item.course_detail.course_detail.serial + "／" + item.course_detail.course_detail.title,
               "coach": item.course_detail.coach_detail.displayname
             }
             var m = tmp.date + " " + tmp.hour_str + ":00"
@@ -240,22 +263,22 @@ App({
   o2UpdateUser: function (phone, data, onsuccess, onfail) {
     var that = this
     wx.request({
-      url: host + '/' + phone + '/',
+      url: host + '/' + phone + '/patch/',
       data: data,
-      method: "patch",
+      method: "PUT",
       header: {
         'content-type': 'application/json',
       },
       success: function (res) {
         if (res.statusCode != 200) {
-          onfail()
+          typeof onfail == "function" && onfail()
         } else {
           that.globalData.userInfo.detail = res.data
-          onsuccess()
+          typeof onsuccess == "function" && onsuccess()
         }
       },
       fail: function (res) {
-        onfail()
+        typeof onfail == "function" && onfail(res)
       }
     })
   },
@@ -279,6 +302,45 @@ App({
       },
       fail: function (res) {
         onfail()
+      }
+    })
+  },
+o2CreateFirstTime:function(phone, course,onsuccess){
+    var that = this
+    wx.request({
+      url: host + '/g/' + course.gym + '/groupcoursebook/' + course.date.replace(/-/g, "") + "/",
+      data: {
+        firsttime: 1,
+        phone: phone,
+        openid: that.globalData.openid,
+        gym: course.gym,
+        date: course.date,
+        customer:phone,
+        course: course.id
+      },
+      method: "post",
+      header: {
+        'content-type': 'application/json',
+      },
+      success:function(res){
+        onsuccess()
+      }})
+
+  },
+  o2ForceBindOpenId: function(phone, openid){
+    var that = this
+    wx.request({
+      url: host + '/' + phone + "/bindopenid/",
+      data: {
+        "openid": openid
+      },
+      method: "post",
+      header: {
+        'content-type': 'application/json',
+      },
+      success: function (res) {
+      },
+      fail: function (res) {
       }
     })
   },
@@ -344,6 +406,18 @@ App({
           onfail()
         } else {
           that.globalData.userInfo.detail = res.data
+          //try to update avatar
+  
+        
+          if (that.globalData.userInfo.avatarUrl != res.data.avatar){
+            that.o2UpdateUser(res.data.name,
+              { avatar: encodeURI(that.globalData.userInfo.avatarUrl)},
+              function () {
+              },
+              function (err) {
+              }
+            )
+          }
           onsuccess()
         }
       },
@@ -386,6 +460,62 @@ App({
       }
     })
   },
+  savePtCourseItem: function(course, onsuccess){
+    var url = host + "/s/" + course.id + "/patch/"
+    wx.request({
+      url: url,
+      method: "PUT",
+      data: {
+        id: course.id,
+        detail: JSON.stringify(course.detail)
+      },
+      header: {
+        'content-type': 'application/json',
+      },
+      success: function (res) {
+        res.data.detail = JSON.parse(res.data.detail)
+        typeof onsuccess == "function" && onsuccess(res.data)
+      }
+    })
+  },
+  loadPtCourseItem: function(courseid, onsuccess){
+    var url = host + "/s/" + courseid + "/"
+    wx.request({
+      url: url,
+      header: {
+        'content-type': 'application/json',
+      },
+      success: function (res) {
+        res.data.detail = JSON.parse(res.data.detail)
+        typeof onsuccess == "function" && onsuccess(res.data)
+      }
+    })
+  },
+  completePtCourseItem: function (courseid, onsuccess) {
+    var url = host + "/s/" + courseid + "/complete/"
+    wx.request({
+      url: url,
+      header: {
+        'content-type': 'application/json',
+      },
+      success: function (res) {
+        typeof onsuccess == "function" && onsuccess(res.data)
+      }
+    })
+  },
+  loadGroupCourseItem: function(courseid, onsuccess){
+    var url = host + "/groupcourseinstance/" + courseid
+    wx.request({
+      url: url,
+      header: {
+        'content-type': 'application/json',
+      },
+      success: function (res) {
+        console.log(res.data)
+        typeof onsuccess == "function" && onsuccess(res.data)
+      }
+    })
+  },
   loadGroupCourse: function (gym, date, onsuccess) {
     var that = this
     wx.request({
@@ -404,6 +534,9 @@ App({
         typeof onsuccess == "function" && onsuccess(res.data)
       }
     })
+  },
+  getHourStr: function(hour){
+    return TimeMap[hour]
   },
   onLaunch: function () {
     var that = this
@@ -472,6 +605,19 @@ App({
       }
     })
   },
+  getVideoItem: function(id, onsuccess, onfail){
+    var url = host + '/video/' + id
+    wx.request({
+      url: url,
+      header: {
+        'content-type': 'application/json',
+      },
+      success: function (res) {
+        console.log(res.data)
+        typeof onsuccess == "function" && onsuccess(res.data)
+      }
+    })
+  },
   getAlbum: function (url, name, onsuccess, onfail){
     var that = this
     if(url == ""){
@@ -503,6 +649,102 @@ App({
       }
     })
   },
+  o2ChargeDate: function (name,duration,onsuccess, onfail){
+    var url = host + '/g/31/' + name + "/chargemonth/";
+    wx.request({
+      url: url,
+      header: {
+        'content-type': 'application/json',
+      },
+      method: "post",
+      data: {
+        duration: duration  
+      },
+      success: function (res) {
+        if (res.statusCode != 200) {
+          typeof onfail == "function" && onfail()
+        } else{
+          typeof onsuccess == "function" && onsuccess (res.data)
+        }
+      },
+      fail: function (res) {
+        typeof onfail == "function" && onfail()
+      }
+    })
+  },
+  o2CancelSelfHour: function (sid, onsuccess, onfail) {
+    var that = this
+    var url =  host + '/st/' + sid;
+    wx.request({
+      url: url,
+      header: {
+        'content-type': 'application/json',
+      },
+      method: "delete",
+      success: function (res) {
+          typeof onsuccess == "function" && onsuccess(res)
+      },
+      fail: function (res) {
+        typeof onfail == "function" && onfail()
+      }
+    })
+  },
+  o2SubmitSelfHour: function (gym,hour, onsuccess, onfail) {
+    var that = this
+    var datestr = new Date().Format("yyyy-MM-dd")
+    var url = host + '/g/' + gym + "/selftrain/";
+    wx.request({
+      url: url,
+      header: {
+        'content-type': 'application/json',
+      },
+      method: "post",
+      data: {
+        hour:  hour,
+        name:  that.globalData.userInfo.detail.name,
+        date: datestr,
+        gym: gym
+      },
+      success: function (res) {
+        if (res.statusCode != 201) {
+          typeof onfail == "function" && onfail()
+        } else {
+          typeof onsuccess == "function" && onsuccess(res.data)
+        }
+      },
+      fail: function (res) {
+        typeof onfail == "function" && onfail()
+      }
+    })
+  },
+  o2GymLoad: function (gym, onsuccess, onfail) {
+    var that = this
+    var datestr = new Date().Format("yyyyMMdd")
+    var url = host + '/g/' + gym + "/" + datestr + "/load/";
+    var data = {}
+    if (that.globalData.userInfo.detail){
+      data =  {
+        name: that.globalData.userInfo.detail.name
+      }
+    }
+    wx.request({
+      url: url,
+      header: {
+        'content-type': 'application/json',
+      },
+      data: data,
+      success: function (res) {
+        if (res.statusCode != 200) {
+          typeof onfail == "function" && onfail()
+        } else {
+          typeof onsuccess == "function" && onsuccess(res.data)
+        }
+      },
+      fail: function (res) {
+        typeof onfail == "function" && onfail()
+      }
+    })
+  },
   getOneWeek: function () {
     var today = new Date()
     var ret = []
@@ -519,6 +761,19 @@ App({
     }
     return ret
   },
+  loadHomework:function(homeworkid,onsuccess){
+    var url = host + "/homework/" + homeworkid + "/"
+    wx.request({
+      url: url,
+      header: {
+        'content-type': 'application/json',
+      },
+      success: function (res) {
+        res.data.detail = JSON.parse(res.data.detail)
+        typeof onsuccess == "function" && onsuccess(res.data)
+      }
+    })
+  },
   getVideoListUrl:function(keyword){
     var url = ""
     if (keyword == "所有") {
@@ -528,6 +783,37 @@ App({
       url = host + '/g/31/video/keyword/' + keyword + "/";
     }
     return url
+  },
+  loadCourseSurvey: function (courseid, onsuccess) {
+    var url = host + "/cs/" + courseid + "/survey/"
+    wx.request({
+      url: url,
+      header: {
+        'content-type': 'application/json',
+      },
+      success: function (res) {
+        
+        typeof onsuccess == "function" && onsuccess(res.data)
+      }
+    })
+  },
+  submitCourseSurvey: function (courseid,survey, onsuccess) {
+    var data = []
+    survey.questions.forEach(function(item){
+      data.push(item)
+    })
+    var url = host + "/cs/" + courseid + "/survey/"
+    wx.request({
+      url: url,
+      method: 'post',
+      header: {
+        'content-type': 'application/json',
+      },
+      data: data,
+      success: function (res) {
+        typeof onsuccess == "function" && onsuccess(res.data)
+      }
+    })
   },
   globalData: {
     userInfo: null,

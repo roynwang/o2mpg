@@ -2,7 +2,7 @@
   <view class="price-item" style="position:relative;bottom:-20rpx;">
     
     <view class="price-detail" style="margin-left:36rpx">
-      <view class="price-detail-price" style="font-size:1.5rem;font-weight:600"> {{booking.course_detail.serial}} /{{booking.course_detail.title}} {{booking.course_detail.step}}
+      <view class="price-detail-price" style="font-size:1.5rem;font-weight:600"> {{booking.course_detail.serial}} /{{booking.course_detail.title}} 
       </view>
     </view>
   
@@ -28,7 +28,10 @@
        <text style="font-size:1.3rem">{{booking.price}}<text> - {{discountprice}}</text> = {{finalprice < 0? 0: finalprice}} <text style="font-size:0.8rem"> 元</text> </text>
       </view>
       <view  hidden="{{discount.discount!=0}}" class="price-detail-price"> 
-       <text style="font-size:1.3rem"> {{finalprice < 0? 0: finalprice}} <text style="font-size:0.8rem"> 元</text> </text>
+       <text hidden="{{!registered}}"  style="font-size:1.3rem"> {{finalprice < 0? 0: finalprice}} <text style="font-size:0.8rem"> 元</text> </text>
+
+       <text hidden="{{registered}}" style="font-size:1.3rem;border-bottom:6rpx solid #FAD04D;"> 首次 0 元 </text>
+
       </view>
     </view>
   </view>
@@ -39,8 +42,8 @@
   </view>
 </view>
 <view style="padding-top:40rpx;padding-left:60rpx">
-<text >余额：{{summary.balance}} 元</text>
+<!--<text >余额：{{summary.balance}} 元</text>-->
 </view>
  <view style="margin-top:50rpx;"class="charge-pay-btn" bindtap="tapConfirm">
-    确定
+    预约
   </view>

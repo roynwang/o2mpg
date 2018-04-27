@@ -1,0 +1,171 @@
+/* pages/newcoursedetail/newcoursedetail.wxss */
+
+.workout-header {
+  height: 330rpx;
+  display: flex;
+}
+
+.workout-month {
+  width:9%;
+  font-size:0.8rem;
+  font-weight:900;
+  position:relative;
+  left: 16rpx;
+}
+
+.workout-header-left {
+  width: 60%;
+  display: inline-block;
+  padding-left: 60rpx;
+  padding-top: 20rpx;
+}
+
+.workout-header-right {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.workout-header-left image {
+  width: 1rem;
+  height: 1rem;
+  padding-left: 0.2rem;
+  position: relative;
+  top: 0.25rem;
+}
+
+.user-avatar {
+  width: 190rpx;
+  height: 190rpx;
+  margin: 25%;
+  border-radius: 50%;
+  border: 4rpx solid #22a486;
+  
+}
+
+.user-displayname {
+  font-size: 1.6rem;
+  color: #333;
+  font-weight: 800;
+}
+
+.user-displayname-container {
+  margin-top: 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.course-label-container {
+  margin-bottom: 14rpx;
+  display: flex;
+}
+
+.course-label-container view {
+  margin-left: 1rem;
+}
+
+.course-label-container text {
+  color: #22a486;
+  font-size: 1rem;
+}
+
+.workout-item {
+  display: flex;
+  height: 140rpx;
+  padding: 8rpx 15rpx;
+}
+
+.workout-item-left {
+  display: inline-block;
+  min-width: 100rpx;
+  min-height: 140rpx;
+}
+
+.workout-item-right {
+  border-bottom: 1rpx solid #ececec;
+  width: 100%;
+}
+
+.workout-item-action-detail {
+  display: inline-block;
+}
+
+.workout-item-action-amount {
+  display: inline-block;
+  text-align: right;
+  position: absolute;
+  right: 60rpx;
+}
+
+.workout-item-dot {
+  width: 16rpx;
+  background: #f5a623;
+  height: 16rpx;
+  margin-top: 18rpx;
+  margin-left: 40rpx;
+  border-radius: 8rpx;
+}
+.workout-item-action-name {
+  color: #666;
+  font-size: 0.9rem;
+}
+.workout-item-action-comment {
+  color: #999;
+  font-size:0.8rem;
+  margin-top: 14rpx;
+}
+.workout-item-action-amount {
+  color: #666;
+  font-size: 0.9rem;
+}
+.group-number, .repeat-times-number {
+  color:#f5a623;
+  min-width: 0.8rem;
+  display: inline-block;
+  text-align: right;
+}
+.group-number-unit, .repeat-times-unit {
+  margin-left: 10rpx;
+}
+.group-number-unit {
+  margin-right: 4rpx;
+}
+.interval {
+  font-size:0.8rem;
+  color: #999;
+  display:block;
+  margin-top: -0.7rem;
+}
+
+.workout-days {
+  display: flex;
+}
+.workout-day {
+  width: 13%;
+  min-height: 60rpx;
+  display:flex;
+  align-items:center;
+  flex-direction:column;
+}
+.workout-day>.workout-day-number {
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+}
+.workout-day.selected>.workout-day-number {
+   color: #f5a623;
+}
+.workout-day.selected>.workout-day-number:after {
+    content:"\A";
+    width:16rpx;
+    height:16rpx;
+    border-radius:50%;
+    background: #f5a623;
+    display:inline-block;
+    position: relative;
+    top: -16rpx;
+    right: 0rpx;
+}

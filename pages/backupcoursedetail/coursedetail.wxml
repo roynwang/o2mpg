@@ -1,0 +1,76 @@
+<!--coursedetail.wxml-->
+<view>
+
+  <view class="action-comments">
+    <span>训练总结</span>
+  </view>
+  <view class="avatar-row">
+
+    <view style="display:inline-block">
+      <image class="userinfo-avatar" src="{{course.coachprofile.avatar}}" background-size="cover"></image>
+      <view class="avatar-name">
+        <view>
+          <span style="line-height:60rpx;height:60rpx;display:inline-block;color:#333;font-weight:800;margin-left:10rpx">{{course.coachprofile.displayname}}</span>
+          <span style="margin-left:20rpx;font-size:0.6rem;color:#333">×</span>
+          <span style="line-height:60rpx;height:60rpx;display:inline-block;color:#333;font-weight:800;margin-left:10rpx">{{course.hourstr}}</span>
+          <span style="margin-left:20rpx;font-size:0.6rem;color:#333">×</span>
+          <span style="line-height:60rpx;height:60rpx;display:inline-block;color:#333;font-weight:800;margin-left:10rpx">{{course.datestr}}</span>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view style="border-bottom:1rpx solid #e3e3e3;padding-bottom:30rpx;box-shadow:0px 2px 6px rgba(0,0,0,.05);">
+    <view wx:if="{{!editingComments}}" style="margin:4rpx 40rpx;line-height:1.4rem;color:#555;font-size:0.9rem;font-weight:400;">{{comments}}
+    </view>
+    <textarea wx:if="{{editingComments}}" style="margin-left:10rpx;border:solid 1rpx #4fd2c2;height:80rpx;font-size:0.8rem" placeholder="编辑总结" value="{{comments}}" bindinput="bindKeyInput" />
+    <view wx:if="{{!editingComments && showEdit}}" bindtap="showEditAction" style="color:#4fd2c2;border:#4fd2c2 0.5px solid;position:absolute;right:3px;font-size:0.8rem;padding:6rpx 10rpx;margin-top:-50rpx;">编辑</view>
+    <view wx:if="{{editingComments}}" bindtap="saveComments" style="color:#4fd2c2;border:#4fd2c2 0.5px solid;position:absolute;right:3px;font-size:0.8rem;padding:6rpx 10rpx;margin-top:-50rpx;">保存</view>
+  </view>
+
+  <view wx:for="{{actions}}" data-i="{{index}}">
+    <view wx:if="{{item.contenttype == 'action'}}" class="action-row">
+      <view class="action-name">{{item.name}}</view>
+      <view class="action-repeat" data-i="{{index}}" data-k="repeattimes" bindtap="editItem">
+        <span class="action-weight-num">{{item.repeattimes}}</span>
+        <span class="action-unit"> 组</span>
+      </view>
+      <view class="action-weight" data-i="{{index}}" data-k="weight" bindtap="editItem">
+        <span style="margin-left:10rpx;margin-right:10rpx;color:#666;">x</span>
+        <span class="action-weight-num">{{item.weight}}</span>
+        <span class="action-unit">{{item.unit}}</span>
+      </view>
+      <view bindtap="editItem" data-i="{{index}}" data-k="comments" class="action-weight">
+        <span wx:if="{{item.comments != ''}}" style="margin-left:10rpx;margin-right:10rpx;color:#666;">x</span>
+        <span class="action-weight-num" wx:if="{{item.comments != ''}}" style="font-size:1rem">{{item.comments}}</span>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="section section_gap picker" wx:if="{{editingItem}}">
+  <view bindtap="editingClose" class="picker-close">x</view>
+  <view class="body-view" style="padding:40rpx 40rpx 20rpx">
+    <slider activeColor="#4fd2c2" wx:if="{{editingItemField!='comments'}}" value="{{editingItem[editingItemField]}}" bindchange="pickerValueChanged" show-value max="{{editingMax}}" />
+    <view wx:if="{{editingItemField=='weight'}}">
+      <text bindtap='selectValue' data-v="6">6</text>
+      <text bindtap='selectValue' data-v="8">8</text>
+      <text bindtap='selectValue' data-v="10">10</text>
+      <text bindtap='selectValue' data-v="12">12</text>
+      <text bindtap='selectValue' data-v="15">15</text>
+      <text bindtap='selectValue' data-v="25">25</text>
+      <text bindtap='selectValue' data-v="40">40</text>
+    </view>
+    <textarea wx:if="{{editingItemField=='comments'}}" style="margin-left:10rpx;border:solid 1rpx #4fd2c2;height:80rpx;font-size:0.8rem" placeholder="编辑备注" value="{{editingItem[editingItemField]}}" bindinput="pickerValueChanged" />
+  </view>
+</view>
+<view class="survey" wx:if="{{survey.title}}">
+  <view class="survey-submit" bindtap="submitSurvey">提交</view>
+  <view style="width:100%;text-align:center;border-bottom:#ececec solid 1rpx;padding:14rpx 0;font-size:1rem;font-weight:400;margin-bottom:40rpx;">{{survey.title}}</view>
+  <view wx:for="{{survey.questions}}" class="survey-item">
+    <view class="survey-item-title">{{item.question}}</view>
+    <radio-group class="radio-group" data-i="{{index}}"bindchange="optionChanged">
+      <label class="radio" wx:for="{{item.options}}">
+        <radio color="#4fd2c2" value="{{item.value}}" checked="{{item.checked}}" />{{item.desc}}
+      </label>
+    </radio-group>
+  </view>
+</view>

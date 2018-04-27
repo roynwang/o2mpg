@@ -1,0 +1,28 @@
+<view class="section">
+  <view class="price-item" wx:for="{{priceTable}}">
+    <view class="price-detail" >
+      <view class="price-detail-price"> {{item.price}}
+        <text class="stat-item-unit">元</text>
+      </view>
+      <view style="margin-top:-24rpx;">
+        <view class="price-detail-gift">{{item.duration}} 个月</view>
+      </view>
+    </view>
+    <view class="price-checkbox" data-i="{{index}}" bindtap="selectPrice">
+       <icon  hidden="{{!item.selected}}" type='success_circle' style="top:0" color="rgb(105, 206, 219)" size="30" /> 
+        <icon  hidden="{{item.selected}}" type="circle" color="#666" size="14" />
+    </view>
+  </view>
+  <view class="charge-balance">
+    <view style="flex-grow: 1">
+      <text>余额：</text><text>{{userInfo.trainsummary.balance}}</text> - <text> {{priceTable[selected].price }} </text>
+    </view>
+    <view>
+    =     
+      <text class="stat-item-number" style="font-size:1.1rem;font-weight:600;border-bottom:4rpx solid rgb(105, 206, 219); padding:4rpx 6rpx; margin-right:40rpx;">   {{userInfo.trainsummary.balance - priceTable[selected].price }} </text>
+    </view>
+  </view>
+</view>
+ <view class="charge-pay-btn" bindtap="tapPay">
+    提交
+  </view>

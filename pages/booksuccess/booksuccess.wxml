@@ -1,0 +1,8 @@
+<!--firstgroupcourse.wxml-->
+<view class="container">
+  <text class="title">预约成功</text>
+  <view style="margin-top:80rpx"><view style="display:inline-block;border-bottom:6rpx solid #4fd2c2;margin-right:20rpx;line-height:1.4rem">时间</view><text class="desc">{{course.date}} {{hour}}</text></view>
+</view>
+<view style="margin:60rpx">
+  <text class="desc">如果需要取消，请打开“氧气训练馆小程序进行相应操作</text>
+</view>

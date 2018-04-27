@@ -1,0 +1,55 @@
+<!--pages/newcoursedetail/newcoursedetail.wxml-->
+<view>
+ <view class="workout-days">
+    <view class="workout-month"><text>{{monthName}}</text></view>
+    <view class="workout-day {{selectedDates[index] != false ? 'selected' : ''}}" wx:for="{{dates}}" data-i="{{index}}" >
+      <view class="workout-day-number selected" data-v="{{selectedDates[index]}}" bindtap='loadCourse'>{{item}}</view>
+    </view>
+      </view>
+  <view class="workout-header">
+    <view class="workout-header-left">
+      <view class="user-displayname-container">
+        <text class="user-displayname">{{course.customerprofile.displayname}} </text>
+      </view>
+        <view class="course-label-container"><image src="/res/whistle.png" mode="aspectFill"></image>
+       <view>
+        <text>{{course.coachprofile.displayname}} </text>
+        </view>
+      </view>
+       <view class="course-label-container"><image src="/res/schedule.png" mode="aspectFill"></image>
+       <view>
+        <text>{{course.datestr}} {{course.hourstr}} </text>
+        </view>
+      </view>
+       <view class="course-label-container">
+        <image src="/res/note.png" mode="aspectFit"></image>
+        <view style="display:inline-block">
+        <text>{{comments}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="workout-header-right"><image class="user-avatar" src="{{course.customerprofile.avatar}}"/></view>
+  </view>
+ 
+
+  <view class="workout-details">
+    <view class="workout-item" wx:for="{{actions}}" data-i="{{index}}">
+      <view class="workout-item-left"> 
+        <view class="workout-item-dot"></view>
+      </view>
+      <view class="workout-item-right" >
+          <view class="workout-item-action-detail" wx:if="{{item.contenttype == 'action'}}">
+           <view class="workout-item-action-name">{{item.name}}</view>
+           <view class="workout-item-action-comment">{{item.comments}}</view>
+          </view>
+          <view class="workout-item-action-amount">
+              
+              <text class="group-number">{{item.repeattimes}}</text><text class="group-number-unit">组</text> x <text class="repeat-times-number">{{item.weight}}</text><text class="repeat-times-unit">{{item.unit}}</text>
+              <text class="interval">
+              组间休息 {{item.interval||'30s'}}</text>
+          </view>
+      </view>
+    </view>
+      
+  </view>
+</view>

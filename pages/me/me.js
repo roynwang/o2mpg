@@ -15,6 +15,11 @@ Page({
       url: '../charge/charge'
     })
   },
+  chargedate: function () {
+    wx.navigateTo({
+      url: '../chargedate/chargedate'
+    })
+  },
   album: function(){
     wx.navigateTo({
       url: '../album/album'

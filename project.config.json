@@ -1,0 +1,48 @@
+{
+	"description": "项目配置文件。",
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "1.6.0",
+	"appid": "wxf1aacfc6230603e8",
+	"projectname": "%E6%B0%A7%E6%B0%94%E8%AE%AD%E7%BB%83%E9%A6%86",
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 1,
+			"list": [
+				{
+					"id": -1,
+					"name": "courseshare",
+					"pathName": "pages/coursedetail/coursedetail",
+					"query": "id=53650"
+				},
+				{
+					"id": -1,
+					"name": "homework",
+					"pathName": "pages/homework/homework",
+					"query": "id=10",
+					"scene": "1007"
+				},
+				{
+					"id": 2,
+					"name": "计划分享0418",
+					"pathName": "pages/coursedetail/coursedetail",
+					"query": "id=71754"
+				}
+			]
+		}
+	}
+}

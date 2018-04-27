@@ -149,7 +149,7 @@ text, view {
   font-size: 0.8rem;
   color: rgba(119, 129, 139, 0.6);
   line-height: 1rem;
-  padding-top:2rpx;
+  padding-top: 2rpx;
 }
 
 .course-list {
@@ -181,12 +181,10 @@ text, view {
 }
 
 .course-desc {
-  
   font-size: 1.1rem;
   color: #333;
   line-height: 1.5rem;
   margin-top: 10rpx;
-
 }
 
 .course-book {
@@ -212,7 +210,7 @@ text, view {
   text-align: left;
   color: #333;
   font-size: 0.8rem;
-  line-height:1.5rem;
+  line-height: 1.5rem;
 }
 
 .course-book-confirm {
@@ -295,7 +293,7 @@ text, view {
   flex-grow: 1;
   padding-top: 30rpx;
   /*padding-right: 80rpx;*/
-  font-weight: 600
+  font-weight: 600;
 }
 
 .booked-item-detail {
@@ -351,7 +349,7 @@ text, view {
   float: none;
   width: 300rpx;
   margin: 40rpx auto;
-  font-weight:600;
+  font-weight: 600;
 }
 
 .booking .course-desc {
@@ -361,129 +359,235 @@ text, view {
 }
 
 .course-book-btn.confirm {
-   color: white;
-   border: 1px solid #4fd2c2;
-   background: #4fd2c2;
-   box-shadow: 0rpx 0rpx 14rpx 2rpx rgba(105, 206, 219, 0.5);
+  color: white;
+  border: 1px solid #4fd2c2;
+  background: #4fd2c2;
+  box-shadow: 0rpx 0rpx 14rpx 2rpx rgba(105, 206, 219, 0.5);
 }
 
 .course-status-corner {
-  width:12rpx;
-  height:12rpx;
-  position:relative;
-  border:#4fd2c2 8rpx solid;
+  width: 12rpx;
+  height: 12rpx;
+  position: relative;
+  border: #4fd2c2 8rpx solid;
   top: 10rpx;
   right: 20rpx;
   border-radius: 50%;
-
 }
 
 .course-price {
   font-size: 0.4rem;
   margin-left: 10rpx;
-  background: #FAD04D;
+  background: #fad04d;
   color: white;
   padding: 0rpx 8rpx;
   border-radius: 4rpx;
-  top:-5rpx;
-  position:relative;
+  top: -5rpx;
+  position: relative;
 }
-
 
 .video-item {
-  width:100%;
-  background:#fff;
-  min-height:240rpx;
+  width: 100%;
+  background: #fff;
+  min-height: 240rpx;
   display: flex;
-  margin:20rpx 0;
-  box-shadow:0.5px -2px 25px rgba(0,0,0,.1);
-  border:2rpx solid #ececec;
+  margin: 20rpx 0;
+  box-shadow: 0.5px -2px 25px rgba(0, 0, 0, 0.1);
+  border: 2rpx solid #ececec;
 }
+
 .video-image {
   width: 240rpx;
   height: 140rpx;
-  padding-top:24rpx;
+  padding-top: 24rpx;
 }
 
 .video-info {
-  background:#fff;
+  background: #fff;
   /*top:-74rpx;*/
-  padding-top:15rpx;
-  position:relative;
-  padding-bottom:30rpx;
-  display:inline-block;
+  padding-top: 15rpx;
+  position: relative;
+  padding-bottom: 30rpx;
+  display: inline-block;
   min-width: calc(100% - 270rpx);
-  padding-left:20rpx;
-
+  padding-left: 20rpx;
 }
 
 .video-coach-avatar {
-  position:relative;
-  left:20rpx;
-
-  display:inline-block;
-  background:#FAD04D;
+  position: relative;
+  left: 20rpx;
+  display: inline-block;
+  background: #fad04d;
   /*background:rgba(240,240,240,0.2);*/
-
-  height:52rpx;
-  padding:2rpx 20rpx 2rpx 4rpx;
-  border-radius:30rpx;
-  color:white;
-
+  height: 52rpx;
+  padding: 2rpx 20rpx 2rpx 4rpx;
+  border-radius: 30rpx;
+  color: white;
 }
+
 .video-coach-avatar image {
-  margin-top:2rpx;
-  width:48rpx;
-  height:48rpx;
-  border-radius:50%;
+  margin-top: 2rpx;
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
 }
 
 .video-coach-avatar text {
-  font-size:0.9rem;
-  line-height:52rpx;
-  position:relative;
-  top:-14rpx;
-  font-weight:600;
-  margin-left:10rpx;
+  font-size: 0.9rem;
+  line-height: 52rpx;
+  position: relative;
+  top: -14rpx;
+  font-weight: 600;
+  margin-left: 10rpx;
 }
 
 .video-title {
-  position:relative;
-  color:#333;
-  font-size:1.1rem;
-  font-weight:600;
-
+  position: relative;
+  color: #333;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .video-desc {
-  position:relative;
+  position: relative;
   font-size: 0.9rem;
-  color:#777;
+  color: #777;
 }
 
 .video-keyword {
-  display:inline-block;
+  display: inline-block;
 }
+
 .video-keyword>view {
-  
-  font-size:0.8rem;
-  margin:8rpx 12rpx;
-  background:#ececec;
-  padding:10rpx 16rpx;
-  color:#999;
-  border-radius:6rpx;
+  font-size: 0.8rem;
+  margin: 8rpx 12rpx;
+  background: #ececec;
+  padding: 10rpx 16rpx;
+  color: #999;
+  border-radius: 6rpx;
 }
+
 .video-keyword>view.active {
   background: #4fd2c2;
-  color:white;
+  color: white;
 }
 
 .video-search-section {
-  position:fixed;
-  top:0;
-  z-index:10000;
-  background:white;
+  position: fixed;
+  top: 0;
+  z-index: 10000;
+  background: white;
   padding: 10rpx 20rpx 20rpx 20rpx;
-  box-shadow:0.5px -2px 25px rgba(0,0,0,.2);
-  width:100%;
+  box-shadow: 0.5px -2px 25px rgba(0, 0, 0, 0.2);
+  width: 100%;
+}
+
+.hour-item {
+  min-height: 100rpx;
+  max-height: 100rpx;
+  line-height: 100rpx;
+  border-bottom: #999 dotted 4rpx;
+}
+
+.hour-item:nth-of-type(odd) {
+  border-bottom: #ddd solid 4rpx;
+}
+
+.hour-person {
+  display: inline-block;
+  width: 79%;
+  line-height: 100rpx;
+  min-height: 100rpx;
+  margin-left: 100rpx;
+}
+
+.hour-str {
+  display: inline-block;
+  width: 100rpx;
+  /*position: relative;*/
+  line-height: 100rpx;
+  min-height: 100rpx;
+  /*bottom:54rpx;*/
+  position: relative;
+  top: 40rpx;
+  font-size: 0.8rem;
+  padding-left: 8rpx;
+  font-weight: 900;
+  background: white;
+  color: #666;
+}
+
+.hour-person-seat {
+  width: 40rpx;
+  height: 40rpx;
+  display: inline-block;
+  margin-right: 20rpx;
+  margin-top: 6rpx;
+  /*border-radius: 50%;
+  border:rgba(119, 129, 139, 0.7) solid 4rpx;*/
+}
+
+.hour-person-seat>image {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.hour-person .hour-person-seat:first-child {
+  margin-left: 30rpx;
+}
+
+.hour-person-add {
+  width: 60rpx;
+  height: 60rpx;
+  display: inline-block;
+  margin-right: 20rpx;
+  border-radius: 50%;
+  color: #4fd2c2;
+  line-height: 40rpx;
+  background: white;
+  float: right;
+  margin-top: 20rpx;
+  font-size: 1.2rem;
+  border: #4fd2c2 solid 4rpx;
+}
+
+.hour-person-add>text {
+  padding-left: 18rpx;
+  top: 6rpx;
+  position: relative;
+}
+
+.hour-location {
+  float: right;
+  background: #ddd;
+  color: #fff;
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 0.8rem;
+  padding: 6rpx 20rpx;
+}
+
+.hour-location.active {
+  background: #4fd2c2;
+  color: #fff;
+  box-shadow: 6rpx 0rpx 14rpx 2rpx rgba(105, 206, 219, 0.4);
+}
+
+.hour-person-full {
+  float: right;
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+.date-str {
+  display: inline-block;
+  font-size: 0.9rem;
+  line-height: 1.2rem;
+  position: absolute;
+  left: 20rpx;
+  top: 15rpx;
+  font-weight: 500;
+  color: #333;
+  margin-left: 40rpx;
+  border-bottom:#fad04d solid 8rpx;
 }

@@ -19,7 +19,8 @@ Page({
     day: null,
     month: null,
     gymInfo: null,
-    summary: null
+    summary: null,
+    registered: true
 
   },
   //事件处理函数
@@ -33,29 +34,104 @@ Page({
       url: '../charge/charge'
     })
   },
+  onShareAppMessage: function () {
+    return {
+      title: "快来加入氧气小团课",
+      path: 'pages/bookconfirm/bookconfirm?id=' + app.globalData.booking.id
+    };
+  },
+  refreshUser(date){
+    var that = this
+    app.getUserInfo(function (userInfo) {
+      //更新数据
+      that.setData({
+        userInfo: userInfo
+      })
+      console.log(app.globalData.userInfo)
+      app.o2GetUser(app.globalData.openid,
+        function () {
+          app.o2GetUserTrainSummary(app.globalData.userInfo.detail.name,
+            app.globalData.gym, function () {
+              that.setData({
+                summary: app.globalData.userInfo.trainsummary,
+              })
+            })
+          app.o2GetDiscount(app.globalData.userInfo.detail.name,
+            date.Format("yyyyMMdd"),
+            function (res) {
+              if (res.enddate && new Date(res.enddate) > new Date(date)){
+                that.setData({
+                  registered: true,
+                  discount: { discount: 0 },
+                  discountprice: 0,
+                  finalprice: 0
+                })
+              } else {
+              that.setData({
+                discount: res,
+                discountprice: Math.ceil(app.globalData.booking.price * res.discount / 100),
+                finalprice: app.globalData.booking.price - Math.ceil(app.globalData.booking.price * res.discount / 100),
+              })
+              }
+            },
+            function () {
+              that.setData({      
+                discount: 0,
+                discountprice: 0,
+                finalprice: app.globalData.booking.price
+              })
+            })
+        },
+        function () {
+          that.setData({
+            registered: false,
+            discount: {discount:0},
+            discountprice: 0,
+            finalprice: 0
+          })
+        })
+    })
+
+  },
+
+  onLoad: function (options) {
+    var that = this
+    var courseid = options.id
+    if (courseid) {
+      //get course detail
+      app.loadGroupCourseItem(courseid, function (data) {
+        app.globalData.booking = data
+        var date = new Date(app.globalData.booking.date)
+        that.setData({
+          booking: app.globalData.booking,
+          day: date.getDate(),
+          month: date.getShortMonthName()
+        })
+        app.getGym(app.globalData.booking.gym,function(){
+          that.setData({
+            gymInfo: app.globalData.gymInfo
+          })
+        })
+
+        that.refreshUser(date)
+
+     
+      })
+
+    }
+  },
   onShow: function () {
     var that = this
-    var date = new Date(app.globalData.booking.date)
-    that.setData({
-      booking: app.globalData.booking,
-      day: date.getDate(),
-      month: date.getShortMonthName(),
-      gymInfo: app.globalData.gymInfo,
-      summary: app.globalData.userInfo.trainsummary,
-    })
-    app.o2GetDiscount(app.globalData.userInfo.detail.name,
-    date.Format("yyyyMMdd"),
-    function(res){
-      that.setData({
-        discount: res,
-        discountprice: Math.ceil(app.globalData.booking.price * res.discount / 100),
-        finalprice: app.globalData.booking.price - Math.ceil(app.globalData.booking.price * res.discount / 100),
-      })
-    },
-    function(){})
   },
   tapConfirm: function () {
     var that = this
+    if(!that.data.registered){
+      wx.navigateTo({
+        url: '../firstgroupcourse/firstgroupcourse'
+      })
+      return 
+    }
+
     app.o2BookGroupCourse(that.data.booking, function () {
       wx.showToast({
         title: '预约已提交',

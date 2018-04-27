@@ -1,0 +1,12 @@
+<!--firstgroupcourse.wxml-->
+<view class="container">
+  <text class="title">还差最后一步</text>
+  <text class="desc">氧气需要您的电话号码用于登记</text>
+   <view class="input-view">
+ <input class="input-item" placeholder="请输入您的手机号码" focus="1" bindinput="bindPhoneKeyInput" />
+ </view>
+    <!--<image class="input-icon" src="/res/input.png" mode="aspectFill"></image>-->
+     <view style="margin-top:50rpx;"class="charge-pay-btn {{showNext}}" bindtap="tapConfirm">
+    保存
+  </view>
+</view>

@@ -1,4 +1,4 @@
-// videodetail.js
+// booksuccess.js
 var app = getApp()
 Page({
 
@@ -6,8 +6,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    video: null,
-    w: 300
+    course: null,
+    userInfo: null,
+    hour: null
   
   },
 
@@ -15,31 +16,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-      var that  = this
-      wx.getSystemInfo({
-        success: function (res) {
-          that.setData({
-            w: res.windowWidth,
-            h: res.windowWidth*0.68,
-            video: app.globalData.playing
-          });
-        }
-      });
-      var courseid = options.id
-      app.getVideoItem(courseid, function(data){
-        app.globalData.playing = data
-        that.setData({
-          video: app.globalData.playing
-      })
-      }, function(){})
+    this.setData({
+      course: app.globalData.booking,
+      userInfo: app.globalData.userInfo,
+      hour: app.getHourStr(app.globalData.booking.hour)
+    })
   },
-  onShareAppMessage: function () {
-    var that = this
-    return {
-      title: app.globalData.playing.title,
-      path: 'pages/videodetail/videodetail?id=' + that.data.video.id
-    };
-  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -81,4 +64,11 @@ Page({
   onReachBottom: function () {
   
   },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+  
+  }
 })

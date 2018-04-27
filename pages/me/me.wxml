@@ -28,6 +28,19 @@
       <view bindtap="charge" class="course-book-btn" style="margin:0;font-size: 1rem;float:left;margin-top:30rpx;">充值</view>
     </view>
   </view>
+    <view wx:if="{{userInfo.trainsummary.balance>0||userInfo.trainsummary.group_enddate}}" class="price-item">
+    <view class="price-detail">
+      <view style="margin-top:-24rpx;">
+        <view style="padding-left:6rpx;padding-bottom:16rpx;color:#999;font-size:0.8rem;" class="price-detail-gift">团课有效期 </view>
+      </view>
+      <view class="price-detail-price" style="font-size:1.7rem;"> {{userInfo.trainsummary.group_enddate || "N/A"}}
+        <text class="stat-item-unit"></text>
+      </view>
+    </view>
+    <view class="price-checkbox" style="border:none">
+      <view bindtap="chargedate" class="course-book-btn" style="margin:0;font-size: 1rem;float:left;margin-top:30rpx;">续期</view>
+    </view>
+  </view>
     <view wx:if="{{userInfo.trainsummary.order_count!=0}}"class="price-item">
     <view class="price-detail">
       <view style="margin-top:-24rpx;">

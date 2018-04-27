@@ -11,7 +11,13 @@
     "pages/personaldata/personaldata",
     "pages/evaldetail/evaldetail",
     "pages/orderlist/orderlist",
-    "pages/videodetail/videodetail"
+    "pages/videodetail/videodetail",
+    "pages/firstgroupcourse/firstgroupcourse",
+    "pages/booksuccess/booksuccess",
+    "pages/chargedate/chargedate",
+    "pages/backupcoursedetail/coursedetail",
+    "pages/homework/homework",
+    "pages/coursedetail/coursedetail"
   ],
   "window": {
     "backgroundTextStyle": "light",

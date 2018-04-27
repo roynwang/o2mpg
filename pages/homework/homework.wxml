@@ -1,0 +1,45 @@
+<!--coursedetail.wxml-->
+<view>
+  <!-- <view class="action-comments">
+    <span>家庭作业</span>
+  </view> -->
+  <view class="workout-header">
+    <view class="workout-header-left">
+      <view class="user-displayname-container">
+        <text class="user-displayname">{{detail.customerprofile.displayname}} </text>
+      </view>
+        <view class="course-label-container"><image src="/res/whistle.png" mode="aspectFill"></image>
+       <view>
+        <text>{{detail.coachprofile.displayname}} </text>
+        </view>
+      </view>
+       <view class="course-label-container"><image src="/res/schedule.png" mode="aspectFill"></image>
+       <view>
+        <text>{{detail.created_date}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="workout-header-right"><image class="user-avatar" src="{{detail.customerprofile.avatar}}"/></view>
+  </view>
+
+ <view class="workout-details">
+    <view class="workout-item" wx:for="{{actions}}" data-i="{{index}}">
+      <view class="workout-item-left"> 
+        <view class="workout-item-dot"></view>
+      </view>
+      <view class="workout-item-right" >
+          <view class="workout-item-action-detail" wx:if="{{item.contenttype == 'action'}}">
+           <view class="workout-item-action-name">{{item.name}}</view>
+           <view class="workout-item-action-comment">{{item.comments}}</view>
+          </view>
+          <view class="workout-item-action-amount">
+              
+              <text class="group-number">{{item.repeattimes}}</text><text class="group-number-unit">组</text> x <text class="repeat-times-number">{{item.weight}}</text><text class="repeat-times-unit">{{item.unit}}</text>
+              <text class="interval">
+              组间休息 {{item.interval||'30s'}}</text>
+          </view>
+      </view>
+    </view>
+      
+  </view>
+</view>

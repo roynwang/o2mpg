@@ -1,7 +1,5 @@
 <view>  
-<view>
-  <video style="width:{{w}}px;height:{{h}}px" src="{{video.attachment}}"  poster="{{video.pic}}" controls autoplay="1"></video>
-</view>
+
 <view style="padding:20rpx 40rpx">
   <view class="video-title">
     <text>{{video.title}}</text>
@@ -9,5 +7,8 @@
   <view class="video-desc">
   <text>{{video.summary}}</text>
   </view>
+</view>
+<view>
+  <video style="width:{{w}}px;height:{{h}}px" src="{{video.attachment}}"  poster="{{video.pic}}" controls autoplay="1"></video>
 </view>
 </view>

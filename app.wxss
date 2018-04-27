@@ -11,7 +11,7 @@
 } 
 
 .bottom-bar-item{
-  width: 33.1%;
+  width: 24.7%;
   display: inline-block;
   text-align: center;
   line-height: 100rpx;

@@ -1,4 +1,4 @@
-// videodetail.js
+// pages/homework/homework.js
 var app = getApp()
 Page({
 
@@ -6,40 +6,27 @@ Page({
    * 页面的初始数据
    */
   data: {
-    video: null,
-    w: 300
-  
+    actions:[],
+    detail: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-      var that  = this
-      wx.getSystemInfo({
-        success: function (res) {
-          that.setData({
-            w: res.windowWidth,
-            h: res.windowWidth*0.68,
-            video: app.globalData.playing
-          });
-        }
-      });
-      var courseid = options.id
-      app.getVideoItem(courseid, function(data){
-        app.globalData.playing = data
-        that.setData({
-          video: app.globalData.playing
-      })
-      }, function(){})
-  },
-  onShareAppMessage: function () {
     var that = this
-    return {
-      title: app.globalData.playing.title,
-      path: 'pages/videodetail/videodetail?id=' + that.data.video.id
-    };
+    var homeworkid = options.id
+    app.loadHomework(homeworkid, function(res){
+      res.created_date = res.created_date.replace(/-/g, "/").substr(5)
+      that.setData({
+        actions: res.detail,
+        detail: res
+      })
+    })
+
+  
   },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -81,4 +68,11 @@ Page({
   onReachBottom: function () {
   
   },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+  
+  }
 })

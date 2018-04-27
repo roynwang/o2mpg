@@ -9,8 +9,24 @@ Page({
     courselist: [],
     currentDate: null,
     hide_selection: true,
+    selectedgym: 31,
+    datestr: new Date().Format("MM/dd"),
+    hours: ["09:00", "09:30",
+      "10:00", "10:30",
+      "11:00", "11:30",
+      "12:00", "12:30",
+      "13:00", "13:30",
+      "14:00", "14:30",
+      "15:00", "15:30",
+      "16:00", "16:30",
+      "17:00", "17:30",
+      "18:00", "18:30",
+      "19:00", "19:30",
+      "20:00", "20:30",
+      "21:00", "21:30",
+      "22:00"],
     w: 0,
-    keywords: ["所有","竖脊肌", "髂腰肌", "胸大肌", "腹直肌", "背阔肌", "股四头肌", "臀大肌", "腘绳肌", "腓肠肌", "外展肌群", "三角肌", "肱三头肌", "腹外斜肌", "内收肌群", "臀部肌群", "斜方肌", "肱二头肌", "颈部", "腹肌", "中背部", "胸肌", "肩部", "下背部", "前臂", "小腿肌群", "胫骨前肌", "比目鱼肌", "前臂肌群"],
+    keywords: ["所有", "竖脊肌", "髂腰肌", "胸大肌", "腹直肌", "背阔肌", "股四头肌", "臀大肌", "腘绳肌", "腓肠肌", "外展肌群", "三角肌", "肱三头肌", "腹外斜肌", "内收肌群", "臀部肌群", "斜方肌", "肱二头肌", "颈部", "腹肌", "中背部", "胸肌", "肩部", "下背部", "前臂", "小腿肌群", "胫骨前肌", "比目鱼肌", "前臂肌群"],
     selected_keyword: "所有",
     showBook: false,
     bookedGroupCourse: [],
@@ -19,33 +35,42 @@ Page({
     tabs: {
       mainpage: "active",
       video: "",
-      groupcourse: ""
+      groupcourse: "",
+      selfservice: "",
     },
     videonexturl: "",
     videos: []
   },
   loading: false,
-  toggleMuscle:function(){
+  toggleMuscle: function () {
     var that = this
     that.setData({
       hide_selection: !that.data.hide_selection
     })
   },
-  showVideo: function(e){
+  showtraindetail: function(e){
+    var that = this
+    var tar = e.currentTarget
+    var i = tar.dataset['i']
+    wx.navigateTo({
+      url: '../coursedetail/coursedetail?id=' + i
+    })
+  },
+  showVideo: function (e) {
     var that = this
     var tar = e.currentTarget
     var i = tar.dataset['i']
     app.globalData.playing = that.data.videos[i]
     wx.navigateTo({
-      url: '../videodetail/videodetail'
+      url: '../videodetail/videodetail?id=' + that.data.videos[i].id
     })
-    
+
   },
-  tapKeyword: function(e){
+  tapKeyword: function (e) {
     var that = this
     var tar = e.currentTarget
     that.setData({
-      videos:[],
+      videos: [],
       selected_keyword: tar.dataset['i'],
       videonexturl: app.getVideoListUrl(tar.dataset['i'])
     })
@@ -64,18 +89,18 @@ Page({
 
   tapBook: function (e) {
     var that = this
-    if (app.globalData.userInfo.detail == null) {
-      wx.navigateTo({
-        url: '../register/register'
-      })
-    } else {
-      var tar = e.currentTarget
-      var i = parseInt(tar.dataset["i"])
-      app.globalData.booking = that.data.courselist[i]
-      wx.navigateTo({
-        url: '../bookconfirm/bookconfirm'
-      })
-    }
+    // if (app.globalData.userInfo.detail == null) {
+    //   wx.navigateTo({
+    //     url: '../register/register'
+    //   })
+    // } else {
+    var tar = e.currentTarget
+    var i = parseInt(tar.dataset["i"])
+    app.globalData.booking = that.data.courselist[i]
+    wx.navigateTo({
+      url: '../bookconfirm/bookconfirm?id=' + app.globalData.booking.id
+    })
+    // }
   },
   selectDate: function (i) {
     var that = this
@@ -118,16 +143,38 @@ Page({
     var tabs = {
       mainpage: "",
       video: "",
-      groupcourse: ""
+      groupcourse: "",
+      selfservice: ""
     };
     if ("mainpage" == tar.dataset['i']) {
       tabs.mainpage = 'active'
+      wx.setNavigationBarTitle({
+        title: "我的日程"
+      })
+
+      if (app.globalData.userInfo.detail == null) {
+        wx.navigateTo({
+          url: '../register/register'
+        })
+      } 
     }
     if ("video" == tar.dataset['i']) {
       tabs.video = 'active'
+      wx.setNavigationBarTitle({
+        title: "动作查询" 
+      })
     }
     if ("groupcourse" == tar.dataset['i']) {
       tabs.groupcourse = 'active'
+      wx.setNavigationBarTitle({
+        title: "团课预约"
+      })
+    }
+    if ("selfservice" == tar.dataset['i']) {
+      tabs.selfservice = 'active'
+      wx.setNavigationBarTitle({
+        title: "自助锻炼预约"
+      })
     }
     that.setData({
       tabs: tabs
@@ -223,19 +270,28 @@ Page({
     if (that.loading == true) {
       return
     }
-    that.loading = true
+
+    if (app.globalData.userInfo.detail) {
+      that.loading = true
+    } else {
+      return
+    }
+
+    app.globalData.bookedPtCourse = []
+    app.globalData.bookedGroupCourse = []
     app.o2BookedPtCourse('', app.globalData.userInfo.detail.name, function (start) {
       that.data.day = start
       courses = courses.concat(app.globalData.bookedPtCourse)
       app.o2BookedGroupCourse(app.globalData.userInfo.detail.name, function () {
         that.loading = false
         courses = courses.concat(app.globalData.bookedGroupCourse)
-        courses.reverse()
-        // courses.sort(function(a,b){
-        //   var ad = Date.parse(a.date + " " + a.hour_str + ":00")
-        //   var bd = Date.parse(a.date + " " + a.hour_str + ":00")
-        //   return ad >= bd 
-        // })
+        
+        courses.sort(function(a,b){
+          var ad = new Date(a.date + " " + a.hour_str + ":00").getTime()
+          var bd = new Date(b.date + " " + b.hour_str + ":00").getTime()
+          return ad - bd 
+        })
+        courses = courses.reverse().slice(0,50);
         var hideBook = false
         courses.forEach(function (item) {
           hideBook = hideBook || !item.completed
@@ -256,7 +312,7 @@ Page({
       success: function (res) {
         that.setData({
           scrollHeight: res.windowHeight,
-          w: res.windowWidth*.95
+          w: res.windowWidth * .95
         });
 
       }
@@ -267,9 +323,120 @@ Page({
       currentDate: 0
     })
     that.selectDate(0)
-    app.o2GetUserTrainSummary(app.globalData.userInfo.detail.name,
-      app.globalData.gym, function () { })
-
+    if (app.globalData.userInfo.detail) {
+      app.o2GetUserTrainSummary(app.globalData.userInfo.detail.name,
+        app.globalData.gym, function () { })
+    }
     that.loadMoreVideo()
+    that.loadGymLoad()
+  },
+  toggleGymLoad:function(e){
+    var that = this
+    var tar = e.currentTarget
+    var i = tar.dataset['i']
+    that.setData({
+      selectedgym: i,
+     
+    })
+    that.loadGymLoad(1)
+  },
+  loadGymLoad: function (showtoast) {
+    var that = this
+    var selected = that.data.selectedgym
+    if(showtoast){
+      wx.showLoading({
+       title: '正在读取',
+      })
+    }
+    app.o2GymLoad(selected,
+      function (res) {
+        res.forEach(function(item){
+          item.seats = Array(item.course_count).fill(1);
+          if(item.selftrain){
+            item.seats[0] = 0
+          }
+        })
+        that.setData({  
+          load: res
+        })
+        if (showtoast) {
+          wx.hideLoading()
+        }  
+      },
+      function (res) {
+
+      })
+  },
+  cancelSelfTrain:function(e){
+    var that = this
+    var tar = e.currentTarget
+    var i = tar.dataset['i']
+    app.o2CancelSelfHour(i,function(res){
+      wx.showToast({
+        title: '成功',
+        icon: 'success',
+        duration: 2000
+      })
+      setTimeout(function () {
+        that.loadGymLoad()
+      }, 2000);
+    },
+    function(){
+      wx.showToast({
+        title: '失败',
+        duration: 2000
+      })
+    })
+  },
+  confirmSelfTrain: function(e){
+    var that = this
+    var tar = e.currentTarget
+    var i = tar.dataset['i']
+
+    app.o2SubmitSelfHour(
+      that.data.selectedgym,
+      i,
+      function(res){
+        wx.showToast({
+          title: '成功',
+          icon: 'success',
+          duration: 2000
+        })
+      },
+      function(){
+        wx.showToast({
+          title: '失败',
+          duration: 2000
+        })
+      }
+    )
+  },
+
+  selectHour: function(e){
+
+    if (app.globalData.userInfo.detail == null) {
+      wx.navigateTo({
+        url: '../register/register'
+      })
+    } 
+
+    var that = this
+    if(that.pending){
+      return
+    }
+    that.pending = true
+
+    var tar = e.currentTarget
+    var i = tar.dataset['i']
+    var t = that.data.load
+    t[i].confirming = 1
+    that.setData({
+      load: t
+    })
+    var cb = function () {
+      that.pending = false
+      that.loadGymLoad()
+    }
+    setTimeout(cb,4000)
   }
 })
