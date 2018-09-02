@@ -1,9 +1,66 @@
 /* pages/newcoursedetail/newcoursedetail.wxss */
 
+.mask {
+  background: rgba(0,0,0, 0.5);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 100;
+}
+.modal {
+  width: 100%;
+  height: 300px;
+  background: rgb(18,136,135);
+  padding: 50rpx;
+  box-shadow: 0 3rpx 40rpx rgba(0,0,0,0.8);
+}
+.modal .subtitle {
+  color: rgba(255,255,255,0.8);
+  font-size: 1rem;
+  margin-top: 20rpx;
+  font-weight: 200;
+}
+.modal .caption {
+  color: rgb(74,179,185);
+  font-size: 0.8rem;
+  margin-top: 50rpx;
+}
+.modal .focus {
+  font-size: 3rem;
+  color: #fff;
+  font-weight: 100;
+}
+.modal .unit {
+  font-size: 2rem;
+}
+
+.modal .rate-group {
+  margin-bottom: 14rpx;
+  display: flex;
+}
+.modal .rate-title{
+  color: #fff;
+  font-weight: 100;
+  margin-right: 30rpx;
+}
+.modal .rate-bar .score {
+  width: 18rpx;
+  height: 18rpx;
+  position: relative;
+  top: 2rpx;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 24rpx;
+  border: 4rpx solid rgba(255,255,255,0.6);
+}
+.modal .rate-bar .score.active {
+  background: rgba(255,255,255,0.4);
+}
 .workout-header {
   height: 420rpx;
   display: flex;
 }
+
 
 .workout-month {
   width:9%;

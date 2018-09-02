@@ -1,0 +1,36 @@
+<!--pages/coursereview/coursereview.wxml-->
+<view>
+  <view wx:if="{{!showList && showConfirm}}" class="confirm-comments-card">
+    <view class="course-label">
+      <image style="border-radius: 50%;height:80rpx;width:80rpx;"src="{{coursereview.coach_detail.custom_avatar}}"></image>
+      <text style="font-size: 1.2rem; margin-left: 20rpx; color: rgba(255,255,255,0.85);">{{coursereview.coach_detail.displayname}}</text>
+      <text style="font-size: 1rem; margin-right: 20rpx; color: rgba(255,255,255,0.85);text-align:right;flex:1;">{{coursereview.date}}</text>
+    </view>
+    <view class="button-view {{coursereview.user_confirmed?'':'incompleted'}}">
+      <text style="position:absolute;top:16%;width:88%;">{{editedReview}}</text>
+      <button wx:if="{{showConfirmButton}}" class="customer-confirm" bindtap="confirmCourse">课程确认</button>
+      <view wx:if="{{!showConfirmButton}}" class="questionair">
+        <text style="padding: 20rpx">{{question[0]}}</text>
+        <view class="button-group">
+            <button bindtap="questionairY" class="{{question[1].length>3?'small':'' }}">{{question[1]}}</button>
+             <button bindtap="questionairN" class="{{question[2].length>3?'small':'' }}">{{question[2]}}</button>
+        </view>
+        <view style="width:100%;text-aligh:right;filter:none;margin-top:40rpx"><text bindtap="questionairSkip" style="float:right;font-size:1rem;font-weight:600;color:white;border-bottom:2rpx solid white;">跳过 > </text></view>
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{showEdit}}" class="edit-coments-card">
+    <textarea bindinput="bindinput" value="{{editedReview}}" style="width:inherit; margin:10px;border:1px solid #ccc"></textarea>
+    <button bindtap="share" open-type='share' style="background:#4fd2c2;color:white;margin:10px;">保存并分享</button>
+  </view>
+  <view wx:for="{{history}}" class="comments-card {{showList?'':'blur'}}">
+   <view class="course-label">
+      <image style="border-radius: 50%;height:80rpx;width:80rpx;"src="{{coursereview.coach_detail.custom_avatar}}"></image>
+      <text style="font-size: 1.2rem; margin-left: 20rpx; color: rgba(255,255,255,0.85);">{{item.coach_detail.displayname}}</text>
+      <text style="font-size: 1rem; margin-right: 20rpx; color: rgba(255,255,255,0.85); text-align:right;flex:1;">{{item.date}}</text>
+    </view>
+    <view style="padding-top:20px;">
+      {{item.coach_review}}
+    </view>
+    </view>
+</view>

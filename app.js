@@ -62,6 +62,50 @@ App({
       }
     })
   },
+  o2CourseHistoryGet: function (name, onsuccess, onfail) {
+    wx.request({
+      url: host + '/' + name + '/review/',
+      header: {
+        'content-type': 'application/json',
+      },
+      success: function (res) {
+        typeof onsuccess == "function" && onsuccess(res.data)
+      },
+      fail: function (res) {
+        typeof onfail == "function" && onfail()
+      }
+    })
+  },
+  o2CourseReviewUpdate: function (id, data, onsuccess, onfail) {
+    wx.request({
+      url: host + '/s/' + id + '/review/patch/',
+      header: {
+        'content-type': 'application/json',
+      },
+      data: data,
+      method: "PUT",
+      success: function (res) {
+        typeof onsuccess == "function" && onsuccess(res.data)
+      },
+      fail: function (res) {
+        typeof onfail == "function" && onfail()
+      }
+    })
+  },
+  o2CourseReview: function (id, onsuccess, onfail) {
+    wx.request({
+      url: host + '/s/' + id + '/review/',
+      header: {
+        'content-type': 'application/json',
+      },
+      success: function (res) {
+        typeof onsuccess == "function" && onsuccess(res.data)
+      },
+      fail: function (res) {
+        typeof onfail == "function" && onfail()
+      }
+    })
+  },
   o2GetCharge: function(phone, chargeid,gym,code,onsuccess, onfail){
      var that = this
      wx.request({
@@ -407,8 +451,6 @@ o2CreateFirstTime:function(phone, course,onsuccess){
         } else {
           that.globalData.userInfo.detail = res.data
           //try to update avatar
-  
-        
           if (that.globalData.userInfo.avatarUrl != res.data.avatar){
             that.o2UpdateUser(res.data.name,
               { avatar: encodeURI(that.globalData.userInfo.avatarUrl)},
@@ -578,6 +620,19 @@ o2CreateFirstTime:function(phone, course,onsuccess){
       }
     })
 
+  },
+  getUserTarget: function (name, onsuccess, onfail) {
+    var url = host + '/' + name + "/t/"
+    wx.request({
+      url: url,
+      header: {
+        'content-type': 'application/json',
+      },
+      success: function (res) {
+        console.log(res.data)
+        typeof onsuccess == "function" && onsuccess(res.data)
+      }
+    })
   },
   getEvalDate: function (name,onsuccess, onfail){
     var url = host + '/' + name + "/e/"

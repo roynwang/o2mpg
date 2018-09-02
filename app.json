@@ -17,7 +17,8 @@
     "pages/chargedate/chargedate",
     "pages/backupcoursedetail/coursedetail",
     "pages/homework/homework",
-    "pages/coursedetail/coursedetail"
+    "pages/coursedetail/coursedetail",
+    "pages/coursereview/coursereview"
   ],
   "window": {
     "backgroundTextStyle": "light",

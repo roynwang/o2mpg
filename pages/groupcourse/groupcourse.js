@@ -8,6 +8,7 @@ Page({
     days: [],
     courselist: [],
     currentDate: null,
+    currentShareCourse: null,
     hide_selection: true,
     selectedgym: 31,
     datestr: new Date().Format("MM/dd"),
@@ -48,12 +49,43 @@ Page({
       hide_selection: !that.data.hide_selection
     })
   },
+  onShareAppMessage: function (e) {
+    var that = this
+    var tar = e.target
+    var i = parseInt(tar.dataset['i'])
+    var course = that.data.bookedGroupCourse.find(function(item){ return item.id == i })
+    return {
+      title: "训练计划 / " + course.coach + " / " + course.date,
+      path: 'pages/coursedetail/coursedetail?id=' + i,
+      imageUrl: "https://dn-o2fit.qbox.me/share_cover.png"
+    };
+  },
   showtraindetail: function(e){
     var that = this
-    var tar = e.currentTarget
+    var tar = e.target
     var i = tar.dataset['i']
+    if(tar.dataset['action'] =="review"){
+      wx.navigateTo({
+        url: '../coursereview/coursereview?id=' + i
+      })
+      return
+    }
+
+    if (tar.dataset['action'] == "share") {
+      return
+    }
+    tar = e.currentTarget
+    i = tar.dataset['i']
+   
     wx.navigateTo({
       url: '../coursedetail/coursedetail?id=' + i
+    })
+  },
+  editReview: function(e) {
+    tar = e.currentTarget
+    var i = tar.dataset['i']
+    wx.navigateTo({
+      url: '../coursereview/coursereview?id=' + i
     })
   },
   showVideo: function (e) {
@@ -85,7 +117,15 @@ Page({
       playing: parseInt(i)
     })
   },
-
+  editReview: function(e){
+    var that = this
+    var tar = e.target
+    var i = parseInt(tar.dataset['i'])
+    var course = that.data.bookedGroupCourse.find(function (item) { return item.id == i })
+    // wx.navigateTo({
+    //   url: '../bookconfirm/bookconfirm?id=' + app.globalData.booking.id
+    // })
+  },
 
   tapBook: function (e) {
     var that = this

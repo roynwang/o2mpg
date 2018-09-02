@@ -1,55 +1,102 @@
 <!--pages/newcoursedetail/newcoursedetail.wxml-->
 <view>
- <view class="workout-days">
-    <view class="workout-month"><text>{{monthName}}</text></view>
-    <view class="workout-day {{selectedDates[index] != false ? 'selected' : ''}}" wx:for="{{dates}}" data-i="{{index}}" >
+  <view class="mask" bindtap="tapHide" wx:if="{{showTarget}}">
+    <view class="modal">
+      <view class="subtitle">
+        <text>第 {{target.done_count}} 次训练</text>
+      </view>
+      <view class="caption">
+        <text>距离下次测量</text>
+      </view>
+      <view class="focus">
+        <text>{{target.before_day}}<text class="unit">天</text> 
+        <!-- / {{target.before_trainning}}<text class="unit">次</text> --></text> 
+      </view>
+      <view class="caption">
+        <text>上周评分</text>
+      </view>
+      <view class="rate-group" style="margin-top:30rpx; display:flex;">
+         <view class="rate-title">饮食</view>
+         <view class="rate-bar"> 
+            <view class="score {{target.diet_score >= 1 ?'active':''}}"></view>
+            <view class="score {{target.diet_score >= 2 ?'active':''}}"></view>
+            <view class="score {{target.diet_score >= 3 ?'active':''}}"></view>
+            <view class="score {{target.diet_score >= 4 ?'active':''}}"></view>
+            <view class="score {{target.diet_score >= 5 ?'active':''}}"></view>
+         </view>
+      </view>
+      <view class="rate-group">
+          <view class="rate-title">训练</view>
+            <view class="rate-bar"> 
+            <view class="score {{target.train_score >= 1 ?'active':''}}"></view>
+            <view class="score {{target.train_score >= 2 ?'active':''}}"></view>
+            <view class="score {{target.train_score >= 3 ?'active':''}}"></view>
+            <view class="score {{target.train_score >= 4 ?'active':''}}"></view>
+            <view class="score {{target.train_score >= 5 ?'active':''}}"></view>
+
+         </view>
+      </view>
+    </view>
+  </view>
+  <view class="workout-days">
+    <view class="workout-month">
+      <text>{{monthName}}</text>
+    </view>
+    <view class="workout-day {{selectedDates[index] != false ? 'selected' : ''}}" wx:for="{{dates}}" data-i="{{index}}">
       <view class="workout-day-number selected" data-v="{{selectedDates[index]}}" bindtap='loadCourse'>{{item}}</view>
     </view>
-      </view>
+  </view>
   <view class="workout-header">
     <view class="workout-header-left">
       <view class="user-displayname-container">
         <text class="user-displayname">{{course.customerprofile.displayname}} </text>
       </view>
-        <view class="course-label-container"><image src="/res/whistle.png" mode="aspectFill"></image>
-       <view>
-        <text>{{course.coachprofile.displayname}} </text>
+      <view class="course-label-container">
+        <image src="/res/whistle.png" mode="aspectFill"></image>
+        <view>
+          <text>{{course.coachprofile.displayname}} </text>
         </view>
       </view>
-       <view class="course-label-container"><image src="/res/schedule.png" mode="aspectFill"></image>
-       <view>
-        <text>{{course.datestr}} {{course.hourstr}} </text>
+      <view class="course-label-container">
+        <image src="/res/schedule.png" mode="aspectFill"></image>
+        <view>
+          <text>{{course.datestr}} {{course.hourstr}} </text>
         </view>
       </view>
-       <view class="course-label-container">
+      <view class="course-label-container">
         <image src="/res/note.png" mode="aspectFit"></image>
         <view style="display:inline-block">
-        <text>{{comments}}</text>
+          <text>{{comments}}</text>
         </view>
       </view>
     </view>
-    <view class="workout-header-right"><image class="user-avatar" src="{{course.customerprofile.avatar}}"/></view>
+    <view class="workout-header-right">
+      <image class="user-avatar" src="{{course.customerprofile.avatar}}" />
+    </view>
   </view>
- 
+
 
   <view class="workout-details">
     <view class="workout-item" wx:for="{{actions}}" data-i="{{index}}">
-      <view class="workout-item-left"> 
+      <view class="workout-item-left">
         <view class="workout-item-dot"></view>
       </view>
-      <view class="workout-item-right" >
-          <view class="workout-item-action-detail" wx:if="{{item.contenttype == 'action'}}">
-           <view class="workout-item-action-name">{{item.name}}</view>
-           <view class="workout-item-action-comment">{{item.comments}}</view>
-          </view>
-          <view class="workout-item-action-amount">
-              
-              <text class="group-number">{{item.repeattimes}}</text><text class="group-number-unit">组</text> x <text class="repeat-times-number">{{item.weight}}</text><text class="repeat-times-unit">{{item.unit}}</text>
-              <text class="interval">
+      <view class="workout-item-right">
+        <view class="workout-item-action-detail" wx:if="{{item.contenttype == 'action'}}">
+          <view class="workout-item-action-name">{{item.name}}</view>
+          <view class="workout-item-action-comment">{{item.comments}}</view>
+        </view>
+        <view class="workout-item-action-amount">
+
+          <text class="group-number">{{item.repeattimes}}</text>
+          <text class="group-number-unit">组</text> x
+          <text class="repeat-times-number">{{item.weight}}</text>
+          <text class="repeat-times-unit">{{item.unit}}</text>
+          <text class="interval">
               组间休息 {{item.interval||'30s'}}</text>
-          </view>
+        </view>
       </view>
     </view>
-      
+
   </view>
 </view>

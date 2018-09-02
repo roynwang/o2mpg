@@ -24,14 +24,17 @@ Page({
     editingMax: 10,
     editinItemIndex: -1,
     edited: false,
-    monthName: ""
+    monthName: "",
+    showTarget: false,
+    target: {}
   },
   onShareAppMessage: function () {
     this.saveDetail()
     var that = this
     return {
       title: "训练总结×" + that.data.course.customerprofile.displayname,
-      path: 'pages/coursedetail/coursedetail?id=' + that.data.courseid
+      path: 'pages/coursedetail/coursedetail?id=' + that.data.courseid,
+      imageUrl: "https://dn-o2fit.qbox.me/share_cover.png"
     };
   },
   /**
@@ -95,8 +98,13 @@ Page({
             that.setData({
               showEdit: app.globalData.userInfo.detail.iscoach
             })
+            if (!app.globalData.userInfo.detail.iscoach) {
+              that.refreshTarget();
+            }
             // console.log("get user info success")
             if (app.globalData.userInfo.detail.name == data.customerprofile.name) {
+
+
               that.completeCourse(data)
               that.loadSurvey()
             }
@@ -106,6 +114,7 @@ Page({
             app.o2ForceBindOpenId(data.customerprofile.name, app.globalData.openid)
             console.log("get user info failed")
             that.completeCourse(data)
+            that.refreshTarget();
           })
       })
 
@@ -127,7 +136,23 @@ Page({
   },
   completeCourse: function (course) {
     app.completePtCourseItem(course.id)
-
+  },
+  tapHide: function(){
+    this.setData({
+      showTarget: false
+    })
+  },
+  refreshTarget: function(){
+    var that = this
+    if (that.data.course.user_confirmed) {
+      that.setData({showTarget: false });
+      return;
+    }
+    app.getUserTarget(that.data.course.customerprofile.name, function(data){
+        that.setData({target: data, showTarget: true});
+    }, function(){
+        that.tapHide()
+    })
   },
   loadSurvey: function () {
     var that = this

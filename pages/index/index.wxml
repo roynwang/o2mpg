@@ -5,6 +5,7 @@
     <text class="userinfo-nickname">{{userInfo.nickName}}</text>
   </view>
   <view class="input-view">
-      <view bindtap="tapGo">{{loading?"载入中":"点击进入"}}</view>
+   <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">进入</button> 
+      <!-- <view bindtap="tapGo"></view> -->
   </view>
 </view>
