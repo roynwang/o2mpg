@@ -18,7 +18,8 @@
     "pages/backupcoursedetail/coursedetail",
     "pages/homework/homework",
     "pages/coursedetail/coursedetail",
-    "pages/coursereview/coursereview"
+    "pages/coursereview/coursereview",
+    "pages/rankinglist/rankinglist"
   ],
   "window": {
     "backgroundTextStyle": "light",

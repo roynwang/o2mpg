@@ -57,7 +57,7 @@ Page({
     return {
       title: "训练计划 / " + course.coach + " / " + course.date,
       path: 'pages/coursedetail/coursedetail?id=' + i,
-      imageUrl: "https://dn-o2fit.qbox.me/share_cover.png"
+      imageUrl: "http://static.o2-fit.com/share_cover" + parseInt(Math.random() * 100) % 2+".png"
     };
   },
   showtraindetail: function(e){

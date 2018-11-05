@@ -1,10 +1,16 @@
 /* pages/coursereview/coursereview.wxss */
-.questionair {
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  width:100%;
+
+page {
+  background: rgb(242, 245, 248);
 }
+
+.questionair {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
 .comments-card, .confirm-comments-card {
   margin: 20rpx;
   background: #42d2c2;
@@ -16,6 +22,7 @@
   padding: 8rpx 20rpx;
   margin-bottom: 30rpx;
 }
+
 .button-view {
   display: flex;
   align-items: center;
@@ -49,40 +56,45 @@
   display: flex;
   align-items: center;
 }
+
 .incompleted text {
-  filter:blur(5px);
+  filter: blur(5px);
 }
 
 .incompleted .questionair {
-  display:flex;
+  display: flex;
 }
+
 .incompleted button {
   display: block;
 }
+
 .blur {
-  filter:blur(5px);
+  filter: blur(5px);
 }
+
 .comments-card .course-label text {
-  color: #444
+  color: #444;
 }
 
 .questionair {
-  display:none;
-  flex-direction:column;
-  align-items:center;
-  width:100%;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
-.questionair text {
-color:#333;
-filter:none;
-font-size:1.4rem;
-opacity:1;
-font-weight:900;
 
+.questionair text {
+  color: #333;
+  filter: none;
+  font-size: 1.4rem;
+  opacity: 1;
+  font-weight: 900;
 }
+
 .questionair .button-group {
-  display:flex;
-  justify-content:space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .questionair .button-group button {
@@ -92,15 +104,277 @@ font-weight:900;
   background: rgba(18, 134, 133, 0.7);
   letter-spacing: 2rpx;
   font-size: 1.2rem;
-  line-height:2.2rem;
+  line-height: 2.2rem;
   font-weight: 900;
   box-shadow: 4rpx 6rpx 10rpx 2rpx rgba(18, 134, 133, 1);
 }
+
 .questionair .button-group button.small {
-  font-size:0.8rem;
-  letter-spacing:0;
-  width:8rem;
+  font-size: 0.8rem;
+  letter-spacing: 0;
+  width: 6rem;
 }
+
 .questionair .button-group button::after {
   border: none;
+}
+
+.new-comments-card {
+  display: flex;
+  min-height: 8rem;
+}
+
+.new-comments-card-left {
+  flex: 1;
+  border-right: 10rpx dotted #ccc;
+  display: flex;
+  flex-direction: column;
+}
+
+.new-comments-card-left .month, .new-comments-card-left .day {
+  text-align: center;
+}
+
+.new-comments-card-left .month {
+  margin-top: -44rpx;
+  color: #aaa;
+  font-weight: 500;
+}
+
+.new-comments-card-left .day {
+  color: #333;
+  font-weight: 600;
+  font-size: 1.1rem;
+  line-height: 1rem;
+}
+
+.new-comments-card-left .circle {
+  width: 26rpx;
+  height: 26rpx;
+  background: white;
+  position: relative;
+  float: right;
+  left: calc(100% - 15rpx);
+  border-radius: 50%;
+  border: 6rpx solid #ccc;
+}
+
+.new-comments-card-right {
+  flex: 3;
+  padding: 0 60rpx 60rpx;
+}
+
+.new-comments-card-right .new-comments-card-frame {
+  background: white;
+  padding: 30rpx 26rpx;
+  box-shadow: 4rpx 6rpx 6rpx 2rpx #ddd;
+  border-radius: 8rpx;
+}
+
+.new-comments-card-frame .coach {
+  color: #999;
+  margin-bottom: 10rpx;
+  display: flex;
+  line-height: 50rpx;
+}
+
+.new-comments-card-frame .title-avatar {
+  border-radius: 50%;
+  height: 60rpx;
+  width: 60rpx;
+}
+
+.new-comments-card-frame .coach-name {
+  top: 6rpx;
+  position: relative;
+  left: 12rpx;
+  font-size: 0.9rem;
+  flex: 1;
+}
+
+.new-comments-card-frame .coach-review {
+  color: #333;
+  font-size: 0.95rem;
+  font-weight: 400;
+}
+
+.customer-target {
+  background: white;
+  padding: 10rpx 40rpx;
+}
+
+.customer-target-date {
+  color: white;
+  background: #f5a623;
+  font-size: 0.84rem;
+  padding: 0rpx 20rpx;
+  line-height: 1.2rem;
+  border-radius: 12rpx;
+  width: 150rpx;
+}
+
+.customer-target-text {
+  padding: 20rpx 0;
+  font-size: 1.4rem;
+  color: #333;
+}
+
+.target-progress {
+  height: 6rpx;
+  background: #ccc;
+  margin-bottom: 15px;
+  box-shadow: 4rpx 6rpx 6rpx 2rpx #eee;
+}
+
+.target-done {
+  background: #42d2c2;
+  width: 50%;
+  height: 100%;
+}
+
+.customer-target-frame {
+  background: white;
+}
+
+.eval-date-text {
+  display: flex;
+  padding-bottom: 4rpx;
+  font-size: 0.8rem;
+}
+
+.eval-date-text view {
+  flex: 1;
+  color: #999;
+}
+
+.new-comments-card-frame .photo {
+  height: 120rpx;
+  width: 120rpx;
+  margin: 4rpx;
+}
+
+.coach-name text.eval, .coach-name text.photo, .coach-name text.target_complete,
+.coach-name text.bonus {
+  background: rgb(248, 93, 118);
+  color: white;
+  padding: 0rpx 20rpx;
+  border-radius: 8rpx;
+}
+
+.coach-name text.target_create {
+  background: rgb(255, 183, 0);
+  color: white;
+  padding: 0rpx 20rpx;
+  border-radius: 8rpx;
+}
+
+.coach-name text.customerkpi {
+  color: white;
+  background: #22a486;
+  padding: 0rpx 20rpx;
+  border-radius: 8rpx;
+}
+
+.new-comments-card-frame.photo {
+  background: white;
+}
+
+.new-comments-card-frame.eval {
+  background: rgb(255, 135, 155);
+}
+
+.new-comments-card-frame.bonus {
+  background: rgb(255, 135, 155);
+}
+
+.new-comments-card-frame.target_create {
+  background: #f3a424;
+}
+
+.new-comments-card-frame.target_complete {
+  background: rgb(255, 135, 155);
+}
+
+.new-comments-card-frame.target_create .coach-review,
+.new-comments-card-frame.target_complete .coach-review,
+.new-comments-card-frame.eval .coach-review,
+.new-comments-card-frame.eval .customerkpi,
+.new-comments-card-frame.bonus .coach-review,
+.new-comments-card-frame.bonus .customerkpi {
+  color: white;
+}
+
+.new-comments-card-frame.customerkpi {
+  background: #42d2c2;
+}
+
+.rate-group {
+  display: flex;
+}
+
+.rate-title {
+  color: white;
+  display: inline-block;
+  font-size: 0.8rem;
+  line-height: 1.5rem;
+}
+
+.rate-bar {
+  margin-left: 24rpx;
+}
+
+.rate-bar .score {
+  width: 18rpx;
+  height: 18rpx;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 18rpx;
+  border: 4rpx solid rgba(255, 255, 255, 0.6);
+}
+
+.rate-bar .score.active {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.tips {
+  margin-bottom: 40rpx;
+  text-align: center;
+  width: 100%;
+  font-size: 0.9rem;
+}
+
+.tips span {
+  padding: 10rpx 40rpx;
+  background: rgb(248, 93, 118);
+  color: white;
+  border-radius: 10rpx;
+  box-shadow: 2px 2px 2px rgba(248, 93, 118, 0.5);
+}
+
+.tips span image {
+  position: relative;
+  width: 40rpx;
+  height: 40rpx;
+  top: 10rpx;
+  left: -10rpx;
+  margin-right: 12rpx;
+}
+
+.customer-ranking {
+  position: absolute;
+  right: 10rpx;
+  top: 18rpx;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.customer-ranking span {
+  font-weight: 900;
+  color: #fff;
+  width: 1.1rem;
+  height: 1.1rem;
+  background: #42d2c2;
+  display: inline-block;
+  text-align: center;
+  border-radius: 50%;
 }

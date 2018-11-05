@@ -1,0 +1,18 @@
+<!--pages/rankinglist/rankinglist.wxml-->
+<view class="section">
+  <view class="rank-group" wx:for="{{ranking.list}}" wx:for-index='p' >
+       <view class="tips-block">
+    <view hidden='{{item[0].times<8}}' class="bonus tips">获赠课一节</view>
+   <view hidden='{{mypos!=p}}'class="me tips">我在这</view>
+   </view>
+   <view style="width:100%;padding: 0.8rem 2rem;display:inline;">
+    <view class="rank"><text style="marigin-right:16rpx">本月第{{["一","二","三","四","五","六","七","八","九","十","十一","十二","十三","十四","十五","十六"][p]}}名</text> {{item[0].times}} 次</view>
+    <view class="rank-subtitle">
+      <text>大悦城 + 长楹天街 <text class="number">{{item.length}}</text>人</text>
+    </view>
+     <view class="people">
+      <image class="avatar {{p == 0 && 'first'}}" wx:for="{{item}}" src="{{item.profile.avatar}}"/>
+    </view>
+    </view>
+  </view>
+</view>

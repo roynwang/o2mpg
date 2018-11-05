@@ -73,7 +73,7 @@
           <view class="course-time">
             <text>{{item.title}}</text>
             <view wx:if="{{ !item.hide_cancel&&!item.completed}}" data-i="{{index}}" bindtap="tapCancel" class="course-book-btn {{item.confirming?'confirm':''}}">{{item.confirming?'确认取消':'取消'}}</view>
-            <view wx:if="{{!item.confirming &&item.completed}}" class="course-book-btn">
+            <view wx:if="{{!item.confirming &&item.completed}}" class="course-book-btn" data-action="review" data-isbutton="1"  data-i="{{item.id}}">
               <icon type="success_no_circle" size="10" color="#4fd2c2" style="line-height:10rpx;margin-right:4rpx;position:relative;right:5rpx;top:2rpx;" />已完成</view>
                  <button wx:if="{{item.iscoach && !item.completed}}" class="course-book-btn" style="margin-left:8rpx" data-i="{{item.id}}"  data-isbutton="1" data-action="review" bindtap="editReview">
              完成</button>
@@ -83,7 +83,7 @@
           </view>
           <view class="course-desc">
             <text style="display:inline-block"> {{item.hour_str}} × {{item.iscoach?item.customer:item.coach}}</text>
-            <text class="course-price" wx:if="{{item.price!=0 && !item.iscoach}}">{{item.price}}-{{item.discount}}</text>
+            <!-- <text class="course-price" wx:if="{{item.price!=0 && !item.iscoach}}">{{item.price}}-{{item.discount}}</text> -->
           </view>
 
         </view>

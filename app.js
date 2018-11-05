@@ -62,6 +62,25 @@ App({
       }
     })
   },
+  o2TrainHistoryGet: function (name, year, month, onsuccess, onfail) {
+    wx.request({
+      url: host + '/' + name + '/traintimeline/' + year + "/" + month + "/",
+      header: {
+        'content-type': 'application/json',
+      },
+      success: function (res) {
+        res.data.forEach(function (item) {
+          let d = new Date(item.date)
+          item.month = d.getMonthName()
+          item.day = d.getDate()
+        })
+        typeof onsuccess == "function" && onsuccess(res.data)
+      },
+      fail: function (res) {
+        typeof onfail == "function" && onfail()
+      }
+    })
+  },
   o2CourseHistoryGet: function (name, onsuccess, onfail) {
     wx.request({
       url: host + '/' + name + '/review/',
@@ -69,6 +88,11 @@ App({
         'content-type': 'application/json',
       },
       success: function (res) {
+        res.data.forEach(function(item){
+          let d = new Date(item.date)
+          item.month = d.getMonthName()
+          item.day = d.getDate()
+        })
         typeof onsuccess == "function" && onsuccess(res.data)
       },
       fail: function (res) {
@@ -188,7 +212,11 @@ App({
     if(day != ''){
       date = day
     }
-    var start = date.addDays(-30)
+    let delta = 30
+    if(that.globalData.userInfo.detail.iscoach){
+      delta = 7
+    }
+    var start = date.addDays(-delta)
     wx.request({
       url: host + '/'+ phone +'/w/',
       header: {
@@ -634,6 +662,19 @@ o2CreateFirstTime:function(phone, course,onsuccess){
       }
     })
   },
+  getCustomerTargets: function (name, onsuccess, onfail) {
+    var url = host + '/' + name + "/targets/"
+    wx.request({
+      url: url,
+      header: {
+        'content-type': 'application/json',
+      },
+      success: function (res) {
+        console.log(res.data)
+        typeof onsuccess == "function" && onsuccess(res.data)
+      }
+    })
+  },
   getEvalDate: function (name,onsuccess, onfail){
     var url = host + '/' + name + "/e/"
     wx.request({
@@ -816,6 +857,32 @@ o2CreateFirstTime:function(phone, course,onsuccess){
     }
     return ret
   },
+  loadCustomerTips: function (customer, onsuccess) {
+    var url = host + "/" + customer + "/tips/"
+    wx.request({
+      url: url,
+      header: {
+        'content-type': 'application/json',
+      },
+      success: function (res) {
+        typeof onsuccess == "function" && onsuccess(res.data)
+      }
+    })
+  },
+  loadRanking: function (customer, onsuccess) {
+    var that = this
+    var url = host + "/" + customer + "/ranking/"
+    wx.request({
+      url: url,
+      header: {
+        'content-type': 'application/json',
+      },
+      success: function (res) {
+        that.globalData.ranking = res.data
+        typeof onsuccess == "function" && onsuccess(res.data)
+      }
+    })
+  },
   loadHomework:function(homeworkid,onsuccess){
     var url = host + "/homework/" + homeworkid + "/"
     wx.request({
@@ -847,7 +914,6 @@ o2CreateFirstTime:function(phone, course,onsuccess){
         'content-type': 'application/json',
       },
       success: function (res) {
-        
         typeof onsuccess == "function" && onsuccess(res.data)
       }
     })
@@ -877,6 +943,7 @@ o2CreateFirstTime:function(phone, course,onsuccess){
     booking: null,
     gym: 31,
     gymInfo: null,
-    playing: null
+    playing: null,
+    ranking: [],
   }
 })

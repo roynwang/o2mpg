@@ -1,0 +1,54 @@
+.rank-group {
+  box-shadow:4rpx 4rpx 20rpx rgba(0,0,0,0.2);
+  margin:1.2rem 1.2rem;
+
+}
+.tips-block {
+  right: 1.2rem;
+  position: absolute;
+  font-size: 0.7rem;
+  color: white;
+  margin-top:20rpx;
+}
+.tips-block .tips {
+  margin-top: 0.1rem;
+  padding-left: 0.2rem;
+  padding-right: 0.2rem;
+  text-align: center;
+}
+.tips-block .tips.bonus {
+  background: #40d2c2;
+}
+.tips-block .tips.me {
+  background: #f5a623;
+}
+.rank {
+  text-align: center;
+  color: #333;
+  font-size: 1.2rem;
+}
+.rank-subtitle {
+  text-align: center;
+  color:#40d2c2;
+  font-size: 0.9rem;
+  margin-top: 0.3rem;
+  /* font-weight: 600; */
+}
+.people {
+
+justify-content:center;
+padding:0.8rem 1rem;
+
+text-align: center;
+
+}
+.people .avatar{
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  margin: 0.2rem 0.1rem;
+}
+.people .avatar.first{
+  width: 90rpx;
+  height: 90rpx;
+}

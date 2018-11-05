@@ -6,14 +6,63 @@ Page({
    * 页面的初始数据
    */
   data: {
+    customer: "",
     history:[],
+    year: 0,
+    month: 0,
+    eval: {},
+    targets:[],
     coursereview: null,
     showConfirm: false,
     showEdit: false,
     showList: false,
     editedReview: '',
     showConfirmButton: true,
-    question: []
+    question: [],
+    tips: { image: '', text: ''},
+    rank: "?"
+  },
+  loadEvalTarget: function(name) {
+    var that = this
+    app.getUserTarget(name,
+      function (data) {
+        data['nextCheckDay'] = new Date().addDays(data.before_day).Format("MM / dd")
+        data['percentage'] = 100 - data.before_day * 2.5
+        if(data.percentage<0){
+          data.percentage = 0
+        }
+        if(data.percentage>100) {
+          data.percentage = 100
+        }
+        that.setData({ eval: data })
+      },
+      function (data) {
+      })
+  },
+  loadCustomerTarget: function(name) {
+    var that = this
+    app.getCustomerTargets(name, 
+    function(data){
+      that.setData({targets: data})
+    }, 
+    function(data){
+    })
+  },
+  showCourseDetail: function(e){
+    var tar = e.currentTarget
+    wx.navigateTo({
+      url: tar.dataset['link']
+    })
+  },
+  showRankingList: function(e) {
+    wx.navigateTo({
+      url: "/pages/rankinglist/rankinglist"
+    })
+  },
+  showPersonalData: function(e) {
+    wx.navigateTo({
+      url: "/pages/personaldata/personaldata"
+    })
   },
   bindinput: function(e) {
     this.setData({
@@ -33,7 +82,6 @@ Page({
       displaySetting.showEdit = !this.data.coursereview.user_confirmed
       displaySetting.showConfirm = false
       displaySetting.showList = true
-     
     } else {
       displaySetting.showEdit = false
       displaySetting.showConfirm = true
@@ -58,18 +106,21 @@ Page({
       })
       app.o2CourseHistoryGet(newCourse.customer_detail.name, function (data) {
         that.setData({
-          history: data
+          history: data,
+          showList: true
         })
       }, function () {
 
       })
-      if (anwser != 0) {
-        wx.showToast({
-          title: '感谢您的反馈',
-          icon: 'success',
-          duration: 2000
-        })
+      let title = '感谢您的反馈'
+      if (anwser <= 0 ) {
+        title = "已确认完成"
       }
+      wx.showToast({
+        title: title,
+        icon: 'success',
+        duration: 2000
+      })
     }, () => {
 
       that.setData({
@@ -106,34 +157,66 @@ Page({
     that.setData({
       showConfirmButton: false
     })
-    if(!that.data.coursereview.coach_review){
-      that.confirm(-1)
+    if (!that.data.coursereview.question){
+      that.confirm(0)
     }
     return
+  },
+  showPic: function (e) {
+    var that = this
+    var tar = e.currentTarget
+    var index = parseInt(tar.dataset["index"])
+    var i = parseInt(tar.dataset["i"])
+    wx.previewImage({
+      current: that.data.history[index].body_images[i],
+      urls: that.data.history[index].body_images
+    })
+  },
+  loadHistory: function(year, month, customer) {
+    var that = this
+    app.o2TrainHistoryGet(customer, that.data.year, that.data.month, function (data) {
+      history = that.data.history.concat(data)
+      that.setData({
+        history: history
+      })
+      
+    }, function () {
+
+    })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    var date = new Date()
+    var year = date.getFullYear()
+    var month = date.getMonth() + 1
     var that = this
+    that.setData({
+      year: year,
+      month: month
+    })
+
     var courseid = options.id
     //load review
     app.o2CourseReview(courseid, (res) => {
         res.dateStr = res.date.replace(/-/g, '/').substring(5)
-
         that.setData({
           coursereview: res,
           editedReview: res.coach_review,
           question: res.question.split('|')
         })
-        app.o2CourseHistoryGet(res.customer_detail.name, function(data){
-            that.setData({
-              history: data
-            })
-        }, function() {
-
-        })
-
+      that.loadEvalTarget(res.customer);
+      that.loadCustomerTarget(res.customer);
+      that.setData({customer: res.customer})
+      app.loadCustomerTips(res.customer, function(data){
+          that.setData({tips: data})
+      })
+      app.loadRanking(res.customer, function(data){
+        that.setData({rank: app.globalData.ranking.rank})
+      })
+      that.loadHistory(year, month, res.customer)
+      that.onReachBottom()
         app.getUserInfo(() => {
           app.o2GetUser(app.globalData.openid,
             () => {
@@ -145,6 +228,7 @@ Page({
             })
         })
       },
+      
       (res) => {
         console.log("get course review failed")
       })
@@ -194,7 +278,18 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-
+    var that = this
+    var month = that.data.month - 1
+    var year = that.data.year
+    if( month <= 0 ){
+      year -= 1
+      month = 12 + month
+    }
+    that.setData({
+      year: year,
+      month: month
+    })
+    that.loadHistory(year, month, that.data.customer)
   },
 
   /**
@@ -202,6 +297,7 @@ Page({
    */
   onShareAppMessage: function() {
     var that = this
+   
     this.setData({
       showConfirm: true,
       showEdit: false,
@@ -214,11 +310,15 @@ Page({
     newCourse.customer = newCourse.customer_detail.name
     newCourse.user_confirmed = false
     newCourse.coach_review = this.data.editedReview
-    app.o2CourseReviewUpdate(newCourse.course, newCourse, null, null)
-
+  
+    if (app.globalData.userInfo.detail.iscoach) {
+      app.o2CourseReviewUpdate(newCourse.course, newCourse, null, null)
+    } 
+    that.determineDisplay()
     return {
       title: '课程确认',
       path: 'pages/coursereview/coursereview?id=' + this.data.coursereview.course,
+      imageUrl: "http://static.o2-fit.com/confirm.png",
       success: function() {
         console.log("success")
       },
@@ -226,10 +326,8 @@ Page({
         console.log("fail")
       },
       complete: function() {
-        that.determineDisplay()
+       
       }
     }
-
   }
-
 })

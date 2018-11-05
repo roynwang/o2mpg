@@ -34,7 +34,7 @@ Page({
     return {
       title: "训练总结×" + that.data.course.customerprofile.displayname,
       path: 'pages/coursedetail/coursedetail?id=' + that.data.courseid,
-      imageUrl: "https://dn-o2fit.qbox.me/share_cover.png"
+      imageUrl: "http://static.o2-fit.com/share_cover.png"
     };
   },
   /**

@@ -1,21 +1,23 @@
 <!--pages/coursereview/coursereview.wxml-->
-<view>
+<view class="bg">
   <view wx:if="{{!showList && showConfirm}}" class="confirm-comments-card">
     <view class="course-label">
-      <image style="border-radius: 50%;height:80rpx;width:80rpx;"src="{{coursereview.coach_detail.custom_avatar}}"></image>
+      <image style="border-radius: 50%;height:80rpx;width:80rpx;" src="{{coursereview.coach_detail.custom_avatar}}"></image>
       <text style="font-size: 1.2rem; margin-left: 20rpx; color: rgba(255,255,255,0.85);">{{coursereview.coach_detail.displayname}}</text>
       <text style="font-size: 1rem; margin-right: 20rpx; color: rgba(255,255,255,0.85);text-align:right;flex:1;">{{coursereview.date}}</text>
     </view>
     <view class="button-view {{coursereview.user_confirmed?'':'incompleted'}}">
       <text style="position:absolute;top:16%;width:88%;">{{editedReview}}</text>
       <button wx:if="{{showConfirmButton}}" class="customer-confirm" bindtap="confirmCourse">课程确认</button>
-      <view wx:if="{{!showConfirmButton}}" class="questionair">
+      <view wx:if="{{!showConfirmButton && coursereview.question.length > 0}}" class="questionair">
         <text style="padding: 20rpx">{{question[0]}}</text>
         <view class="button-group">
-            <button bindtap="questionairY" class="{{question[1].length>3?'small':'' }}">{{question[1]}}</button>
-             <button bindtap="questionairN" class="{{question[2].length>3?'small':'' }}">{{question[2]}}</button>
+          <button bindtap="questionairY" class="{{question[1].length>3?'small':'' }}">{{question[1]}}</button>
+          <button bindtap="questionairN" class="{{question[2].length>3?'small':'' }}">{{question[2]}}</button>
         </view>
-        <view style="width:100%;text-aligh:right;filter:none;margin-top:40rpx"><text bindtap="questionairSkip" style="float:right;font-size:1rem;font-weight:600;color:white;border-bottom:2rpx solid white;">跳过 > </text></view>
+        <view style="width:100%;text-aligh:right;filter:none;margin-top:40rpx">
+          <text bindtap="questionairSkip" style="float:right;font-size:1rem;font-weight:600;color:white;border-bottom:2rpx solid white;">跳过 > </text>
+        </view>
       </view>
     </view>
   </view>
@@ -23,14 +25,68 @@
     <textarea bindinput="bindinput" value="{{editedReview}}" style="width:inherit; margin:10px;border:1px solid #ccc"></textarea>
     <button bindtap="share" open-type='share' style="background:#4fd2c2;color:white;margin:10px;">保存并分享</button>
   </view>
-  <view wx:for="{{history}}" class="comments-card {{showList?'':'blur'}}">
-   <view class="course-label">
-      <image style="border-radius: 50%;height:80rpx;width:80rpx;"src="{{coursereview.coach_detail.custom_avatar}}"></image>
-      <text style="font-size: 1.2rem; margin-left: 20rpx; color: rgba(255,255,255,0.85);">{{item.coach_detail.displayname}}</text>
-      <text style="font-size: 1rem; margin-right: 20rpx; color: rgba(255,255,255,0.85); text-align:right;flex:1;">{{item.date}}</text>
+
+  <view class="customer-target-frame">
+    <view bindtap="showRankingList" class="customer-ranking">本月排名 <span>{{rank < 0 ? '?' : rank}}</span> ›</view>
+    <view class="customer-target">
+      <view class="customer-target-date">
+        <image style="width:1.2rem;height:1.2rem;position:relative;top:8rpx;right:10rpx;" src="http://static.o2-fit.com/star.png"/>
+        <view style="display:inline-block;height:1.2rem;position:relative;bottom:4rpx;left:4px;">难度 {{targets.length > 0 ? targets[0].rate : " ? "}}</view>
+      </view>
+      <view class="customer-target-text">
+        {{targets.length > 0 ? targets[0].target : "还没有设定目标"}}
+      </view>
     </view>
-    <view style="padding-top:20px;">
-      {{item.coach_review}}
+    <view class="eval-date-text">
+      <view style="text-align:left;padding-left:44rpx" >距离下次测量还有 {{eval.before_day}} 天</view>
+      <view style="text-align:right;padding-right:20rpx;" bindtap='showPersonalData'>
+        <image src="/res/calendar.png" style="width:26rpx;height:26rpx;position:relative;margin-right:12rpx;top:2rpx;"></image><text style="font-weight:900;margin-right:20rpx">{{eval.nextCheckDay}}</text>  <text style="font-size:0.6rem;">历史 ›</text></view>
     </view>
+    <view class="target-progress">
+      <view class="target-done" style="width:{{eval.percentage}}%"></view>
     </view>
+  </view>
+   <view wx:if="{{tips.text}}" class="tips {{showList?'':'blur'}}">
+    <span><image wx:if="{{tips.image}}" src="{{tips.image}}?v=11"></image>{{tips.text}}</span>
+    </view>
+  <view wx:for="{{history}}" wx:for-index='p' class="new-comments-card {{showList?'':'blur'}}">
+    <view class="new-comments-card-left">
+      <view class="circle"></view>
+      <view class="month">{{item.month}}</view>
+      <view class="day">{{item.day}}</view>
+    </view>
+    <view class="new-comments-card-right">
+      <view class="new-comments-card-frame {{item.event_type}}">
+        <view class="coach">
+          <image class="title-avatar" src="{{item.title_avatar}}?v=1"></image>
+          <view class="coach-name">
+            <text class="{{item.event_type}}">{{item.title}}</text>
+          </view>
+            <image bindtap="showCourseDetail" data-link="{{item.link}}" wx:if="{{item.event_type=='review'}}" src="http://static.o2-fit.com/more.png" style="width:60rpx;height:60rpx"/>
+        </view>
+        <text class="coach-review"> {{item.body_text}}</text>
+        <image data-index="{{p}}" class="photo" wx:for="{{item.body_images}}" src="{{item}}?imageView2/1/w/100/h/100" bindtap="showPic" data-i="{{index}}"></image>
+        <view wx:if="{{item.event_type == 'customerkpi'}}" class="rate-group">
+          <view class="rate-title">训练评分</view>
+          <view class="rate-bar">
+            <view class="score {{item.train_score >= 1 ?'active':''}}"></view>
+            <view class="score {{item.train_score >= 2 ?'active':''}}"></view>
+            <view class="score {{item.train_score >= 3 ?'active':''}}"></view>
+            <view class="score {{item.train_score >= 4 ?'active':''}}"></view>
+            <view class="score {{item.train_score >= 5 ?'active':''}}"></view>
+          </view>
+        </view>
+         <view wx:if="{{item.event_type == 'customerkpi'}}" class="rate-group">
+          <view class="rate-title">饮食评分</view>
+          <view class="rate-bar">
+            <view class="score {{item.diet_score >= 1 ?'active':''}}"></view>
+            <view class="score {{item.diet_score >= 2 ?'active':''}}"></view>
+            <view class="score {{item.diet_score >= 3 ?'active':''}}"></view>
+            <view class="score {{item.diet_score >= 4 ?'active':''}}"></view>
+            <view class="score {{item.diet_score >= 5 ?'active':''}}"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
 </view>
