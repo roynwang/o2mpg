@@ -183,6 +183,9 @@ page {
   height: 60rpx;
   width: 60rpx;
 }
+.weibo .title-avatar {
+  display: none
+}
 
 .new-comments-card-frame .coach-name {
   top: 6rpx;
@@ -204,8 +207,8 @@ page {
 }
 
 .customer-target-date {
-  color: white;
-  background: #f5a623;
+  color: #333;
+  background: white;
   font-size: 0.84rem;
   padding: 0rpx 20rpx;
   line-height: 1.2rem;
@@ -259,6 +262,9 @@ page {
   color: white;
   padding: 0rpx 20rpx;
   border-radius: 8rpx;
+}
+.coach-name text.weibo {
+  display: none;
 }
 
 .coach-name text.target_create {
@@ -370,11 +376,59 @@ page {
 
 .customer-ranking span {
   font-weight: 900;
-  color: #fff;
+  color: #42d2c2;
   width: 1.1rem;
   height: 1.1rem;
-  background: #42d2c2;
   display: inline-block;
   text-align: center;
   border-radius: 50%;
+  border: 4rpx solid #42d2c2;
+}
+
+.user-comments-edit {
+  min-height: 60rpx;
+  position: relative;
+}
+
+.say-btn {
+  position: absolute;
+  background: #42d2c2;
+  right: 0;
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+  box-shadow: 4rpx 6rpx 6rpx 2rpx #ddd;
+  color: white;
+  font-size: 0.9rem;
+  padding: 4rpx 16rpx 4rpx 24rpx;
+  top: 250rpx;
+  z-index: 100;
+}
+
+.user-comments-edit textarea {
+  background: white;
+  box-shadow: 4rpx 6rpx 6rpx 2rpx #ddd;
+  padding: 10rpx 16rpx;
+  border-radius: 4rpx;
+  color: #333;
+  margin: 0 auto 30rpx auto;
+}
+
+.save-btn {
+  position: absolute;
+  right: 70rpx;
+  z-index: 100;
+  color: white;
+  background: #42d2c2;
+  padding: 4rpx 16rpx;
+  bottom: 6px;
+  border-radius: 6rpx;
+  font-size: 0.9rem;
+}
+.customer-say-sth {
+}
+.customer-say-sth image{
+  width: 60rpx;
+  height: 60rpx;
+  padding-right: 30rpx;
+  color: #777;
 }

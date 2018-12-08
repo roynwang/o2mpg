@@ -26,7 +26,7 @@
     <button bindtap="share" open-type='share' style="background:#4fd2c2;color:white;margin:10px;">保存并分享</button>
   </view>
 
-  <view class="customer-target-frame">
+  <view class="customer-target-frame {{showList?'':'blur'}}">
     <view bindtap="showRankingList" class="customer-ranking">本月排名 <span>{{rank < 0 ? '?' : rank}}</span> ›</view>
     <view class="customer-target">
       <view class="customer-target-date">
@@ -49,6 +49,12 @@
    <view wx:if="{{tips.text}}" class="tips {{showList?'':'blur'}}">
     <span><image wx:if="{{tips.image}}" src="{{tips.image}}?v=11"></image>{{tips.text}}</span>
     </view>
+      <view class="say-btn" bindtap='userCommentActionTapped'>{{userCommentActionText}}</view>
+    <view class="user-comments-edit" wx:if="{{showUserComments}}">
+      <view>还没支持emoji表情 Σ( ° △ °|||)︴</view>
+      <view bindtap='onSaySomthingSave' class="save-btn">发送</view>
+      <textarea  placeholder='{{saySthPlaceholder}}' value="{{saySomethingText}}" bindinput='onSaySomthingEdit'></textarea>
+    </view>
   <view wx:for="{{history}}" wx:for-index='p' class="new-comments-card {{showList?'':'blur'}}">
     <view class="new-comments-card-left">
       <view class="circle"></view>
@@ -64,7 +70,12 @@
           </view>
             <image bindtap="showCourseDetail" data-link="{{item.link}}" wx:if="{{item.event_type=='review'}}" src="http://static.o2-fit.com/more.png" style="width:60rpx;height:60rpx"/>
         </view>
+        <image wx:if="{{item.event_type == 'weibo'}}" style="display:inline-block;width:60rpx;height:60rpx;padding-right:30rpx" src="http://static.o2-fit.com/quotation.png"></image>
+
+        <image wx:if="{{item.event_type == 'review'}}" style="display:inline-block;width:40rpx;height:40rpx;padding-right:10rpx;opacity:0.6" src="http://static.o2-fit.com/quote-left.png"></image>
         <text class="coach-review"> {{item.body_text}}</text>
+        <image wx:if="{{item.event_type == 'review'}}" style="display:inline-block;width:40rpx;height:40rpx;padding-left:20rpx;top:8rpx;position:relative;opacity:0.6" src="http://static.o2-fit.com/quote-right.png"></image>
+
         <image data-index="{{p}}" class="photo" wx:for="{{item.body_images}}" src="{{item}}?imageView2/1/w/100/h/100" bindtap="showPic" data-i="{{index}}"></image>
         <view wx:if="{{item.event_type == 'customerkpi'}}" class="rate-group">
           <view class="rate-title">训练评分</view>

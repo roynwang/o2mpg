@@ -12,6 +12,8 @@ Page({
     month: 0,
     eval: {},
     targets:[],
+    userCommentActionText: "说点啥",
+    showUserComments: false,
     coursereview: null,
     showConfirm: false,
     showEdit: false,
@@ -20,7 +22,45 @@ Page({
     showConfirmButton: true,
     question: [],
     tips: { image: '', text: ''},
-    rank: "?"
+    rank: "?",
+    saySomethingText:""
+  },
+  onSaySomthingEdit: function(e){
+    this.setData({
+      saySomethingText: e.detail.value
+    })
+  },
+  onSaySomthingSave: function() {
+    var that = this
+    app.o2PostWeibo(
+      that.data.customer,
+      that.data.saySomethingText,
+      function(res){
+          that.setData({
+            history: [],
+            showUserComments: false,
+            userCommentActionText: "说点啥"
+          })
+          that.onLoad(that.data.options)
+      },
+      function(){
+
+      }
+    )
+  },
+  userCommentActionTapped: function(){
+    if (!this.data.showUserComments) {
+      this.setData({
+        showUserComments: true,
+        userCommentActionText: "x"
+      });
+    } else {
+      this.setData({
+        showUserComments: false,
+        userCommentActionText: "说点啥"
+      });
+    }
+
   },
   loadEvalTarget: function(name) {
     var that = this
@@ -172,13 +212,14 @@ Page({
       urls: that.data.history[index].body_images
     })
   },
-  loadHistory: function(year, month, customer) {
+  loadHistory: function(year, month, customer, onsuccess) {
     var that = this
     app.o2TrainHistoryGet(customer, that.data.year, that.data.month, function (data) {
       history = that.data.history.concat(data)
       that.setData({
         history: history
       })
+      onsuccess && onsuccess()
       
     }, function () {
 
@@ -192,7 +233,16 @@ Page({
     var year = date.getFullYear()
     var month = date.getMonth() + 1
     var that = this
+    var placeholders = [
+      "不要吝啬表扬你的教练 ♪(^∇^*)",
+      "pick喜欢的小哥哥小姐姐啊 ╰(*°▽°*)╯",
+      "尽情怼，怼完小心哦 (～￣(OO)￣)ブ"
+    ]
+    let i = Date.parse(new Date()) % (placeholders.length - 1) 
+    let saySthPlaceholder = placeholders[i];
     that.setData({
+      saySthPlaceholder: saySthPlaceholder,
+      options: options,
       year: year,
       month: month
     })
@@ -215,8 +265,10 @@ Page({
       app.loadRanking(res.customer, function(data){
         that.setData({rank: app.globalData.ranking.rank})
       })
-      that.loadHistory(year, month, res.customer)
-      that.onReachBottom()
+      that.loadHistory(year, month, res.customer, function(){
+        that.onReachBottom()
+      })
+      
         app.getUserInfo(() => {
           app.o2GetUser(app.globalData.openid,
             () => {

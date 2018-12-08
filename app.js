@@ -46,6 +46,26 @@ Date.prototype.Format = function (fmt) { //author: meizz
 }
 
 App({
+  o2PostWeibo: function(name, content, onsuccess, onfail){
+    var that = this
+    wx.request({
+      url: host + '/' + name + '/weibo/',
+      header: {
+        'content-type': 'application/json',
+      },
+      data: {
+        title: "user_comments",
+        brief: content,
+      },
+      method: "post",
+      success: function (res) {
+        typeof onsuccess == "function" && onsuccess(res.data)
+      },
+      fail: function (res) {
+        typeof onfail == "function" && onfail()
+      }
+    })
+  },
   o2GetDiscount: function(phone, date,onsuccess, onfail){
     var that = this
      wx.request({
