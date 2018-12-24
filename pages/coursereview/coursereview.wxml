@@ -49,9 +49,9 @@
    <view wx:if="{{tips.text}}" class="tips {{showList?'':'blur'}}">
     <span><image wx:if="{{tips.image}}" src="{{tips.image}}?v=11"></image>{{tips.text}}</span>
     </view>
-      <view class="say-btn" bindtap='userCommentActionTapped'>{{userCommentActionText}}</view>
+      <view class="say-btn {{showList?'':'blur'}}" bindtap='userCommentActionTapped'>{{userCommentActionText}}</view>
     <view class="user-comments-edit" wx:if="{{showUserComments}}">
-      <view>还没支持emoji表情 Σ( ° △ °|||)︴</view>
+      <!-- <view class="emoji-tips">还没支持emoji表情 Σ( ° △ °|||)︴</view> -->
       <view bindtap='onSaySomthingSave' class="save-btn">发送</view>
       <textarea  placeholder='{{saySthPlaceholder}}' value="{{saySomethingText}}" bindinput='onSaySomthingEdit'></textarea>
     </view>

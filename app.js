@@ -59,6 +59,10 @@ App({
       },
       method: "post",
       success: function (res) {
+        if (res.statusCode == 500) {
+          typeof onfail == "function" && onfail()
+          return
+        }
         typeof onsuccess == "function" && onsuccess(res.data)
       },
       fail: function (res) {

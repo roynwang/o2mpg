@@ -401,7 +401,7 @@ page {
   font-size: 0.9rem;
   padding: 4rpx 16rpx 4rpx 24rpx;
   top: 250rpx;
-  z-index: 100;
+  z-index: 1000;
 }
 
 .user-comments-edit textarea {
@@ -431,4 +431,12 @@ page {
   height: 60rpx;
   padding-right: 30rpx;
   color: #777;
+}
+.emoji-tips {
+  position:absolute;
+  bottom:16rpx;
+  left:80rpx;
+  z-index:100;
+  font-size:0.8rem;
+  color:#999;
 }

@@ -47,13 +47,13 @@
 					"id": 2,
 					"name": "计划分享0418",
 					"pathName": "pages/coursedetail/coursedetail",
-					"query": "id=76001"
+					"query": "id=109928"
 				},
 				{
 					"id": 3,
 					"name": "review",
 					"pathName": "pages/coursereview/coursereview",
-					"query": "id=106065"
+					"query": "id=109912"
 				}
 			]
 		}

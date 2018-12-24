@@ -23,7 +23,8 @@ Page({
     question: [],
     tips: { image: '', text: ''},
     rank: "?",
-    saySomethingText:""
+    saySomethingText:"",
+    saySthPlaceholder: ""
   },
   onSaySomthingEdit: function(e){
     this.setData({
@@ -32,10 +33,15 @@ Page({
   },
   onSaySomthingSave: function() {
     var that = this
+    wx.showLoading({
+      title: '正在提交'
+    })
     app.o2PostWeibo(
       that.data.customer,
       that.data.saySomethingText,
       function(res){
+          wx.hideLoading()
+          wx.showToast({ icon: 'success', title: "成功" })
           that.setData({
             history: [],
             showUserComments: false,
@@ -44,11 +50,21 @@ Page({
           that.onLoad(that.data.options)
       },
       function(){
-
+        wx.hideLoading()
+        wx.showToast({ icon: 'none', title:"失败：再试试~"})
       }
     )
   },
   userCommentActionTapped: function(){
+    var that = this
+    if (that.data.coursereview.customer_detail.openid != app.globalData.openid) {
+      wx.showToast({
+        title: '用户信息不符',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
     if (!this.data.showUserComments) {
       this.setData({
         showUserComments: true,
@@ -235,10 +251,10 @@ Page({
     var that = this
     var placeholders = [
       "不要吝啬表扬你的教练 ♪(^∇^*)",
-      "pick喜欢的小哥哥小姐姐啊 ╰(*°▽°*)╯",
-      "尽情怼，怼完小心哦 (～￣(OO)￣)ブ"
+      "pick你的小哥哥小姐姐 ╰(*°▽°*)╯",
+      "尽情怼，怼完小心 (～￣(OO)￣)ブ"
     ]
-    let i = Date.parse(new Date()) % (placeholders.length - 1) 
+    let i = Date.parse(new Date()) % (placeholders.length) 
     let saySthPlaceholder = placeholders[i];
     that.setData({
       saySthPlaceholder: saySthPlaceholder,
