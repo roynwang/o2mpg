@@ -1,7 +1,6 @@
 // pages/coursereview/coursereview.js
 var app = getApp()
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -33,6 +32,13 @@ Page({
   },
   onSaySomthingSave: function() {
     var that = this
+    if (that.data.saySomethingText.length == 0) {
+      wx.showToast({
+        icon: 'none',
+        title: '不能为空',
+      })
+      return
+    }
     wx.showLoading({
       title: '正在提交'
     })

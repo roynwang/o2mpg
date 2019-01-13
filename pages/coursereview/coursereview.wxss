@@ -1,7 +1,7 @@
 /* pages/coursereview/coursereview.wxss */
 
 page {
-  background: rgb(242, 245, 248);
+  background: rgb(248, 248, 248);
 }
 
 .questionair {
@@ -128,7 +128,6 @@ page {
   flex: 1;
   border-right: 10rpx dotted #ccc;
   display: flex;
-  flex-direction: column;
 }
 
 .new-comments-card-left .month, .new-comments-card-left .day {
@@ -153,7 +152,6 @@ page {
   height: 26rpx;
   background: white;
   position: relative;
-  float: right;
   left: calc(100% - 15rpx);
   border-radius: 50%;
   border: 6rpx solid #ccc;
@@ -410,19 +408,20 @@ page {
   padding: 10rpx 16rpx;
   border-radius: 4rpx;
   color: #333;
-  margin: 0 auto 30rpx auto;
+  margin: 0 auto 10rpx auto;
 }
 
 .save-btn {
-  position: absolute;
-  right: 70rpx;
-  z-index: 100;
   color: white;
   background: #42d2c2;
   padding: 4rpx 16rpx;
-  bottom: 6px;
   border-radius: 6rpx;
   font-size: 0.9rem;
+  width: 2.5rem;
+  text-align: center;
+  float: right;
+  margin-right:60rpx;
+  box-shadow: 4rpx 6rpx 6rpx 2rpx #ddd;
 }
 .customer-say-sth {
 }

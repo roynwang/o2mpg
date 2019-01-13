@@ -9,7 +9,7 @@
     <view class="button-view {{coursereview.user_confirmed?'':'incompleted'}}">
       <text style="position:absolute;top:16%;width:88%;">{{editedReview}}</text>
       <button wx:if="{{showConfirmButton}}" class="customer-confirm" bindtap="confirmCourse">课程确认</button>
-      <view wx:if="{{!showConfirmButton && coursereview.question.length > 0}}" class="questionair">
+      <!-- <view wx:if="{{!showConfirmButton && coursereview.question.length > 0}}" class="questionair">
         <text style="padding: 20rpx">{{question[0]}}</text>
         <view class="button-group">
           <button bindtap="questionairY" class="{{question[1].length>3?'small':'' }}">{{question[1]}}</button>
@@ -18,7 +18,7 @@
         <view style="width:100%;text-aligh:right;filter:none;margin-top:40rpx">
           <text bindtap="questionairSkip" style="float:right;font-size:1rem;font-weight:600;color:white;border-bottom:2rpx solid white;">跳过 > </text>
         </view>
-      </view>
+      </view> -->
     </view>
   </view>
   <view wx:if="{{showEdit}}" class="edit-coments-card">
@@ -52,14 +52,20 @@
       <view class="say-btn {{showList?'':'blur'}}" bindtap='userCommentActionTapped'>{{userCommentActionText}}</view>
     <view class="user-comments-edit" wx:if="{{showUserComments}}">
       <!-- <view class="emoji-tips">还没支持emoji表情 Σ( ° △ °|||)︴</view> -->
-      <view bindtap='onSaySomthingSave' class="save-btn">发送</view>
+   
       <textarea  placeholder='{{saySthPlaceholder}}' value="{{saySomethingText}}" bindinput='onSaySomthingEdit'></textarea>
+      <view style="min-height:2rem;">
+         <view bindtap='onSaySomthingSave' class="save-btn">发送</view>
+         </view>
     </view>
   <view wx:for="{{history}}" wx:for-index='p' class="new-comments-card {{showList?'':'blur'}}">
     <view class="new-comments-card-left">
+      <view style="flex:1">
       <view class="circle"></view>
       <view class="month">{{item.month}}</view>
       <view class="day">{{item.day}}</view>
+      </view>
+      <view class="v-hr"></view>
     </view>
     <view class="new-comments-card-right">
       <view class="new-comments-card-frame {{item.event_type}}">
@@ -68,7 +74,7 @@
           <view class="coach-name">
             <text class="{{item.event_type}}">{{item.title}}</text>
           </view>
-            <image bindtap="showCourseDetail" data-link="{{item.link}}" wx:if="{{item.event_type=='review'}}" src="http://static.o2-fit.com/more.png" style="width:60rpx;height:60rpx"/>
+            <!-- <image bindtap="showCourseDetail" data-link="{{item.link}}" wx:if="{{item.event_type=='review'}}" src="http://static.o2-fit.com/more.png" style="width:60rpx;height:60rpx"/> -->
         </view>
         <image wx:if="{{item.event_type == 'weibo'}}" style="display:inline-block;width:60rpx;height:60rpx;padding-right:30rpx" src="http://static.o2-fit.com/quotation.png"></image>
 
