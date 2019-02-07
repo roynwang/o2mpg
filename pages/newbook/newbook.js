@@ -102,43 +102,47 @@ Page({
    */
   onLoad: function (options) {
     var that = this
-    let availableCoaches = app.globalData.gymInfo.coaches_set.filter(function (c) {
-      return c.can_book
-    })
-    if(options.mode == "create"){
-      this.setData({
-        mode: options.mode,
-        orderId: options.orderId,
-        courseId: options.courseId || false,
-        date: new Date().Format("yyyy-MM-dd"),
-        coaches: availableCoaches
-      })
-      this.loadAvailableTime()
-    }
-    if(options.mode == "reschedule"){
-        //load schedule
-      app.loadPtCourseItem(options.courseId, function(data){
-        // get target coach
-        let selected = 0;
-        for (let i = 0; i < availableCoaches.length; i++){
-          if(availableCoaches[i].name == data.coachprofile.name){
-            selected = i
-            break
-          }
-        }
-        // assign value
+    app.o2GetUserAvailableCoaches(app.globalData.userInfo.detail.name,
+    function(data){
+      let availableCoaches = data.filter(function (item) { return item.can_book})
+      if (options.mode == "create") {
         that.setData({
           mode: options.mode,
-          orderId: data.order,
-          courseId: options.courseId,
-          date: data.date,
-          selectedCoach: selected,
+          orderId: options.orderId,
+          courseId: options.courseId || false,
+          date: new Date().addDays(1).Format("yyyy-MM-dd"),
           coaches: availableCoaches
         })
         that.loadAvailableTime()
-      })
-    }
+      }
+      if (options.mode == "reschedule") {
+        //load schedule
+        app.loadPtCourseItem(options.courseId, function (data) {
+          // get target coach
+          let selected = 0;
+          for (let i = 0; i < availableCoaches.length; i++) {
+            if (availableCoaches[i].name == data.coachprofile.name) {
+              selected = i
+              break
+            }
+          }
+          // assign value
+          that.setData({
+            mode: options.mode,
+            orderId: data.order,
+            courseId: options.courseId,
+            date: data.date,
+            selectedCoach: selected,
+            coaches: availableCoaches
+          })
+          that.loadAvailableTime()
+        })
+      }
 
+
+    })
+  
+    
    
     // this.setData({
     //   timeMap: app.TimeMap

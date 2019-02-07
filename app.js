@@ -315,6 +315,13 @@ App({
         } else {
          
           res.data.forEach(function (item) {
+            let detailJSON = JSON.parse(item.detail)
+            let title = "1 V 1 训练"
+            detailJSON.forEach(function(item){
+              if(item.contenttype == "comments") {
+                title = item.comments
+              }
+            })
             var d = new Date(item.date)
             var tmp = {
               "id": item.id,
@@ -327,7 +334,7 @@ App({
               "confirming": false,
               "coach": item.coachprofile.displayname,
               "customer": item.customerprofile.displayname,
-              "title": "1 V 1 普通训练",
+              "title": title,
               "hide_cancel": true,
               "completed": item.done,
               "price":item.price,
@@ -647,6 +654,18 @@ o2CreateFirstTime:function(phone, course,onsuccess){
       },
       success: function (res) {
         res.data.detail = JSON.parse(res.data.detail)
+        typeof onsuccess == "function" && onsuccess(res.data)
+      }
+    })
+  },
+  o2GetUserAvailableCoaches: function(name, onsuccess) {
+    var url = host + "/" + name + "/coaches/"
+    wx.request({
+      url: url,
+      header: {
+        'content-type': 'application/json',
+      },
+      success: function (res) {
         typeof onsuccess == "function" && onsuccess(res.data)
       }
     })
