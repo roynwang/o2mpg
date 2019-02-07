@@ -46,6 +46,45 @@ Date.prototype.Format = function (fmt) { //author: meizz
 }
 
 App({
+  TimeMap: TimeMap,
+  o2CustomerCreateBook: function(coach, customer, orderId, date, hour, onsuccess, onfail) {
+    var that = this
+    let dateUrl = date.replace(/-/g, "")
+    // String = "\(self.ip)/\(user)/b/\(fdate)/
+    // self.create_data = [
+    //   "date": datestr,
+    //   "hour": hour,
+    //   "coach": coachid,
+    //   "custom": customerid,
+    //   "order": order!.id!
+    // ]
+
+    wx.request({
+      url: host + '/' + coach.name + '/b/' + dateUrl + '/',
+      header: {
+        'content-type': 'application/json',
+      },
+      data: {
+        date: date,
+        hour: hour,
+        coach: coach.id,
+        custom: customer.id,
+        order: orderId,
+      },
+      method: "post",
+      success: function (res) {
+        if (res.statusCode == 500) {
+          typeof onfail == "function" && onfail()
+          return
+        }
+        typeof onsuccess == "function" && onsuccess(res.data)
+      },
+      fail: function (res) {
+        typeof onfail == "function" && onfail()
+      }
+    })
+
+  },
   o2PostWeibo: function(name, content, onsuccess, onfail){
     var that = this
     wx.request({
@@ -190,6 +229,21 @@ App({
       }
     })
   },
+  o2GetUserAvailableOrder: function(name, onsuccess, onfail) {
+    var that = this
+    wx.request({
+      url: host + '/' + name + '/o/available/',
+      header: {
+        'content-type': 'application/json',
+      },
+      success: function (res) {
+        typeof onsuccess == "function" && onsuccess(res.data)
+      },
+      fail: function (res) {
+        typeof onfail == "function" && onfail()
+      }
+    })
+  },
   o2CancelBookedGroupCourse: function (id, onsuccess, onfail) {
     var that = this
     wx.request({
@@ -234,7 +288,11 @@ App({
     }
     var date = new Date()
     if(day != ''){
-      date = day
+      date = day   
+    }else {
+      if (!that.globalData.userInfo.detail.iscoach) {
+        date = date.addDays(7)
+      }
     }
     let delta = 30
     if(that.globalData.userInfo.detail.iscoach){
@@ -465,6 +523,25 @@ o2CreateFirstTime:function(phone, course,onsuccess){
       }
     })
   },
+  o2GetCoachAvailableHour: function(name, date, onsuccess, onfail){
+    var that = this
+    wx.request({
+      url: host + '/' + name + '/d/' + date.replace(/-/g, "") + '/',
+      header: {
+        'content-type': 'application/json',
+      },
+      success: function (res) {
+        if (res.statusCode == 404) {
+          onfail()
+        } else {
+          onsuccess(res.data)
+        }
+      },
+      fail: function (res) {
+        onfail()
+      }
+    })
+  },
   o2GetUserTrainSummary: function (name, gym,onsuccess, onfail) {
     var that = this
     wx.request({
@@ -550,6 +627,39 @@ o2CreateFirstTime:function(phone, course,onsuccess){
       },
       success: function (res) {
         that.globalData.gymInfo = res.data
+        typeof onsuccess == "function" && onsuccess(res.data)
+      }
+    })
+  },
+  saveNewPtCourseTime: function (courseId, coachId, date, hour, onsuccess) {
+    var url = host + "/s/" + courseId + "/patch/"
+    wx.request({
+      url: url,
+      method: "PUT",
+      data: {
+        id: courseId,
+        date: date,
+        hour: hour,
+        coach: coachId
+      },
+      header: {
+        'content-type': 'application/json',
+      },
+      success: function (res) {
+        res.data.detail = JSON.parse(res.data.detail)
+        typeof onsuccess == "function" && onsuccess(res.data)
+      }
+    })
+  },
+  cancelPtCourseItem: function (courseId, onsuccess) {
+    var url = host + "/s/" + courseId + "/"
+    wx.request({
+      url: url,
+      method: "DELETE",
+      header: {
+        'content-type': 'application/json',
+      },
+      success: function (res) {
         typeof onsuccess == "function" && onsuccess(res.data)
       }
     })

@@ -1,14 +1,13 @@
 <view class="bottom-bar">
-
-    <view bindtap="toggleTab" class="bottom-bar-item {{tabs['mainpage']}}" data-i="mainpage">
+  <view bindtap="toggleTab" class="bottom-bar-item {{tabs['mainpage']}}" data-i="mainpage">
     <image class="bar-icon-unselected" src="/res/profile.png" mode="aspectFill"></image>
     <image class="bar-icon-selected" src="/res/profile-active.png" mode="aspectFill"></image>
   </view>
 
-    <view bindtap="toggleTab" class="bottom-bar-item {{tabs['groupcourse']}}" data-i="groupcourse">
+  <!-- <view bindtap="toggleTab" class="bottom-bar-item {{tabs['groupcourse']}}" data-i="groupcourse">
     <image class="bar-icon-unselected" src="/res/home.png" mode="aspectFill"></image>
     <image class="bar-icon-selected" src="/res/home-active.png" mode="aspectFill"></image>
-  </view>
+  </view> -->
 
 
 
@@ -17,31 +16,30 @@
     <image class="bar-icon-selected" src="/res/dumbbell-active.png" mode="aspectFill"></image>
   </view>
 
-  <view data-i="video" bindtap="toggleTab" class="bottom-bar-item {{tabs['video']}}">
+  <!-- <view data-i="video" bindtap="toggleTab" class="bottom-bar-item {{tabs['video']}}">
     <image class="bar-icon-unselected" src="/res/video.png" mode="aspectFill"></image>
     <image class="bar-icon-selected" src="/res/video-active.png" mode="aspectFill"></image>
-  </view>
+  </view> -->
 
 
 </view>
 <view wx:if="{{tabs['mainpage'] == 'active'}}" style="position:fixed;width:100%;display:flex; flex-flow:row;top:0;background:#fff;z-index:1000;border-bottom:solid 4rpx #f3f3f3;box-shadow: 0rpx -3rpx 50rpx rgba(0,0,0,.1);">
-  <view style="flex-grow: 1;padding-left:60rpx;padding-bottom:40rpx;">
-    <text class="text-summary">
-      {{userInfo.nickName}}
-      <!--上次锻炼在 </text>
-      <text class="text-highlight">7</text>
-      <text class="text-summary" style="margin-left:10rpx">天前--></text>
-  </view>
-  <view bindtap="showMe" style="width:140rpx;padding-top:80rpx">
+  <view bindtap="showMe" style="width:140rpx;padding-top:72rpx;padding-left:30rpx">
     <view style="line-height:10rpx;height:4rpx;background:#666;width:40rpx;position:relative;left:20rpx;"></view>
     <view style="line-height:10rpx;height:4rpx;background:#666;width:60rpx;margin-top:16rpx"></view>
     <view style="line-height:10rpx;height:4rpx;background:#666;width:40rpx;position:relative;margin-top:16rpx"></view>
   </view>
+    <view style="flex-grow: 1;padding-bottom:50rpx;">
+    <text class="text-summary">
+      {{userInfo.nickName}}
+    </text>
+    <view wx:if="{{availableOrder != null}}" class="new-book-btn" bindtap='bookNew'>+</view>
+  </view>
 </view>
 
 
-<scroll-view wx:if="{{tabs['mainpage'] == 'active'}}" bindscrolltolower="loadMoreCourse" scroll-y="1" style="height:{{scrollHeight}}px;padding: 80rpx 0;background:white;">
-  <view style="height:120rpx"></view>
+<scroll-view wx:if="{{tabs['mainpage'] == 'active'}}" bindscrolltolower="loadMoreCourse" scroll-y="1" style="height:{{scrollHeight}}px;padding: 120rpx 0;background:white;">
+  <view style="height:80rpx"></view>
   <view class="section" hidden="{{user == null}}">
 
     <!--<view class="userinfo" style="display:flex;flex-flow:row">
@@ -62,30 +60,27 @@
         </view>
 
       </view>
-      <view wx:for="{{bookedGroupCourse}}" wx:key="id" class="booked-item {{!item.completed ?'pending':'completed'}}" bindtap="showtraindetail" data-i="{{item.id}}">
+      <view wx:for="{{bookedGroupCourse}}" class="booked-item {{!item.completed ?'pending':'completed'}}" bindtap="showtraindetail" data-i="{{item.id}}">
 
         <view class="date">
           <view class="day">{{item.day}}</view>
           <view class="month">{{item.month}}</view>
         </view>
         <view class="booked-item-detail">
-
-          <view class="course-time">
-            <text>{{item.title}}</text>
-            <view wx:if="{{ !item.hide_cancel&&!item.completed}}" data-i="{{index}}" bindtap="tapCancel" class="course-book-btn {{item.confirming?'confirm':''}}">{{item.confirming?'确认取消':'取消'}}</view>
-            <view wx:if="{{!item.confirming &&item.completed}}" class="course-book-btn" data-action="review" data-isbutton="1"  data-i="{{item.id}}">
-              <icon type="success_no_circle" size="10" color="#4fd2c2" style="line-height:10rpx;margin-right:4rpx;position:relative;right:5rpx;top:2rpx;" />已完成</view>
-                 <button wx:if="{{item.iscoach && !item.completed}}" class="course-book-btn" style="margin-left:8rpx" data-i="{{item.id}}"  data-isbutton="1" data-action="review" bindtap="editReview">
-             完成</button>
-             
-               <button wx:if="{{item.iscoach}}" style="margin-right:8rpx" class="course-book-btn" data-action="share" data-i="{{item.id}}" open-type="share" data-isbutton="1">
-             分享</button>
-          </view>
           <view class="course-desc">
             <text style="display:inline-block"> {{item.hour_str}} × {{item.iscoach?item.customer:item.coach}}</text>
-            <!-- <text class="course-price" wx:if="{{item.price!=0 && !item.iscoach}}">{{item.price}}-{{item.discount}}</text> -->
           </view>
-
+          <view class="course-time">
+            <text>{{item.title}}</text>
+            
+          </view>
+          <view class="course-action-btns">
+          <view wx:if="{{ !item.hide_cancel&&!item.completed}}" data-i="{{index}}" bindtap="tapCancel" class="course-book-btn {{item.confirming?'confirm':''}}">{{item.confirming?'确认取消':'取消'}}</view>
+            <button wx:if="{{!item.confirming &&item.completed}}" class="course-book-btn" data-action="review" data-isbutton="1" data-i="{{item.id}}">查看</button>
+            <button wx:if="{{item.iscoach}}"  class="course-book-btn share" data-action="share" data-i="{{item.id}}" open-type="share" data-isbutton="1">分享</button>
+            <button wx:if="{{!(!item.confirming &&item.completed)}}" class="course-book-btn" data-i="{{index}}" data-action="cancel" bindtap='tapCancel'>{{item.confirming?'确认取消':'取消'}}</button>
+            <button bindtap='reschedule' class="course-book-btn share" wx:if="{{!(!item.confirming &&item.completed)}}" data-i="{{item.id}}" data-isbutton="1">改期</button>
+          </view>
         </view>
       </view>
     </view>
@@ -148,27 +143,29 @@
 </scroll-view>
 
 
-<view   hidden="{{tabs['video'] != 'active'}}" class="video-search-section">
-    <view class="active" bindtap="toggleMuscle" style="padding-left:20rpx;color:#777;font-weight:900;z-index:10001"><text>类别: {{selected_keyword}}</text>
-      <text style="text-align:right;position:absolute;right:100rpx;font-weight:900;color:#777;"><text wx:if="{{hide_selection}}" style="position:relative;right:-4rpx;">○</text>
-      <text wx:if="{{!hide_selection}}" style="position:relative;top:-4rpx;color:#4fd2c2">×</text></text>
-    </view>
-<view hidden="{{hide_selection}}" style="margin-top:20rpx;padding:20rpx 10rpx 6rpx 10rpx;border-top:#aaa dashed 2rpx;">
-<view   wx:for="{{keywords}}" data-i="{{index}}" class="video-keyword">
-  <view wx:if="{{item == selected_keyword}}"
-   class="active">{{item}}</view>
-  <view bindtap="tapKeyword" data-i="{{item}}" wx:if="{{item != selected_keyword}}">{{item}}</view>
+<view hidden="{{tabs['video'] != 'active'}}" class="video-search-section">
+  <view class="active" bindtap="toggleMuscle" style="padding-left:20rpx;color:#777;font-weight:900;z-index:10001">
+    <text>类别: {{selected_keyword}}</text>
+    <text style="text-align:right;position:absolute;right:100rpx;font-weight:900;color:#777;"><text wx:if="{{hide_selection}}" style="position:relative;right:-4rpx;">○</text>
+    <text wx:if="{{!hide_selection}}" style="position:relative;top:-4rpx;color:#4fd2c2">×</text></text>
   </view>
-</view>
+  <view hidden="{{hide_selection}}" style="margin-top:20rpx;padding:20rpx 10rpx 6rpx 10rpx;border-top:#aaa dashed 2rpx;">
+    <view wx:for="{{keywords}}" data-i="{{index}}" class="video-keyword">
+      <view wx:if="{{item == selected_keyword}}" class="active">{{item}}</view>
+      <view bindtap="tapKeyword" data-i="{{item}}" wx:if="{{item != selected_keyword}}">{{item}}</view>
+    </view>
+  </view>
 </view>
 
 
 <scroll-view hidden="{{tabs['video'] != 'active'}}" bindscrolltolower="loadMoreVideo" scroll-y="1" style="height:{{scrollHeight}}px;background:white;padding-bottom:0rpx;padding-top:75rpx;">
-  <view  wx:for="{{videos}}" data-i="{{index}}" class="video-item" bindtap="showVideo">
-  <view class="video-image">
-   <image bindtap="playvideo" style="width:inherit;height:inherit" src="{{item.pic}}" mode="aspectFill"></image>
-   <view style="padding-left:20rpx;"><text style="border-bottom:6rpx solid #4fd2c2;font-size:0.9rem;color:#777">{{item.keywords}}</text></view>
-  </view>
+  <view wx:for="{{videos}}" data-i="{{index}}" class="video-item" bindtap="showVideo">
+    <view class="video-image">
+      <image bindtap="playvideo" style="width:inherit;height:inherit" src="{{item.pic}}" mode="aspectFill"></image>
+      <view style="padding-left:20rpx;">
+        <text style="border-bottom:6rpx solid #4fd2c2;font-size:0.9rem;color:#777">{{item.keywords}}</text>
+      </view>
+    </view>
     <view class="video-info">
       <text class="video-title">{{item.title}}
       </text>
@@ -185,44 +182,44 @@
   </view>-->
   <view class="day-course-list">
     <view class="days">
-       <view data-i="{{index}}" wx:for="{{days}}" bindtap="tapDate">
-      <view  class="date" hidden="{{item.selected}}">
-        <view class="day">{{item.day}}</view>
-        <view class="month">{{item.month}}</view>
-      </view>
-      <view class="date active" hidden="{{!item.selected}}">
-        <view class="day">{{item.day}}</view>
-        <view class="month">{{item.month}}</view>
-      </view>
+      <view data-i="{{index}}" wx:for="{{days}}" bindtap="tapDate">
+        <view class="date" hidden="{{item.selected}}">
+          <view class="day">{{item.day}}</view>
+          <view class="month">{{item.month}}</view>
+        </view>
+        <view class="date active" hidden="{{!item.selected}}">
+          <view class="day">{{item.day}}</view>
+          <view class="month">{{item.month}}</view>
+        </view>
       </view>
     </view>
     <view class="course-list">
       <view hidden="{{courselist.length !=0}}" style="text-align:center;margin-top:30%;"> 暂无课程,换一天试试 </view>
-      <view class="course"  wx:for="{{courselist}}" >
+      <view class="course" wx:for="{{courselist}}">
         <view wx:if="{{userInfo.detail.iscoach}}" style="font-size:0.8rem;line-height:0.8rem;position:absolute;">
-        <view  style="display:inline-block" wx:for="{{item.booked}}">{{item.customer_detail.displayname + "/"}}</view>
+          <view style="display:inline-block" wx:for="{{item.booked}}">{{item.customer_detail.displayname + "/"}}</view>
         </view>
-       <view class="course-desc" style="padding-top:40rpx;">
-           <view style="position:absolute;right:50rpx;">
-           <image wx:if="{{item.course_detail.intensity<1}}" style="width:30rpx;height:30rpx" src="/res/burn.png"></image>
+        <view class="course-desc" style="padding-top:40rpx;">
+          <view style="position:absolute;right:50rpx;">
+            <image wx:if="{{item.course_detail.intensity<1}}" style="width:30rpx;height:30rpx" src="/res/burn.png"></image>
             <image wx:if="{{item.course_detail.intensity>0}}" style="width:30rpx;height:30rpx" src="/res/burn-active.png"></image>
 
             <image wx:if="{{item.course_detail.intensity<2}}" style="width:30rpx;height:30rpx" src="/res/burn.png"></image>
-             <image wx:if="{{item.course_detail.intensity>1}}" style="width:30rpx;height:30rpx" src="/res/burn-active.png"></image>
+            <image wx:if="{{item.course_detail.intensity>1}}" style="width:30rpx;height:30rpx" src="/res/burn-active.png"></image>
 
-             <image wx:if="{{item.course_detail.intensity<3}}" style="width:30rpx;height:30rpx" src="/res/burn.png"></image>
-              <image wx:if="{{item.course_detail.intensity>2}}" style="width:30rpx;height:30rpx" src="/res/burn-active.png"></image>
-           </view>
+            <image wx:if="{{item.course_detail.intensity<3}}" style="width:30rpx;height:30rpx" src="/res/burn.png"></image>
+            <image wx:if="{{item.course_detail.intensity>2}}" style="width:30rpx;height:30rpx" src="/res/burn-active.png"></image>
+          </view>
           <text style="border-bottom:8rpx solid rgb(105, 206, 219);">{{item.weekday}} x {{item.hour_str}}
           </text>
-           <text style="position:relative;top:20rpx;font-weight:600">{{item.course_detail.serial}}
+          <text style="position:relative;top:20rpx;font-weight:600">{{item.course_detail.serial}}
            </text>
-           <text style="position:relative;top:20rpx;font-weight:600">{{item.course_detail.title}}
+          <text style="position:relative;top:20rpx;font-weight:600">{{item.course_detail.title}}
           </text>
         </view>
         <view class="course-time" style="margin-top:20rpx">
           <text style="border:none"> {{item.coach_detail.displayname}} <text style="border-bottom:8rpx solid #FAD04D;margin-left:4rpx">{{item.booked.length}}／{{item.budget}}</text></text>
-          <view  data-i="{{index}}" class="course-book-btn" bindtap="tapBook">预约</view>
+          <view data-i="{{index}}" class="course-book-btn" bindtap="tapBook">预约</view>
         </view>
       </view>
     </view>
@@ -235,23 +232,31 @@
     <text wx:if="{{selectedgym!=19}}" class="hour-location" data-i="19" bindtap="toggleGymLoad">大悦城</text>
     <text wx:if="{{selectedgym==19}}" class="hour-location active" data-i="19">大悦城</text>
     <text wx:if="{{selectedgym!=31}}" class="hour-location" bindtap="toggleGymLoad" data-i="31">长楹天街</text>
-        <text wx:if="{{selectedgym==31}}" class="hour-location active" data-i="31">长楹天街</text>
+    <text wx:if="{{selectedgym==31}}" class="hour-location active" data-i="31">长楹天街</text>
   </view>
-  <view  wx:for="{{hours}}" data-i="{{index}}" class="hour-item">
+  <view wx:for="{{hours}}" data-i="{{index}}" class="hour-item">
     <view class="hour-str">{{item}}</view>
     <view class="hour-person">
-      <view wx:for="{{load[index].seats}}" class="hour-person-seat"> 
-      <image wx:if="{{item}}" src="/res/dumbbell.png" mode="aspectFill"></image>
-     <image wx:if="{{!item}}" src="/res/dumbbell-active.png" mode="aspectFill"></image>
+      <view wx:for="{{load[index].seats}}" class="hour-person-seat">
+        <image wx:if="{{item}}" src="/res/dumbbell.png" mode="aspectFill"></image>
+        <image wx:if="{{!item}}" src="/res/dumbbell-active.png" mode="aspectFill"></image>
       </view>
-      <view  data-i="{{index}}" wx:if="{{load[index].confirming != 1 && load[index].available == 1}}" class="hour-person-add" bindtap="selectHour"><text>+</text></view>
-      <view wx:if="{{load[index].available == 0}}" class="hour-person-full"><text>已满</text></view>
-        <view wx:if="{{load[index].confirming == 1}}" class="course-book-btn" style="margin-right:0;margin-top:20rpx" bindtap="confirmSelfTrain" data-i="{{index}}"><text>+ 提交</text></view>
-         <view wx:if="{{load[index].available == 2}}" class="course-book-btn" style="margin-right:0;margin-top:20rpx;border-color:#999;color:#999;" bindtap="cancelSelfTrain" data-i="{{load[index].selftrain}}"><text>× 取消</text></view>
+      <view data-i="{{index}}" wx:if="{{load[index].confirming != 1 && load[index].available == 1}}" class="hour-person-add" bindtap="selectHour">
+        <text>+</text>
+      </view>
+      <view wx:if="{{load[index].available == 0}}" class="hour-person-full">
+        <text>已满</text>
+      </view>
+      <view wx:if="{{load[index].confirming == 1}}" class="course-book-btn" style="margin-right:0;margin-top:20rpx" bindtap="confirmSelfTrain" data-i="{{index}}">
+        <text>+ 提交</text>
+      </view>
+      <view wx:if="{{load[index].available == 2}}" class="course-book-btn" style="margin-right:0;margin-top:20rpx;border-color:#999;color:#999;" bindtap="cancelSelfTrain" data-i="{{load[index].selftrain}}">
+        <text>× 取消</text>
+      </view>
 
     </view>
   </view>
-    <!--<view class="hour-item">
+  <!--<view class="hour-item">
        <view class="hour-str"></view>
     <view class="hour-person">    </view>
   </view>-->

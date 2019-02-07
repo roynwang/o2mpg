@@ -19,7 +19,8 @@
     "pages/homework/homework",
     "pages/coursedetail/coursedetail",
     "pages/coursereview/coursereview",
-    "pages/rankinglist/rankinglist"
+    "pages/rankinglist/rankinglist",
+    "pages/newbook/newbook"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -83,7 +83,7 @@
 .text-summary {
   font-size: 1.6rem;
   color: #333;
-  line-height: 2rem;
+  line-height: 1.9rem;
   font-weight: 500;
 }
 
@@ -124,6 +124,7 @@ text, view {
   text-align: center;
   border: #fff solid 1rpx;
   border-right: none;
+  margin-top:40rpx;
 }
 
 .date.active {
@@ -135,10 +136,9 @@ text, view {
 
 .day {
   font-size: 1.4rem;
-  color: rgba(119, 129, 139, 0.7);
+  /* color: rgba(119, 129, 139, 0.7); */
   line-height: 1.6rem;
   padding-top: 36rpx;
-  font-weight: 600;
 }
 
 .active .day, .active .month {
@@ -147,7 +147,7 @@ text, view {
 
 .month {
   font-size: 0.8rem;
-  color: rgba(119, 129, 139, 0.6);
+  /* color: rgba(119, 129, 139, 0.6); */
   line-height: 1rem;
   padding-top: 2rpx;
 }
@@ -176,7 +176,7 @@ text, view {
 
 .course-time > text {
   color: #333;
-  border-bottom: 6rpx solid #4fd2c2;
+  /* border-bottom: 6rpx solid #4fd2c2; */
   padding: 4rpx 4rpx;
 }
 
@@ -221,14 +221,15 @@ text, view {
 
 .course-book-btn {
   display: inline-block;
-  float: right;
   margin-right: -70rpx;
-  border: 3rpx solid #4fd2c2;
+  border: 4rpx solid #333;
   padding: 6rpx 20rpx;
   line-height: 40rpx;
-  color: #4fd2c2;
+  color: #333;
   font-size: 0.9rem;
   font-weight: 500;
+  border-radius:0;
+  background: white;
 }
 
 .course-book-btn.large {
@@ -237,6 +238,10 @@ text, view {
   border-width: 4rpx;
   text-align: center;
   margin: 30rpx auto;
+}
+.course-book-btn.share {
+  background: #555;
+  color:white;
 }
 
 .top-tips {
@@ -274,17 +279,20 @@ text, view {
 }
 
 .booked-item {
-  display: flex;
-  border-bottom: 1px solid #e3e3e3;
+display:flex;
+border:1px solid #e3e3e3;
+margin:50rpx 30rpx;
+box-shadow:6px 6rpx 30rpx #ddd;
+color:#666;
 }
 
 .booked-item .course-time {
-  padding-top: 0;
-  padding-bottom: 26rpx;
+  padding-top: 12rpx;
+
 }
 
 .booked-item .course-book-btn {
-  margin-right: 0;
+  margin-right: 24rpx;
 }
 
 .booked-item .course-desc {
@@ -299,11 +307,19 @@ text, view {
 .booked-item-detail {
   flex-grow: 1;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   padding-right: 20rpx;
+  padding-left:30rpx;
 }
 
-.completed .course-time>text {
+.booked-item.completed {
+  border-left:#555 8rpx solid;
+}
+.booked-item.pending {
+  border-left:#4fd2c2 8rpx solid;
+}
+
+/* .completed .course-time>text {
   color: #999;
   border: none;
 }
@@ -315,10 +331,10 @@ text, view {
 .completed .course-book-btn {
   color: #bbb;
   border-color: #ccc;
-}
+} */
 
 .booked-item.pending .date > .day, .booked-item.pending .date > .month {
-  color: #333;
+  /* color: #333; */
 }
 
 .booked-item.booking .date > .day, .booked-item.booking .date > .month {
@@ -356,6 +372,11 @@ text, view {
   display: flex;
   flex-flow: column;
   text-align: center;
+}
+
+.course-action-btns {
+  padding-top: 18rpx;
+  padding-bottom:18rpx;
 }
 
 .course-book-btn.confirm {
@@ -590,4 +611,19 @@ text, view {
   color: #333;
   margin-left: 40rpx;
   border-bottom:#fad04d solid 8rpx;
+}
+
+.new-book-btn {
+  position:absolute;
+right:20rpx;
+background:#555;
+color:white;
+width:100rpx;
+height:100rpx;
+font-size:2.5rem;
+text-align:center;
+border-radius:50rpx;
+box-shadow:4rpx 6rpx 18rpx #999;
+line-height:2.6rem;
+
 }

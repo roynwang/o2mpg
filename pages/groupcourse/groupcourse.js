@@ -40,7 +40,8 @@ Page({
       selfservice: "",
     },
     videonexturl: "",
-    videos: []
+    videos: [],
+    availableOrder: null
   },
   loading: false,
   toggleMuscle: function () {
@@ -68,6 +69,9 @@ Page({
       wx.navigateTo({
         url: '../coursereview/coursereview?id=' + i
       })
+      return
+    }
+    if (tar.dataset['action'] == "cancel") {
       return
     }
 
@@ -117,6 +121,11 @@ Page({
       playing: parseInt(i)
     })
   },
+  bookNew: function() {
+    wx.navigateTo({
+      url: '../newbook/newbook?mode=create&orderId='+this.data.availableOrder.id
+    })
+  },
   editReview: function(e){
     var that = this
     var tar = e.target
@@ -163,9 +172,6 @@ Page({
     var i = parseInt(tar.dataset["i"])
     that.selectDate(i)
   },
-
-
-
   showMe: function () {
     if (app.globalData.userInfo.detail != null) {
       wx.navigateTo({
@@ -270,13 +276,19 @@ Page({
   confirmCancel: function (id) {
 
   },
+  reschedule: function(e) {
+    var courseId = parseInt(e.currentTarget.dataset["i"])
+    wx.navigateTo({
+      url: '../newbook/newbook?mode=reschedule&courseId=' + courseId
+    })
+  },
   tapCancel: function (e) {
     var that = this
     var tar = e.currentTarget
     var i = parseInt(tar.dataset["i"])
     var bgc = that.data.bookedGroupCourse
     if (bgc[i].confirming) {
-      app.o2CancelBookedGroupCourse(bgc[i].id, function (res) {
+      app.cancelPtCourseItem(bgc[i].id, function (res) {
         wx.showToast({
           title: '预约已取消',
           icon: 'success',
@@ -313,6 +325,16 @@ Page({
 
     if (app.globalData.userInfo.detail) {
       that.loading = true
+      // load determine whether show add button
+      if (!app.globalData.userInfo.detail.iscoach && app.globalData.userInfo.detail.flag==2) {
+        app.o2GetUserAvailableOrder(app.globalData.userInfo.detail.name, 
+        function(data){
+          that.setData({
+           availableOrder: data
+        })
+      },
+      function(){}) 
+      }
     } else {
       return
     }
@@ -322,9 +344,9 @@ Page({
     app.o2BookedPtCourse('', app.globalData.userInfo.detail.name, function (start) {
       that.data.day = start
       courses = courses.concat(app.globalData.bookedPtCourse)
-      app.o2BookedGroupCourse(app.globalData.userInfo.detail.name, function () {
+      // app.o2BookedGroupCourse(app.globalData.userInfo.detail.name, function () {
         that.loading = false
-        courses = courses.concat(app.globalData.bookedGroupCourse)
+      //   courses = courses.concat(app.globalData.bookedGroupCourse)
         
         courses.sort(function(a,b){
           var ad = new Date(a.date + " " + a.hour_str + ":00").getTime()
@@ -341,7 +363,7 @@ Page({
           // showBook: !hideBook,
           bookedGroupCourse: courses
         })
-      }, function () { })
+      // }, function () { })
     }, function () { })
 
   },

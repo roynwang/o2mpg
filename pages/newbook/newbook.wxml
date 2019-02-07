@@ -1,0 +1,37 @@
+<!--pages/newbook/newbook.wxml-->
+<view class="section" style="text-align:center;font-weight:500;padding:20rpx;border-bottom:solid 2px #f3f3f3;box-shadow:0px -1px 25px rgba(0,0,0,.1);">
+  <picker
+    mode="date"
+    value="{{date}}"
+    start="2019-01-01"
+    end="2019-12-31"
+    bindchange="bindDateChange"
+  >
+    <view class="picker">
+       {{date}} 
+    </view>
+  </picker>
+  <view style="overflow-x:scroll">
+  <view class="avatar-list" style="width:{{152*coaches.length}}rpx">
+    <view wx:for="{{coaches}}" data-i="{{index}}" bindtap='selectCoach' class="avatar {{index == selectedCoach ? 'selected':''}}">
+      <text style = "line-height:120rpx;">{{item.displayname}}</text>
+    </view>
+  </view>
+  </view>
+</view>
+
+<view class="section">
+  <view class="hour-list">
+    <view class="hour-row" style="display:flex" wx:for="{{timeMap}}">
+     <view class="hour-label" >
+        <text>{{item}}</text>
+     </view>
+     <view wx:if="{{index<26}}"class="hour-slot  {{index == displaySubmitHour|| index == displaySubmitHour+1 ?'selecting':''}} {{!avaMap[index] ?'na':''}}" 
+     bindtap='selectHour' 
+     data-i="{{index}}"
+     >
+      <button bindtap="submitBook" wx:if="{{index == displaySubmitHour}}" class="course-book-btn" >+ 提交预约</button>
+     </view>
+    </view>
+  </view>
+</view>

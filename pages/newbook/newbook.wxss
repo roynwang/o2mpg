@@ -1,0 +1,83 @@
+/* pages/newbook/newbook.wxss */
+
+.avatar-list {
+  margin-top: 40rpx; 
+  margin:20rpx auto;
+}
+
+.avatar {
+height:120rpx;
+width:120rpx;
+border:8rpx solid #ccc;
+border-radius:50%;
+margin:4rpx 6rpx;
+overflow:hidden;
+display: inline-block;
+opacity:0.3;
+
+}
+.avatar.selected {
+  border-color: #555;
+  opacity: 1;
+  border-width: 16rpx;
+  background: #555;
+  color: white;
+  box-shadow:4rpx 6rpx 18rpx #999;
+
+}
+.avatar > image {
+  width: 100%;
+  height: 100%;
+}
+
+.hour-list {
+  margin-top: 50rpx;
+  padding: 20rpx;
+}
+.hour-label {
+  height: 120rpx;
+  width:120rpx;
+}
+.hour-label > text {
+position:relative;
+top:-24rpx;
+font-weight:600;
+text-align:right;
+letter-spacing:3rpx;
+color:#333;
+
+}
+.hour-slot {
+  flex-grow:1;
+  border-top:4rpx dotted #aaa;
+  text-align:center;
+}
+.hour-row:nth-last-of-type(2) .hour-slot{
+  border-bottom:4rpx dotted #aaa;
+}
+.hour-slot.selecting {
+  background:#999;
+}
+.hour-slot.na {
+  background-image: linear-gradient(45deg, #e6e6e6 25%, #ffffff 25%, #ffffff 50%, #e6e6e6 50%, #e6e6e6 75%, #ffffff 75%, #ffffff 100%);
+background-size: 11.31px 11.31px;
+}
+
+.hour-slot.booked {
+  background-image: linear-gradient(45deg, #4fd2c2 25%, #ffffff 25%, #ffffff 50%, #4fd2c2 50%, #4fd2c2 75%, #ffffff 75%, #ffffff 100%);
+background-size: 11.31px 11.31px;
+}
+
+.course-book-btn {
+  display: inline-block;
+  border: 4rpx solid #333;
+  padding: 6rpx 20rpx;
+  line-height: 40rpx;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius:0;
+  background: #333;
+  position:relative;
+  top:90rpx;
+}
