@@ -24,6 +24,7 @@ Page({
     availableHours: [0, 2, 4],
     avaMap: {},
     orderId: -1,
+    customer: null
   },
   selectCoach: function (e) {
     this.setData({
@@ -36,7 +37,7 @@ Page({
     let hour = that.data.displaySubmitHour
     let date = that.data.date
     let coach = that.data.coaches[that.data.selectedCoach]
-    let customer = app.globalData.userInfo.detail
+    let customer = that.data.customer
     let orderId = that.data.orderId
     if(that.data.mode == "create") {
     app.o2CustomerCreateBook(coach, customer, orderId, date, hour, 
@@ -111,7 +112,8 @@ Page({
           orderId: options.orderId,
           courseId: options.courseId || false,
           date: new Date().addDays(1).Format("yyyy-MM-dd"),
-          coaches: availableCoaches
+          coaches: availableCoaches,
+          customer: app.globalData.userInfo.detail,
         })
         that.loadAvailableTime()
       }
@@ -133,7 +135,8 @@ Page({
             courseId: options.courseId,
             date: data.date,
             selectedCoach: selected,
-            coaches: availableCoaches
+            coaches: availableCoaches,
+            customer: data.customerprofile
           })
           that.loadAvailableTime()
         })

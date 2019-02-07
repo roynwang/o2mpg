@@ -292,6 +292,8 @@ App({
     }else {
       if (!that.globalData.userInfo.detail.iscoach) {
         date = date.addDays(7)
+      } else {
+        date = date.addDays(1)
       }
     }
     let delta = 30
